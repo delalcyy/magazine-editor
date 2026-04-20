@@ -1,0 +1,184 @@
+.ab-page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 64px 24px 96px;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.ab-head { text-align: center; margin-bottom: 48px; }
+
+.ab-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #b08d3c;
+  margin-bottom: 16px;
+}
+.ab-eyebrow::before { content: ""; width: 24px; height: 1px; background: #b08d3c; display: inline-block; }
+
+.ab-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 400;
+  line-height: 1.05;
+  color: #0a0a0a;
+  margin-bottom: 12px;
+}
+.ab-title em { color: #b08d3c; font-style: italic; }
+
+.ab-sub { font-size: 14px; color: #6b6b6b; }
+
+.ab-active-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f0f9f0;
+  border: 1px solid #c3e6cb;
+  padding: 14px 20px;
+  margin-bottom: 28px;
+  font-size: 14px;
+  color: #155724;
+}
+.ab-active-icon { font-size: 16px; color: #b08d3c; }
+
+.ab-card {
+  border: 1px solid #e8e6e1;
+  padding: 44px 40px;
+  background: #fff;
+}
+
+.ab-plan-badge {
+  display: inline-block;
+  background: #b08d3c;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  margin-bottom: 16px;
+}
+
+.ab-plan-name {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: #0a0a0a;
+  margin-bottom: 8px;
+}
+
+.ab-plan-desc { font-size: 13.5px; color: #6b6b6b; margin-bottom: 28px; }
+
+.ab-error {
+  background: #fff5f5; border: 1px solid #f5c6c6; color: #c0392b;
+  font-size: 13px; padding: 10px 14px; margin-bottom: 20px;
+}
+.ab-success {
+  background: #f0f9f0; border: 1px solid #c3e6cb; color: #155724;
+  font-size: 13px; padding: 10px 14px; margin-bottom: 20px;
+}
+
+.ab-form { display: flex; flex-direction: column; gap: 18px; }
+.ab-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.ab-field { display: flex; flex-direction: column; gap: 6px; }
+.ab-field label {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.14em;
+  text-transform: uppercase; color: #0a0a0a;
+}
+.ab-field input,
+.ab-field textarea {
+  border: 1px solid #e8e6e1;
+  padding: 12px 14px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #0a0a0a;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.3s;
+  resize: vertical;
+}
+.ab-field input:focus,
+.ab-field textarea:focus { border-color: #0a0a0a; }
+
+.ab-submit {
+  margin-top: 8px;
+  padding: 14px;
+  background: #0a0a0a;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.ab-submit:hover:not(:disabled) { background: #8a6d2c; }
+.ab-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.ab-divider {
+  border: none;
+  border-top: 1px solid #e8e0d4;
+  margin: 36px 0;
+}
+
+.ab-seri-section { }
+
+.ab-seri-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0a0a0a;
+  margin: 0 0 8px;
+}
+
+.ab-seri-desc {
+  font-size: 13px;
+  color: #777;
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+.ab-seri-form { }
+
+.ab-seri-input-row {
+  display: flex;
+  gap: 10px;
+}
+
+.ab-seri-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #ddd4c4;
+  background: #faf8f5;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #0a0a0a;
+  outline: none;
+  transition: border-color 0.2s;
+  letter-spacing: 0.05em;
+}
+.ab-seri-input:focus { border-color: #0a0a0a; }
+.ab-seri-input:disabled { opacity: 0.6; }
+
+.ab-seri-btn {
+  padding: 12px 24px;
+  background: #8a6d2c;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+  white-space: nowrap;
+}
+.ab-seri-btn:hover:not(:disabled) { background: #0a0a0a; }
+.ab-seri-btn:disabled { opacity: 0.6; cursor: not-allowed; }

@@ -1,0 +1,71 @@
+.editor-page { min-height: calc(100vh - 64px); background: #faf9f6; }
+
+.editor-topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 48px;
+  border-bottom: 1px solid #e8e6e1;
+  background: #fff;
+}
+.editor-topbar-brand {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #0a0a0a;
+}
+.editor-topbar-sep { width: 1px; height: 16px; background: #e8e6e1; }
+.editor-topbar-label {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: #6b6b6b;
+  text-transform: uppercase;
+}
+
+.editor-body { padding: 40px 24px 80px; }
+
+.editor-error {
+  max-width: 680px;
+  margin: 0 auto 24px;
+  background: #fff5f5;
+  border: 1px solid #f5c6c6;
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #c0392b;
+}
+
+.editor-gate {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px;
+  gap: 16px;
+}
+.editor-gate-icon { font-size: 32px; color: #b08d3c; }
+.editor-gate h2 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 2rem;
+  font-weight: 400;
+}
+.editor-gate p { font-size: 14px; color: #6b6b6b; max-width: 40ch; }
+.editor-gate-btn {
+  margin-top: 8px;
+  padding: 14px 32px;
+  background: #0a0a0a;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.editor-gate-btn:hover { background: #8a6d2c; }

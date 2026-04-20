@@ -1,0 +1,481 @@
+import React, { useState, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import Header from '../components/Header'
+import OrderForm from '../components/OrderForm'
+import logoImg from '../assets/logo.png'
+import { buildEmptyAnswers } from '../data/questions'
+import './KapakPage.css'
+import './EditorPage.css'
+
+const BARCODE = (
+  <svg viewBox="0 0 60 22" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <g fill="#111">
+      {[
+        [1,1.2],[3.5,0.6],[5,1.8],[8,0.6],[9.5,1.2],[12,0.6],[13.5,2],
+        [17,0.6],[18.5,1.2],[21,0.8],[23,1.6],[26,0.6],[27.5,1.2],[30,0.8],
+        [32,1.4],[34.5,0.6],[36,1.2],[38.5,0.6],[40,1.8],[43,0.6],[44.5,1.2],
+        [47,0.8],[49,1.6],[52,0.6],[53.5,1.2],[56,0.6],[57.5,1.4],
+      ].map(([x, w], i) => (
+        <rect key={i} x={x} y="1" width={w} height="20" />
+      ))}
+    </g>
+  </svg>
+)
+
+function buildInitialEditor(user) {
+  return {
+    ad:       user?.ad    || '',
+    soyad:    user?.soyad || '',
+    category: '',
+    title:    '',
+    answers:  {},
+    images:   { inset1: null, inset2: null },
+  }
+}
+
+export default function KapakPage() {
+  const { user, hasAbonelik, getToken } = useAuth()
+  const navigate = useNavigate()
+
+  /* ── Adım ── */
+  const [step, setStep] = useState(1)   // 1 = kapak, 2 = editör
+
+  /* ── Kapak state ── */
+  const [photo, setPhoto]             = useState(null)
+  const [photoBase64, setPhotoBase64] = useState(null)
+  const [head,  setHead]              = useState('')
+  const [sub,   setSub]               = useState('')
+  const [exporting, setExporting]     = useState(false)
+  const [saving,    setSaving]        = useState(false)
+  const [savedPdf,  setSavedPdf]      = useState(null)
+  const [toast, setToast]             = useState(null)
+  const [dragOver, setDragOver]       = useState(false)
+
+  const coverRef   = useRef(null)
+  const fileRef    = useRef(null)
+  const toastTimer = useRef(null)
+
+  /* ── Editör state ── */
+  const [formData, setFormData]     = useState(() => buildInitialEditor(user))
+  const [isLoading, setIsLoading]   = useState(false)
+  const [isSuccess, setIsSuccess]   = useState(false)
+  const [pdfFileName, setPdfFileName]           = useState(null)
+  const [kapakPdfFileName, setKapakPdfFileName] = useState(null)
+  const [editorError, setEditorError]           = useState(null)
+
+  const kapakData = (() => {
+    try { return JSON.parse(localStorage.getItem('kapakData') || 'null') } catch { return null }
+  })()
+
+  /* ── Toast ── */
+  function showToast(msg) {
+    setToast(msg)
+    clearTimeout(toastTimer.current)
+    toastTimer.current = setTimeout(() => setToast(null), 2200)
+  }
+
+  /* ── Kapak: fotoğraf ── */
+  function handleFile(file) {
+    if (!file) return
+    if (!file.type.startsWith('image/')) { showToast('Sadece görsel dosyaları'); return }
+    if (file.size > 20 * 1024 * 1024)   { showToast("Dosya 20 MB'den büyük");   return }
+    if (photo) URL.revokeObjectURL(photo)
+    setPhoto(URL.createObjectURL(file))
+    const reader = new FileReader()
+    reader.onload = () => setPhotoBase64(reader.result)
+    reader.readAsDataURL(file)
+    showToast('Fotoğraf yüklendi')
+  }
+  function onFileChange(e) { handleFile(e.target.files?.[0]) }
+  function onDrop(e) {
+    e.preventDefault(); setDragOver(false)
+    handleFile(e.dataTransfer.files?.[0])
+  }
+
+  /* ── Kapak: sıfırla ── */
+  function handleReset() {
+    if (photo) URL.revokeObjectURL(photo)
+    setPhoto(null); setPhotoBase64(null); setHead(''); setSub(''); setSavedPdf(null)
+    showToast('Editör sıfırlandı')
+  }
+
+  /* ── Kapak: PNG indir ── */
+  async function handleExport() {
+    if (exporting) return
+    setExporting(true)
+    try {
+      const html2canvas = (await import('html2canvas')).default
+      const canvas = await html2canvas(coverRef.current, {
+        scale: 3, useCORS: true, backgroundColor: null, logging: false,
+      })
+      const link = document.createElement('a')
+      link.download = `hatira-dergi-kapak-${Date.now()}.png`
+      link.href = canvas.toDataURL('image/png')
+      link.click()
+      showToast('Kapak indirildi')
+    } catch {
+      showToast('Dışa aktarma başarısız')
+    } finally {
+      setExporting(false)
+    }
+  }
+
+  /* ── Kapak kaydet → editöre geç ── */
+  async function handleSaveAndContinue() {
+    if (saving) return
+    setSaving(true)
+    try {
+      const token = getToken()
+      const body = {
+        head: head.trim() || (user?.ad ? `${user.ad} ${user.soyad || ''}`.trim() : ''),
+        sub:  sub.trim(),
+        imageBase64: photoBase64 || null,
+      }
+      const res = await fetch('/api/kapak/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+      })
+      const data = await res.json()
+      if (data.success) {
+        localStorage.setItem('kapakPdf', data.kapakPdf)
+        localStorage.setItem('kapakData', JSON.stringify(body))
+        setSavedPdf(data.kapakPdf)
+        showToast('Kapak kaydedildi! Röportaj formuna geçiliyor…')
+        setTimeout(() => setStep(2), 600)
+      } else {
+        showToast('Kayıt başarısız')
+      }
+    } catch {
+      showToast('Bağlantı hatası')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  /* ── Editör: handlers ── */
+  function handleEditorChange(field, value) {
+    if (field === 'category') {
+      setFormData(prev => ({ ...prev, category: value, answers: buildEmptyAnswers(value) }))
+      return
+    }
+    setFormData(prev => ({ ...prev, [field]: value }))
+  }
+  function handleAnswer(questionId, value) {
+    setFormData(prev => ({ ...prev, answers: { ...prev.answers, [questionId]: value } }))
+  }
+  function handleImageUpload(slot, base64) {
+    setFormData(prev => ({ ...prev, images: { ...prev.images, [slot]: base64 } }))
+  }
+  function handleImageRemove(slot) {
+    setFormData(prev => ({ ...prev, images: { ...prev.images, [slot]: null } }))
+  }
+  async function handleEditorSubmit() {
+    if (!formData.category) return
+    setIsLoading(true); setEditorError(null)
+    try {
+      const fd = new FormData()
+      fd.append('category', formData.category)
+      fd.append('title',    formData.title || formData.category)
+      fd.append('ad',       (formData.ad    || '').toUpperCase())
+      fd.append('soyad',    (formData.soyad || '').toUpperCase())
+      fd.append('answers',  JSON.stringify(formData.answers))
+
+      const kd = (() => {
+        try { return JSON.parse(localStorage.getItem('kapakData') || 'null') } catch { return null }
+      })()
+      if (kd?.imageBase64) fd.append('kapakImageBase64', kd.imageBase64)
+      if (kd?.head)        fd.append('kapakHead',        kd.head)
+      if (kd?.sub)         fd.append('kapakSub',         kd.sub)
+
+      if (formData.images.inset1) {
+        const r1 = await fetch(formData.images.inset1); const b1 = await r1.blob()
+        fd.append('image1', b1, `image1.${b1.type.split('/')[1] || 'jpg'}`)
+      }
+      if (formData.images.inset2) {
+        const r2 = await fetch(formData.images.inset2); const b2 = await r2.blob()
+        fd.append('image2', b2, `image2.${b2.type.split('/')[1] || 'jpg'}`)
+      }
+
+      const response = await fetch('/api/orders/submit', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${getToken()}` },
+        body: fd,
+      })
+      const data = await response.json()
+      if (!response.ok || !data.success) throw new Error(data?.error?.message || 'Bir hata oluştu.')
+
+      setPdfFileName(data.pdfFileName || null)
+      setKapakPdfFileName(data.kapakPdfFileName || null)
+      localStorage.removeItem('kapakData')
+      localStorage.removeItem('kapakPdf')
+      setIsSuccess(true)
+    } catch (err) {
+      setEditorError(err.message || 'Gönderim sırasında bir hata oluştu.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+  function handleEditorReset() {
+    setFormData(buildInitialEditor(user))
+    setIsSuccess(false)
+    setPdfFileName(null)
+    setKapakPdfFileName(null)
+    setEditorError(null)
+  }
+
+  /* ── Abonelik kapısı ── */
+  if (!hasAbonelik) {
+    return (
+      <>
+        <Header />
+        <div className="kp-gate">
+          <span className="kp-gate-icon">✦</span>
+          <h2>Abonelik Gerekiyor</h2>
+          <p>Kapak tasarlamak için önce abone olmanız gerekiyor.</p>
+          <button onClick={() => navigate('/abonelik')} className="kp-gate-btn">Abone Ol</button>
+        </div>
+      </>
+    )
+  }
+
+  const displayHead = head.trim() || (user?.ad ? `${user.ad} ${user.soyad || ''}`.trim() : 'Ad Soyad')
+
+  /* ── ADIM 2: Editör ── */
+  if (step === 2) {
+    return (
+      <>
+        <Header />
+        <div className="editor-page">
+          <div className="editor-topbar">
+            <button
+              className="kp-btn kp-btn-ghost"
+              style={{ fontSize: 11, padding: '6px 12px' }}
+              onClick={() => setStep(1)}
+            >
+              ← Kapağa Dön
+            </button>
+            <div className="editor-topbar-sep" />
+            <span className="editor-topbar-brand">Dergi Editörü</span>
+            <div className="editor-topbar-sep" />
+            <span className="editor-topbar-label">Röportaj Siparişi</span>
+          </div>
+          <main className="editor-body">
+            {editorError && (
+              <div className="editor-error">⚠ {editorError}</div>
+            )}
+            <OrderForm
+              formData={formData}
+              onChange={handleEditorChange}
+              onAnswer={handleAnswer}
+              onImageUpload={handleImageUpload}
+              onImageRemove={handleImageRemove}
+              onSubmit={handleEditorSubmit}
+              isLoading={isLoading}
+              isSuccess={isSuccess}
+              pdfFileName={pdfFileName}
+              kapakPdfFileName={kapakPdfFileName}
+              hasKapak={!!kapakData}
+              onReset={handleEditorReset}
+            />
+          </main>
+        </div>
+        {toast && <div className="kp-toast">{toast}</div>}
+      </>
+    )
+  }
+
+  /* ── ADIM 1: Kapak tasarla ── */
+  return (
+    <>
+      <Header />
+      <div className="kp-app">
+
+        {/* ── Editör paneli ── */}
+        <section className="kp-editor">
+          <div className="kp-editor-inner">
+
+            {/* 01 Fotoğraf */}
+            <div className="kp-section">
+              <div className="kp-section-head">
+                <span className="kp-section-num">01</span>
+                <span className="kp-section-title">Kapak Fotoğrafı</span>
+              </div>
+
+              <div
+                className={`kp-upload ${dragOver ? 'kp-upload--drag' : ''}`}
+                onClick={() => fileRef.current?.click()}
+                onDragOver={e => { e.preventDefault(); setDragOver(true) }}
+                onDragLeave={() => setDragOver(false)}
+                onDrop={onDrop}
+              >
+                <div className="kp-upload-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b8880" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/>
+                  </svg>
+                </div>
+                <span className="kp-upload-title">Fotoğraf seç veya sürükle</span>
+                <span className="kp-upload-hint">JPG · PNG · Maks. 20 MB</span>
+                <input ref={fileRef} type="file" accept="image/*" style={{ display:'none' }} onChange={onFileChange} />
+              </div>
+
+              {photo && (
+                <div className="kp-thumb">
+                  <img src={photo} alt="Yüklenen fotoğraf" />
+                  <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(photo); setPhoto(null) }}>✕ Kaldır</button>
+                </div>
+              )}
+            </div>
+
+            {/* 02 Metinler */}
+            <div className="kp-section">
+              <div className="kp-section-head">
+                <span className="kp-section-num">02</span>
+                <span className="kp-section-title">Metinler</span>
+              </div>
+
+              <div className="kp-fields">
+                <div className="kp-field kp-field-full">
+                  <label className="kp-label">Ad Soyad</label>
+                  <input
+                    className="kp-input"
+                    type="text"
+                    value={head}
+                    onChange={e => setHead(e.target.value)}
+                    placeholder={`${user?.ad || 'Ad'} ${user?.soyad || 'Soyad'}`}
+                    maxLength={40}
+                  />
+                </div>
+                <div className="kp-field kp-field-full">
+                  <label className="kp-label">Alt Başlık <span className="kp-opt">(İsteğe bağlı)</span></label>
+                  <textarea
+                    className="kp-input"
+                    value={sub}
+                    onChange={e => setSub(e.target.value)}
+                    placeholder="Kısa bir alt başlık…"
+                    maxLength={120}
+                    rows={2}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Mobil aksiyonlar */}
+            <div className="kp-editor-actions">
+              <button className="kp-btn kp-btn-ghost" onClick={handleReset}>Sıfırla</button>
+              <button className="kp-btn kp-btn-primary" onClick={handleExport} disabled={exporting}>
+                {exporting ? 'İşleniyor…' : 'Kapağı İndir'}
+              </button>
+            </div>
+
+            {/* Röportaja geç */}
+            <div className="kp-continue">
+              <div className="kp-continue-line" />
+              <button className="kp-continue-btn" onClick={handleSaveAndContinue} disabled={saving}>
+                {saving ? 'Kaydediliyor…' : 'Kapağı Kaydet & Röportaja Geç'} <span className="kp-arr">→</span>
+              </button>
+            </div>
+
+          </div>
+        </section>
+
+        {/* ── Önizleme ── */}
+        <section className="kp-preview">
+          <span className="kp-preview-label">Canlı Önizleme</span>
+
+          <div className="kp-cover-stage">
+            <div className="kp-cover" ref={coverRef}>
+
+              {/* Arka plan */}
+              <div className="kp-cover-bg">
+                {photo && <img className="kp-cover-img" src={photo} alt="" />}
+                <div className="kp-cover-overlay" />
+              </div>
+
+              {/* Boş durum */}
+              {!photo && (
+                <div className="kp-cover-empty">
+                  <div className="kp-cover-empty-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.75)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="2"/>
+                      <circle cx="8.5" cy="8.5" r="1.6"/>
+                      <path d="M3 16l5-5 4 4 3-3 6 6"/>
+                    </svg>
+                  </div>
+                  <div className="kp-cover-empty-title">Önizleme burada</div>
+                  <div className="kp-cover-empty-sub">Fotoğraf yükleyin</div>
+                </div>
+              )}
+
+              {/* Kapak içeriği */}
+              <div className="kp-cover-content">
+
+                {/* Marka - Logo + FashionTV */}
+                <div className="kp-cov-brand">
+                  <img src={logoImg} className="kp-cov-logo-img" alt="Logo" />
+                  <div className="kp-cov-ftv-block">
+                    <span className="kp-cov-ftv-name">FASHIONTV</span>
+                    <span className="kp-cov-ftv-mag">magazine</span>
+                  </div>
+                </div>
+
+                {/* Sol / sağ yazılar */}
+                <div className="kp-cov-side kp-cov-side-left">
+                  YENİ STİL KODLARI{'\n'}MODA DOSYASI{'\n'}İLHAM VEREN SEÇKİLER
+                </div>
+                <div className="kp-cov-side kp-cov-side-right">
+                  ÖZEL RÖPORTAJLAR{'\n'}GÜÇLÜ İSİMLER{'\n'}YENİ SEZON
+                </div>
+
+                {/* Alt bilgi */}
+                <div className="kp-cov-bottom">
+                  <div className="kp-cov-headline">{displayHead.toUpperCase()}</div>
+                  {sub.trim() && <div className="kp-cov-sub">{sub.trim()}</div>}
+                  <div className="kp-cov-edition">İLKBAHAR 2026</div>
+                </div>
+
+                {/* Barkod */}
+                <div className="kp-cov-barcode">{BARCODE}</div>
+
+              </div>
+            </div>
+          </div>
+
+          <span className="kp-preview-size">21,6 × 27,9 cm · 300 dpi</span>
+
+          {savedPdf && (
+            <div className="kp-saved-notice">
+              <span>✓ Kapak PDF oluşturuldu</span>
+              <a href={`/pdfs/${savedPdf}`} target="_blank" rel="noopener noreferrer" className="kp-pdf-link">
+                PDF'i Görüntüle
+              </a>
+            </div>
+          )}
+          <div className="kp-preview-actions">
+            <button className="kp-btn kp-btn-ghost" onClick={handleReset}>Sıfırla</button>
+            <button className="kp-btn kp-btn-primary" onClick={handleExport} disabled={exporting || !photo}>
+              {exporting ? 'İşleniyor…' : '↓ PNG İndir'}
+            </button>
+            <button className="kp-btn kp-btn-gold" onClick={handleSaveAndContinue} disabled={saving}>
+              {saving ? 'Kaydediliyor…' : savedPdf ? 'Röportaja Geç →' : 'Kapağı Kaydet & Röportaja Geç →'}
+            </button>
+          </div>
+        </section>
+
+      </div>
+
+      {toast && <div className="kp-toast">{toast}</div>}
+
+      {exporting && (
+        <div className="kp-export-overlay">
+          <div className="kp-spinner" />
+          <div className="kp-export-label">Dışa aktarılıyor…</div>
+        </div>
+      )}
+    </>
+  )
+}

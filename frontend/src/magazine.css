@@ -1,0 +1,809 @@
+/* ─── magazine.css · Monochrome Editorial · Gold Accent ─────────────────────
+   Beyaz zemin · Siyah tipografi · Altın aksan (#C9A96E)
+   Drop cap: q1.text'in ilk harfi — soru üzerinde, büyük italic
+──────────────────────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Jost:wght@200;300;400;500&display=swap');
+
+.mp-root {
+  --w:   #ffffff;
+  --b:   #0a0a0a;
+  --b70: #4a4a4a;
+  --b40: #8a8a8a;
+  --b15: #d8d8d8;
+  --b06: #f2f2f2;
+  --gld: #C9A96E;   /* altın — sadece zarif vurgu */
+  --gld-lt: #e8d5a8;
+
+  --fd: 'Cormorant', Georgia, serif;
+  --fs: 'Jost', system-ui, sans-serif;
+
+  --pad: 52px;
+  --pw:  794px;
+  --ph:  1123px;
+}
+
+/* ── Scale wrapper ───────────────────────────────────────────────────────── */
+.mp-scaler {
+  transform: scale(var(--mp-scale, 1));
+  transform-origin: top left;
+  width: var(--pw);
+  height: var(--ph);
+}
+
+/* ── Sayfa ───────────────────────────────────────────────────────────────── */
+.mp-root {
+  width: var(--pw);
+  height: var(--ph);
+  background: var(--w);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--fs);
+  color: var(--b);
+  box-shadow: 0 4px 40px rgba(0,0,0,.14);
+}
+
+.mp-inner {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: var(--pad);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   MASTHEAD
+════════════════════════════════════════════════════════════════════════════ */
+.mp-masthead {
+  flex-shrink: 0;
+  margin-bottom: 16px;
+}
+
+.mp-cat {
+  font-family: var(--fs);
+  font-size: 7.5px;
+  font-weight: 400;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--gld);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 10px;
+}
+
+.mp-cat::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--gld-lt);
+  max-width: 120px;
+}
+
+.mp-title {
+  font-family: var(--fd);
+  font-size: 50px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: .96;
+  color: var(--b);
+  margin: 0 0 9px;
+  letter-spacing: -.5px;
+}
+
+.mp-sub {
+  font-family: var(--fs);
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--b40);
+  line-height: 1.5;
+  max-width: 360px;
+  letter-spacing: .02em;
+}
+
+/* ── Ayırıcı ─────────────────────────────────────────────────────────────── */
+.mp-divider {
+  flex-shrink: 0;
+  height: 1px;
+  background: var(--b);
+  margin-bottom: 18px;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   1. SORU — DROP CAP SORU METNİNDE
+   q1.text'in ilk harfi büyük, italic, drop cap olarak gösterilir.
+   Cevap altında küçük ve temiz devam eder.
+════════════════════════════════════════════════════════════════════════════ */
+.mp-q1-wrap {
+  flex-shrink: 0;
+  margin-bottom: 14px;
+  overflow: hidden; /* float clearfix */
+}
+
+/* Büyük harf — sorudan önce float, cevap altında akar */
+.mp-dropcap {
+  float: left;
+  font-family: var(--fd);
+  font-size: 86px;
+  font-weight: 700;
+  font-style: italic;
+  line-height: .78;
+  color: var(--b);
+  margin: 2px 10px 0 0;
+  padding-bottom: 6px;
+}
+
+/* Soru metni — drop cap'in yanında ve altında akar */
+.mp-q1-text {
+  font-family: var(--fd);
+  font-size: 13.5px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--b);
+  line-height: 1.45;
+  margin: 0 0 6px;
+  /* drop cap'in sağına hizalanır */
+}
+
+/* Cevap */
+.mp-q1-num {
+  font-family: var(--fs);
+  font-size: 7px;
+  font-weight: 400;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--gld);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.mp-a1 {
+  font-family: var(--fs);
+  font-size: 11.5px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--b);
+  margin: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   SECTION A: 2–3. soru (sol) + Görsel 1 (sağ)
+════════════════════════════════════════════════════════════════════════════ */
+.mp-sec-a {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 1fr 185px;
+  gap: 0 20px;
+  border-top: 1px solid var(--b15);
+  align-items: start;  /* görsel yukarıda sabit */
+}
+
+.mp-sec-a-qs {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;        /* taşmayı engeller */
+  overflow: hidden;
+}
+
+/* Görsel 1 — 4:5 */
+.mp-img-r {
+  width: 185px;
+  flex-shrink: 0;
+  align-self: start;
+  overflow: hidden;
+  background: var(--b06);
+  position: relative;  /* içindeki absolute img için */
+}
+
+.mp-img-r-in {
+  aspect-ratio: 4 / 5;
+  position: relative;
+  overflow: hidden;
+}
+
+.mp-img-r-in img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   SECTION B: Görsel 2 (sol, daha büyük) + 4–5. soru (sağ)
+════════════════════════════════════════════════════════════════════════════ */
+.mp-sec-b {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 0 20px;
+  border-top: 1px solid var(--b15);
+  align-items: start;  /* görsel yukarıda sabit */
+}
+
+.mp-sec-b-qs {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;        /* taşmayı engeller */
+  overflow: hidden;
+}
+
+/* Görsel 2 — 4:5, 200px geniş */
+.mp-img-l {
+  width: 200px;
+  flex-shrink: 0;
+  align-self: start;
+  overflow: hidden;
+  background: var(--b06);
+  position: relative;
+}
+
+.mp-img-l-in {
+  aspect-ratio: 4 / 5;
+  position: relative;
+  overflow: hidden;
+}
+
+.mp-img-l-in img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+/* ── Placeholder ─────────────────────────────────────────────────────────── */
+.mp-ph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.mp-ph-icon  { font-size: 18px; color: var(--b15); }
+.mp-ph-label {
+  font-family: var(--fs);
+  font-size: 7px;
+  font-weight: 300;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--b40);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   SORU BLOKLARI — section'lar içinde
+   Güçlü italik soru başlığı + hafif cevap
+════════════════════════════════════════════════════════════════════════════ */
+.mp-block {
+  padding: 10px 0;
+  border-top: 1px solid var(--b15);
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.mp-block:first-child { border-top: none; }
+
+.mp-bn {
+  font-family: var(--fs);
+  font-size: 7px;
+  font-weight: 400;
+  letter-spacing: .2em;
+  color: var(--gld);
+  min-width: 18px;
+  line-height: 2.4;
+  flex-shrink: 0;
+}
+
+.mp-bc { flex: 1; min-width: 0; }
+
+/* Soru metni: daha güçlü, daha belirgin */
+.mp-bq {
+  font-family: var(--fd);
+  font-size: 12.5px;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--b);
+  margin: 0 0 4px;
+  line-height: 1.3;
+}
+
+/* Cevap: temiz, sade, açık */
+.mp-ba {
+  font-family: var(--fs);
+  font-size: 10.5px;
+  font-weight: 400;   /* 300→400: daha baskın */
+  line-height: 1.72;
+  color: var(--b);    /* b70→b: tam siyah */
+  margin: 0;
+}
+
+.mp-empty {
+  font-family: var(--fs);
+  font-size: 9px;
+  font-weight: 300;
+  color: var(--b15);
+  font-style: italic;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════════════════════════════════════════ */
+.mp-footer {
+  flex-shrink: 0;
+  padding: 0 var(--pad) 14px;
+}
+
+.mp-footer-rule {
+  height: 1px;
+  background: var(--b);
+  margin-bottom: 9px;
+}
+
+.mp-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mp-footer-l {
+  font-family: var(--fs);
+  font-size: 7px;
+  font-weight: 400;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--b40);
+}
+
+.mp-footer-m {
+  font-family: var(--fd);
+  font-size: 9px;
+  font-style: italic;
+  color: var(--gld);
+}
+
+.mp-footer-r {
+  font-family: var(--fd);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--b);
+}
+
+/* ── No-category hint ────────────────────────────────────────────────────── */
+.mp-hint {
+  font-family: var(--fs);
+  font-size: 9px;
+  color: var(--b40);
+  font-style: italic;
+  margin-top: 10px;
+}
+
+/* ── Print ───────────────────────────────────────────────────────────────── */
+@media print {
+  .mp-scaler { transform: none !important; width: 210mm !important; height: 297mm !important; }
+  .mp-root   { width: 210mm !important; height: 297mm !important; box-shadow: none !important;
+               -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .mp-inner  { overflow: hidden !important; }
+}
+
+
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   MOBİL ROOT — scale sistemi yok, gerçek CSS akışı
+   .mp-root-mobile: masaüstündeki sabit 794×1123 yapısından bağımsız
+════════════════════════════════════════════════════════════════════════════ */
+.mp-root-mobile {
+  width: 100%;
+  background: #ffffff;
+  overflow-x: hidden;
+  font-family: var(--fs);
+  color: var(--b);
+}
+
+.mp-inner-mobile {
+  padding: 24px 16px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobil masthead */
+.mp-root-mobile .mp-masthead {
+  margin-bottom: 12px;
+}
+
+.mp-root-mobile .mp-cat {
+  font-size: 9px;
+  letter-spacing: .22em;
+  margin-bottom: 8px;
+}
+
+.mp-root-mobile .mp-title {
+  font-size: 26px;
+  line-height: 1.05;
+  margin-bottom: 6px;
+}
+
+.mp-root-mobile .mp-sub {
+  font-size: 12px;
+  max-width: 100%;
+}
+
+.mp-root-mobile .mp-divider {
+  margin-bottom: 14px;
+}
+
+/* Mobil drop cap — küçük ama etkileyici */
+.mp-root-mobile .mp-q1-wrap {
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+.mp-root-mobile .mp-dropcap {
+  font-size: 56px;
+  line-height: .78;
+  margin: 3px 8px 0 0;
+}
+
+.mp-root-mobile .mp-q1-num {
+  font-size: 7px;
+  margin-bottom: 3px;
+}
+
+.mp-root-mobile .mp-q1-text {
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.mp-root-mobile .mp-a1 {
+  font-size: 13px;
+  line-height: 1.72;
+}
+
+/* Mobil section A ve B: tek kolon */
+.mp-root-mobile .mp-sec-a,
+.mp-root-mobile .mp-sec-b {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--b15);
+  gap: 0;
+}
+
+.mp-root-mobile .mp-sec-a-qs,
+.mp-root-mobile .mp-sec-b-qs {
+  min-width: 0;
+  overflow: visible;
+}
+
+/* Mobil görseller: tam genişlik, 16:9, sıfır kırpma */
+.mp-root-mobile .mp-img-r,
+.mp-root-mobile .mp-img-l {
+  width: 100% !important;
+  margin: 12px 0;
+}
+
+.mp-root-mobile .mp-img-r-in,
+.mp-root-mobile .mp-img-l-in {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.mp-root-mobile .mp-img-r-in img,
+.mp-root-mobile .mp-img-l-in img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+/* Görsel yoksa placeholder mobilde de güzel dursun */
+.mp-root-mobile .mp-ph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Mobil bloklar */
+.mp-root-mobile .mp-block {
+  padding: 10px 0;
+  border-top: 1px solid var(--b15);
+}
+
+.mp-root-mobile .mp-block:first-child {
+  border-top: none;
+}
+
+.mp-root-mobile .mp-bq {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.mp-root-mobile .mp-ba {
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+/* Mobil footer */
+.mp-root-mobile .mp-footer {
+  padding: 0 16px 20px;
+}
+/* ════════════════════════════════════════════════════════════════════════════
+   MOBİL LAYOUT — tamamen ayrı class seti, masaüstü grid/flex yok
+   mp-mob-* prefix — hiçbir masaüstü class'ı kullanılmaz
+════════════════════════════════════════════════════════════════════════════ */
+
+.mp-mob-layout {
+  width: 100%;
+  background: #ffffff;
+  overflow-x: hidden;
+  font-family: var(--fs);
+  color: var(--b);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Masthead */
+.mp-mob-head {
+  padding: 20px 16px 12px;
+}
+
+.mp-mob-cat {
+  display: block;
+  font-family: var(--fs);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--gld);
+  margin-bottom: 8px;
+}
+
+.mp-mob-title {
+  font-family: var(--fd);
+  font-size: 28px;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.05;
+  color: var(--b);
+  margin: 0 0 6px;
+}
+
+.mp-mob-sub {
+  font-family: var(--fs);
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--b40);
+  line-height: 1.5;
+}
+
+.mp-mob-hint {
+  font-size: 11px;
+  color: var(--b40);
+  font-style: italic;
+  padding: 8px 16px 0;
+}
+
+/* Ayırıcı çizgi */
+.mp-mob-rule {
+  height: 1px;
+  background: var(--b);
+  margin: 0 16px 16px;
+}
+
+/* 1. Soru — drop cap */
+.mp-mob-q1 {
+  padding: 0 16px 14px;
+  overflow: hidden;
+}
+
+.mp-mob-num {
+  display: block;
+  font-family: var(--fs);
+  font-size: 7px;
+  font-weight: 400;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gld);
+  margin-bottom: 3px;
+}
+
+.mp-mob-dropcap {
+  float: left;
+  font-family: var(--fd);
+  font-size: 58px;
+  font-weight: 700;
+  font-style: italic;
+  line-height: .78;
+  color: var(--b);
+  margin: 3px 8px 4px 0;
+}
+
+.mp-mob-q1text {
+  font-family: var(--fd);
+  font-size: 14px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--b);
+  line-height: 1.45;
+  margin: 0 0 6px;
+  overflow: hidden;
+}
+
+/* Normal blok */
+.mp-mob-block {
+  padding: 10px 16px;
+  border-top: 1px solid var(--b15);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mp-mob-q {
+  font-family: var(--fd);
+  font-size: 13.5px;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--b);
+  margin: 0;
+  line-height: 1.35;
+}
+
+.mp-mob-a {
+  font-family: var(--fs);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--b);
+  margin: 0;
+}
+
+.mp-mob-empty {
+  font-family: var(--fs);
+  font-size: 10px;
+  color: var(--b30);
+  font-style: italic;
+}
+
+/* Görseller — tam genişlik, 16:9, sıfır kırpma */
+.mp-mob-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--b06);
+  position: relative;
+  margin: 10px 0;
+}
+
+.mp-mob-img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+.mp-mob-img-ph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Footer */
+.mp-mob-footer {
+  padding: 12px 16px 24px;
+  margin-top: 8px;
+}
+
+.mp-mob-footer-rule {
+  height: 1px;
+  background: var(--b);
+  margin-bottom: 8px;
+}
+
+.mp-mob-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mp-mob-footer-l {
+  font-family: var(--fs);
+  font-size: 7.5px;
+  font-weight: 400;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--b40);
+}
+
+.mp-mob-footer-r {
+  font-family: var(--fd);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--b);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   MOBİL — mob-* prefix, masaüstü class'larından tamamen bağımsız
+════════════════════════════════════════════════════════════════════════════ */
+
+/* Wrapper */
+.mob-wrap {
+  width: 100%;
+  background: #fff;
+  overflow-x: hidden;
+  font-family: var(--fs);
+  color: var(--b);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Başlık */
+.mob-head  { padding: 20px 16px 10px; }
+.mob-cat   { display: block; font-family: var(--fs); font-size: 9px; font-weight: 400; letter-spacing: .24em; text-transform: uppercase; color: var(--gld); margin-bottom: 8px; }
+.mob-title { font-family: var(--fd); font-size: 26px; font-weight: 300; font-style: italic; line-height: 1.05; color: var(--b); margin: 0 0 6px; }
+.mob-sub   { font-family: var(--fs); font-size: 12px; font-weight: 300; color: var(--b40); line-height: 1.5; }
+.mob-hint  { font-family: var(--fs); font-size: 11px; color: var(--b40); font-style: italic; padding: 0 16px 12px; }
+
+/* Çizgi */
+.mob-rule  { height: 1px; background: var(--b); margin: 0 16px 16px; }
+
+/* Numara */
+.mob-num { display: block; font-family: var(--fs); font-size: 7px; letter-spacing: .22em; text-transform: uppercase; color: var(--gld); margin-bottom: 3px; }
+
+/* 1. Soru — drop cap */
+.mob-q1 { padding: 0 16px 16px; overflow: hidden; }
+.mob-q1-body { overflow: hidden; margin-bottom: 6px; }
+.mob-dc { float: left; font-family: var(--fd); font-size: 58px; font-weight: 700; font-style: italic; line-height: .78; color: var(--b); margin: 3px 8px 4px 0; }
+.mob-q1-text { font-family: var(--fd); font-size: 15px; font-weight: 600; font-style: italic; color: var(--b); line-height: 1.4; margin: 0; overflow: hidden; }
+
+/* Normal bloklar */
+.mob-block { padding: 12px 16px; border-top: 1px solid var(--b15); }
+.mob-q     { font-family: var(--fd); font-size: 14px; font-weight: 700; font-style: italic; color: var(--b); margin: 0 0 5px; line-height: 1.35; }
+.mob-a     { font-family: var(--fs); font-size: 13.5px; font-weight: 400; line-height: 1.72; color: var(--b); margin: 0; }
+.mob-empty { font-family: var(--fs); font-size: 10px; color: var(--b30); font-style: italic; }
+
+/* Görseller — tam genişlik, 16:9, kırpma yok */
+.mob-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--b06);
+  position: relative;
+  margin: 12px 0;
+}
+.mob-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+.mob-img-ph  { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+.mob-img-lbl { font-family: var(--fs); font-size: 8px; letter-spacing: .14em; text-transform: uppercase; color: var(--b40); }
+
+/* Footer */
+.mob-footer      { padding: 12px 16px 28px; margin-top: 8px; }
+.mob-footer-rule { height: 1px; background: var(--b); margin-bottom: 8px; }
+.mob-footer-row  { display: flex; align-items: center; justify-content: space-between; }
+.mob-footer-l    { font-family: var(--fs); font-size: 8px; font-weight: 400; letter-spacing: .2em; text-transform: uppercase; color: var(--b40); }
+.mob-footer-r    { font-family: var(--fd); font-size: 13px; font-weight: 600; color: var(--b); }

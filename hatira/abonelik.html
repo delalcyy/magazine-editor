@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MAISON — Abonelik Planı Seç</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* ==============================================================
+     DESIGN TOKENS
+  ============================================================== */
+  :root {
+    --ink: #0a0a0a;
+    --ink-soft: #1f1f1f;
+    --muted: #7a7a7a;
+    --line: #eeece7;
+    --line-soft: #f3f1ec;
+    --paper: #ffffff;
+    --paper-warm: #fafaf7;
+    --gold: #b08d3c;
+    --gold-soft: #c9a961;
+    --gold-deep: #8a6d2c;
+
+    --serif: "Fraunces", "Playfair Display", Georgia, serif;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --max: 1360px;
+    --gutter: clamp(20px, 4vw, 56px);
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.6;
+    font-weight: 400;
+    font-size: 16px;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+  .wrap {
+    width: 100%;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* ==============================================================
+     SHARED ELEMENTS
+  ============================================================== */
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 28px; height: 1px;
+    background: var(--gold);
+    display: inline-block;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 24px;
+    font-family: var(--sans);
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: all 0.4s var(--ease);
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .btn .arr { transition: transform 0.4s var(--ease); }
+  .btn:hover .arr { transform: translateX(4px); }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn-primary:hover { background: var(--gold-deep); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+  .btn-ghost:hover { background: var(--ink); color: var(--paper); }
+
+  /* ==============================================================
+     HEADER
+  ============================================================== */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 22px 0;
+    gap: 24px;
+  }
+  .logo {
+    font-family: var(--serif);
+    font-size: 23px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .logo span { color: var(--gold); font-weight: 600; }
+
+  .nav {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+  }
+  .nav a {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    position: relative;
+    padding: 4px 0;
+  }
+  .nav a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.4s var(--ease);
+  }
+  .nav a:hover::after,
+  .nav a.active::after { width: 100%; }
+  .nav a.active { color: var(--gold); }
+
+  .header-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 24px;
+  }
+  .header-actions .text-link {
+    font-size: 13px;
+    letter-spacing: 0.06em;
+  }
+  .header-actions .text-link:hover { color: var(--gold); }
+
+  @media (max-width: 960px) {
+    .nav, .header-actions .text-link { display: none; }
+    .header-inner { grid-template-columns: 1fr auto; }
+  }
+
+  /* ==============================================================
+     PAGE HEAD
+  ============================================================== */
+  .page-head {
+    padding: clamp(80px, 10vw, 160px) 0 clamp(64px, 7vw, 100px);
+    text-align: center;
+  }
+  .page-head .eyebrow { margin-bottom: 28px; }
+  .page-head h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(2.4rem, 5.4vw, 4.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0 auto 24px;
+    max-width: 18ch;
+  }
+  .page-head p {
+    font-size: clamp(1rem, 1.15vw, 1.08rem);
+    color: var(--muted);
+    max-width: 58ch;
+    margin: 0 auto;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  /* ==============================================================
+     PLANS GRID
+  ============================================================== */
+  .plans-section { padding: 0 0 clamp(96px, 10vw, 160px); }
+
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 960px) {
+    .plans { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  }
+  @media (max-width: 640px) {
+    .plans { grid-template-columns: 1fr; }
+  }
+
+  /* KART TABANI */
+  .plan-card {
+    padding: 44px 36px 36px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.5s var(--ease), border-color 0.4s var(--ease);
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .plan-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--ink);
+  }
+
+  /* KOYU KART VARYANTI */
+  .plan-card.dark {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .plan-card.dark:hover { border-color: var(--gold); }
+
+  /* FEATURED */
+  .plan-card.featured { border-color: var(--ink); }
+  .plan-card.featured.dark { border-color: var(--gold); }
+
+  .plan-badge {
+    position: absolute;
+    top: -1px;
+    right: 24px;
+    background: var(--gold);
+    color: var(--ink);
+    padding: 6px 14px;
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+  }
+
+  /* KART İÇERİĞİ */
+  .plan-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .plan-eyebrow::before {
+    content: "";
+    width: 18px; height: 1px;
+    background: var(--gold);
+  }
+
+  .plan-name {
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+    color: inherit;
+  }
+
+  .plan-tagline {
+    font-size: 13.5px;
+    color: var(--muted);
+    margin-bottom: 36px;
+    line-height: 1.6;
+    font-weight: 400;
+    min-height: 44px;
+  }
+  .plan-card.dark .plan-tagline { color: rgba(255,255,255,0.55); }
+
+  .plan-price-block {
+    padding: 24px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 28px;
+  }
+  .plan-card.dark .plan-price-block { border-color: rgba(255,255,255,0.1); }
+
+  .plan-price {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    font-family: var(--serif);
+  }
+  .plan-price .currency {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: inherit;
+  }
+  .plan-price .amount {
+    font-size: 2.8rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: inherit;
+  }
+  .plan-price .period {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-left: 6px;
+  }
+  .plan-card.dark .plan-price .period { color: rgba(255,255,255,0.5); }
+
+  .plan-per {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    font-weight: 400;
+  }
+  .plan-card.dark .plan-per { color: rgba(255,255,255,0.55); }
+  .plan-per .highlight {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .plan-card.dark .plan-per .highlight { color: var(--gold-soft); }
+
+  .plan-features {
+    list-style: none;
+    margin-bottom: 36px;
+    flex: 1;
+  }
+  .plan-features li {
+    font-size: 13.5px;
+    padding: 8px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    line-height: 1.55;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .plan-card.dark .plan-features li { color: rgba(255,255,255,0.82); }
+  .plan-features li svg {
+    width: 14px; height: 14px;
+    flex-shrink: 0;
+    margin-top: 4px;
+    color: var(--gold);
+  }
+
+  /* KART BUTONU */
+  .plan-btn {
+    width: 100%;
+    padding: 14px 20px;
+    font-family: var(--sans);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s var(--ease);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+  }
+  .plan-btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .plan-btn .arr { transition: transform 0.4s var(--ease); }
+  .plan-btn:hover .arr { transform: translateX(4px); }
+
+  .plan-card.dark .plan-btn {
+    border-color: rgba(255,255,255,0.25);
+    color: var(--paper);
+  }
+  .plan-card.dark .plan-btn:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
+  }
+
+  .plan-card.featured .plan-btn {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .plan-card.featured .plan-btn:hover {
+    background: var(--gold-deep);
+    border-color: var(--gold-deep);
+  }
+  .plan-card.featured.dark .plan-btn {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--paper);
+  }
+  .plan-card.featured.dark .plan-btn:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
+  }
+
+  /* ==============================================================
+     REASSURANCE STRIP
+  ============================================================== */
+  .reassurance {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 40px 0;
+    background: var(--paper-warm);
+  }
+  .reassurance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .reassurance-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    font-weight: 400;
+  }
+  .reassurance-item svg {
+    width: 22px; height: 22px;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+  .reassurance-item strong {
+    color: var(--ink);
+    font-weight: 500;
+    display: block;
+    font-size: 13.5px;
+    margin-bottom: 2px;
+  }
+  @media (max-width: 780px) {
+    .reassurance-grid { grid-template-columns: 1fr; gap: 20px; }
+  }
+
+  /* ==============================================================
+     FOOTER
+  ============================================================== */
+  .footer {
+    background: var(--paper-warm);
+    padding: clamp(80px, 8vw, 120px) 0 40px;
+    border-top: 1px solid var(--line);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 56px;
+    margin-bottom: 72px;
+  }
+  .footer-brand .logo {
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  .footer-brand p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 38ch;
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+  .footer-social {
+    display: flex;
+    gap: 10px;
+  }
+  .footer-social a {
+    width: 38px; height: 38px;
+    border: 1px solid var(--line);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s var(--ease);
+    background: var(--paper);
+  }
+  .footer-social a:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .footer-social svg { width: 15px; height: 15px; }
+
+  .footer h5 {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 22px;
+  }
+  .footer ul { list-style: none; }
+  .footer ul li { margin-bottom: 12px; }
+  .footer ul a {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 400;
+    transition: color 0.3s var(--ease);
+  }
+  .footer ul a:hover { color: var(--gold); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--line);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-weight: 400;
+  }
+  .footer-bottom .logo-mini {
+    font-family: var(--serif);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+  }
+  .footer-bottom .logo-mini span { color: var(--gold); font-weight: 600; }
+
+  @media (max-width: 860px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .footer-brand { grid-column: span 2; }
+  }
+  @media (max-width: 500px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-brand { grid-column: span 1; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+  }
+
+  /* ==============================================================
+     A11Y + MOTION
+  ============================================================== */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="wrap header-inner">
+    <a href="#" class="logo">MAI<span>/</span>SON</a>
+    <nav class="nav" aria-label="Ana navigasyon">
+      <a href="#">Anasayfa</a>
+      <a href="#">Hakkımızda</a>
+      <a href="#" class="active">Abonelik</a>
+      <a href="#">İletişim</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#" class="text-link">Giriş Yap</a>
+      <a href="#" class="btn btn-primary">Kapak Tasarla <span class="arr">→</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE HEAD -->
+<section class="page-head">
+  <div class="wrap">
+    <span class="eyebrow">Abonelik</span>
+    <h1>Abonelik Planını Seç</h1>
+    <p>Sana en uygun planı seç, devam et ve bilgilerini bir sonraki adımda tamamla. İstediğin zaman iptal edebilirsin.</p>
+  </div>
+</section>
+
+<!-- PLAN CARDS -->
+<section class="plans-section">
+  <div class="wrap">
+    <div class="plans">
+
+      <!-- 3 Aylık — BEYAZ -->
+      <article class="plan-card">
+        <span class="plan-eyebrow">Başlangıç</span>
+        <h3 class="plan-name">3 Aylık</h3>
+        <p class="plan-tagline">Kısa vadeli bir deneme için ideal başlangıç.</p>
+        <div class="plan-price-block">
+          <div class="plan-price">
+            <span class="currency">₺</span>
+            <span class="amount">267</span>
+            <span class="period">/ 3 ay</span>
+          </div>
+          <div class="plan-per">Aylık <span class="highlight">₺89</span> karşılığı</div>
+        </div>
+        <ul class="plan-features">
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Sınırsız dergi oluşturma</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Tüm kategorilere erişim</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Yüksek çözünürlüklü PDF</li>
+        </ul>
+        <button class="plan-btn" onclick="continueToNext('3ay')">Devam Et <span class="arr">→</span></button>
+      </article>
+
+      <!-- 6 Aylık — SİYAH -->
+      <article class="plan-card dark">
+        <span class="plan-eyebrow">Orta Vade</span>
+        <h3 class="plan-name">6 Aylık</h3>
+        <p class="plan-tagline">Yarım yıl boyunca kesintisiz erişim ve avantaj.</p>
+        <div class="plan-price-block">
+          <div class="plan-price">
+            <span class="currency">₺</span>
+            <span class="amount">474</span>
+            <span class="period">/ 6 ay</span>
+          </div>
+          <div class="plan-per">Aylık <span class="highlight">₺79</span> karşılığı</div>
+        </div>
+        <ul class="plan-features">
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Sınırsız dergi oluşturma</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Premium şablonlar</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Baskıda %10 indirim</li>
+        </ul>
+        <button class="plan-btn" onclick="continueToNext('6ay')">Devam Et <span class="arr">→</span></button>
+      </article>
+
+      <!-- 9 Aylık — BEYAZ -->
+      <article class="plan-card">
+        <span class="plan-eyebrow">Uzun Vade</span>
+        <h3 class="plan-name">9 Aylık</h3>
+        <p class="plan-tagline">Daha ekonomik aylık maliyetle genişletilmiş erişim.</p>
+        <div class="plan-price-block">
+          <div class="plan-price">
+            <span class="currency">₺</span>
+            <span class="amount">630</span>
+            <span class="period">/ 9 ay</span>
+          </div>
+          <div class="plan-per">Aylık <span class="highlight">₺70</span> karşılığı</div>
+        </div>
+        <ul class="plan-features">
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Sınırsız dergi oluşturma</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Öncelikli müşteri desteği</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Baskıda %15 indirim</li>
+        </ul>
+        <button class="plan-btn" onclick="continueToNext('9ay')">Devam Et <span class="arr">→</span></button>
+      </article>
+
+      <!-- 1 Yıllık — SİYAH + FEATURED -->
+      <article class="plan-card dark featured">
+        <span class="plan-badge">En Popüler</span>
+        <span class="plan-eyebrow">Önerilen</span>
+        <h3 class="plan-name">1 Yıllık</h3>
+        <p class="plan-tagline">En çok tercih edilen plan — tam yıl, tam erişim.</p>
+        <div class="plan-price-block">
+          <div class="plan-price">
+            <span class="currency">₺</span>
+            <span class="amount">756</span>
+            <span class="period">/ yıl</span>
+          </div>
+          <div class="plan-per">Aylık <span class="highlight">₺63</span> karşılığı · %29 avantaj</div>
+        </div>
+        <ul class="plan-features">
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Sınırsız dergi oluşturma</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Tüm premium şablonlar</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Baskıda %25 indirim</li>
+        </ul>
+        <button class="plan-btn" onclick="continueToNext('1yil')">Devam Et <span class="arr">→</span></button>
+      </article>
+
+      <!-- 3 Yıllık — BEYAZ -->
+      <article class="plan-card">
+        <span class="plan-eyebrow">Uzun Dönem</span>
+        <h3 class="plan-name">3 Yıllık</h3>
+        <p class="plan-tagline">Sabit fiyat garantisiyle üç yıl boyunca kesintisiz.</p>
+        <div class="plan-price-block">
+          <div class="plan-price">
+            <span class="currency">₺</span>
+            <span class="amount">1.980</span>
+            <span class="period">/ 3 yıl</span>
+          </div>
+          <div class="plan-per">Aylık <span class="highlight">₺55</span> karşılığı · %38 avantaj</div>
+        </div>
+        <ul class="plan-features">
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Sınırsız dergi oluşturma</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Yıllık baskı hediyesi</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Baskıda %30 indirim</li>
+        </ul>
+        <button class="plan-btn" onclick="continueToNext('3yil')">Devam Et <span class="arr">→</span></button>
+      </article>
+
+      <!-- 5 Yıllık — SİYAH -->
+      <article class="plan-card dark">
+        <span class="plan-eyebrow">Koleksiyoncu</span>
+        <h3 class="plan-name">5 Yıllık</h3>
+        <p class="plan-tagline">En ekonomik seçenek. Bir koleksiyonluk arşive değer.</p>
+        <div class="plan-price-block">
+          <div class="plan-price">
+            <span class="currency">₺</span>
+            <span class="amount">2.940</span>
+            <span class="period">/ 5 yıl</span>
+          </div>
+          <div class="plan-per">Aylık <span class="highlight">₺49</span> karşılığı · %45 avantaj</div>
+        </div>
+        <ul class="plan-features">
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Sınırsız dergi oluşturma</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Yıllık koleksiyon baskısı</li>
+          <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 13 4"/></svg> Baskıda %40 indirim</li>
+        </ul>
+        <button class="plan-btn" onclick="continueToNext('5yil')">Devam Et <span class="arr">→</span></button>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- REASSURANCE -->
+<section class="reassurance">
+  <div class="wrap">
+    <div class="reassurance-grid">
+      <div class="reassurance-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/>
+          <polyline points="9 12 11 14 15 10"/>
+        </svg>
+        <div>
+          <strong>KVKK uyumlu güvenlik</strong>
+          Verilerin bizimle güvende.
+        </div>
+      </div>
+      <div class="reassurance-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v5l3 2"/>
+        </svg>
+        <div>
+          <strong>İstediğin zaman iptal</strong>
+          Taahhüt yok, esneklik var.
+        </div>
+      </div>
+      <div class="reassurance-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <rect x="3" y="6" width="18" height="13" rx="1"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        <div>
+          <strong>3D Secure ödeme</strong>
+          Bir sonraki adımda güvenle.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">MAI<span>/</span>SON</a>
+        <p>Premium kişisel dergi deneyimi. Kendi kapağını tasarla, röportajını oluştur, dergin kendi olsun.</p>
+        <div class="footer-social" aria-label="Sosyal medya">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4l7 10-7 6h3l5.5-5 3.5 5h4l-7.5-10.5L19 4h-3l-4.5 4L8 4z" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18"/><line x1="8" y1="10" x2="8" y2="17"/><circle cx="8" cy="7" r="0.5" fill="currentColor"/><path d="M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>
+          </a>
+          <a href="#" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="12" rx="2"/><polygon points="10 9 15 12 10 15" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h5>Menü</h5>
+        <ul>
+          <li><a href="#">Anasayfa</a></li>
+          <li><a href="#">Abonelik</a></li>
+          <li><a href="#">İletişim</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Destek</h5>
+        <ul>
+          <li><a href="#">S.S.S.</a></li>
+          <li><a href="#">Kargo &amp; Teslimat</a></li>
+          <li><a href="#">İade Koşulları</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Yasal</h5>
+        <ul>
+          <li><a href="#">KVKK Aydınlatma</a></li>
+          <li><a href="#">Gizlilik Politikası</a></li>
+          <li><a href="#">Kullanım Şartları</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 MAISON. Tüm hakları saklıdır.</span>
+      <span class="logo-mini">MAI<span>/</span>SON</span>
+      <span>Türkiye · Istanbul</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function continueToNext(planId) {
+    // Gerçek uygulamada: window.location.href = "/kayit?plan=" + planId;
+    console.log("Seçilen plan:", planId);
+  }
+</script>
+
+</body>
+</html>
