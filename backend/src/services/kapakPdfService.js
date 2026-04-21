@@ -21,6 +21,7 @@ async function generateKapakPDF({ imageBase64, head, sub }) {
     const page = await browser.newPage()
     await page.setViewport({ width: 794, height: 1123, deviceScaleFactor: 2 })
     await page.setContent(html, { waitUntil: 'networkidle0' })
+    await page.evaluate(() => document.fonts.ready)
     await page.pdf({
       path:            filePath,
       width:           '794px',

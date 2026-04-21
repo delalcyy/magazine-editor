@@ -416,14 +416,14 @@ export default function KapakPage() {
 
                 {/* Marka - Logo + FashionTV */}
                 <div className="kp-cov-brand">
-                  <img src={logoImg} className="kp-cov-logo-img" alt="Logo" />
-                  <div className="kp-cov-ftv-block">
-                    <span className="kp-cov-ftv-name">FASHIONTV</span>
-                    <span className="kp-cov-ftv-mag">magazine</span>
+                  <div className="kp-cov-brand-row">
+                    <img src={logoImg} className="kp-cov-logo-img" alt="Logo" />
+                    <span className="kp-cov-ftv-name">fashiontv</span>
                   </div>
+                  <span className="kp-cov-ftv-mag">magazine</span>
                 </div>
 
-                {/* Sol / sağ yazılar */}
+              {/* Sol / sağ yazılar */}
                 <div className="kp-cov-side kp-cov-side-left">
                   YENİ STİL KODLARI{'\n'}MODA DOSYASI{'\n'}İLHAM VEREN SEÇKİLER
                 </div>
@@ -450,9 +450,6 @@ export default function KapakPage() {
           {savedPdf && (
             <div className="kp-saved-notice">
               <span>✓ Kapak PDF oluşturuldu</span>
-              <a href={`/pdfs/${savedPdf}`} target="_blank" rel="noopener noreferrer" className="kp-pdf-link">
-                PDF'i Görüntüle
-              </a>
             </div>
           )}
           <div className="kp-preview-actions">

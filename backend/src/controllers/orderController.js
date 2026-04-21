@@ -130,16 +130,16 @@ async function submitOrder(req, res, next) {
   }
 }
 
-function listOrders(req, res, next) {
+async function listOrders(req, res, next) {
   try {
-    const files = fs.readdirSync(ORDERS_DIR).filter(f => f.endsWith('.json'))
-    const orders = files.map(f => {
-      try {
-        const d = JSON.parse(fs.readFileSync(path.join(ORDERS_DIR, f), 'utf8'))
-        return { orderId: d.orderId, category: d.category, pdfFileName: d.pdfFileName, createdAt: d.createdAt }
-      } catch { return null }
-    }).filter(Boolean).sort((a, b) => b.createdAt.localeCompare(a.createdAt))
-    return res.status(200).json({ success: true, count: orders.length, orders })
+    const [rows] = await db.query(
+      `SELECT s.order_id, s.kategori, s.baslik, s.pdf_dosya, s.kapak_pdf, s.created_at,
+              u.ad, u.soyad, u.email
+       FROM siparisler s
+       LEFT JOIN users u ON s.user_id = u.id
+       ORDER BY s.created_at DESC LIMIT 200`
+    )
+    return res.status(200).json({ success: true, count: rows.length, orders: rows })
   } catch (err) { next(err) }
 }
 

@@ -216,30 +216,37 @@
 
 /* Marka */
 .kp-cov-brand {
-  position: absolute; top: 3cqh; left: 3cqw; right: 3cqw;
-  display: flex; align-items: center; gap: 2.5cqw;
+  position: absolute; top: 2cqh; left: 0; right: 0;
+  padding: 0 3cqw;
+  display: flex; flex-direction: column; gap: 0.15cqh;
+  overflow: hidden;
 }
+
+/* Üst satır: logo + fashiontv */
+.kp-cov-brand-row {
+  display: flex; align-items: center; gap: 2cqw; width: 100%;
+}
+
 /* Logo resmi */
 .kp-cov-logo-img {
-  height: 7cqh; width: auto;
-  object-fit: contain;
-  flex-shrink: 0;
+  height: 11cqh; width: auto; object-fit: contain; flex-shrink: 0;
 }
-/* FashionTV metin bloğu */
-.kp-cov-ftv-block {
-  display: flex; flex-direction: column; line-height: 1;
-  flex: 1; min-width: 0; overflow: hidden;
-}
+
+/* fashiontv yazısı */
 .kp-cov-ftv-name {
-  font-family: var(--kp-sans); font-size: 7cqh; font-weight: 900;
-  letter-spacing: 0.3em; color: #fff; text-transform: uppercase;
-  line-height: 1; white-space: nowrap;
+  font-family: var(--kp-sans); font-size: 11cqh; font-weight: 900;
+  letter-spacing: 0.06em; color: #fff; line-height: 1;
+  white-space: nowrap; overflow: hidden;
+  flex: 1 1 0; min-width: 0; display: block;
 }
+
+/* magazine */
 .kp-cov-ftv-mag {
-  font-family: var(--kp-serif); font-size: 1.8cqh; font-weight: 400;
-  letter-spacing: 0.45em; color: rgba(255,255,255,0.85);
+  font-family: var(--kp-serif); font-size: 4.2cqh; font-weight: 700;
+  letter-spacing: 0.54em; color: rgba(255,255,255,0.88);
   text-transform: lowercase; font-style: italic;
-  text-align: right; margin-top: 0.5cqh;
+  text-align: right; display: block;
+  margin-left: 43cqw; width: 47cqw; margin-top: -1.2cqh;
 }
 
 /* Kapak kaydedilince PDF notice */

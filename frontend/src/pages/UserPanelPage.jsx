@@ -166,26 +166,7 @@ export default function UserPanelPage() {
                       </div>
                       <div className="up-order-title">{order.baslik || order.kategori}</div>
                       <div className="up-order-pdfs">
-                        {order.kapak_pdf && (
-                          <a
-                            href={`/pdfs/${order.kapak_pdf}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="up-pdf-btn up-pdf-kapak"
-                          >
-                            Kapak PDF
-                          </a>
-                        )}
-                        {order.pdf_dosya && (
-                          <a
-                            href={`/pdfs/${order.pdf_dosya}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="up-pdf-btn up-pdf-editor"
-                          >
-                            Editör PDF
-                          </a>
-                        )}
+                        <span className="up-pdf-status">✓ PDF hazırlandı, sizinle paylaşılacak.</span>
                       </div>
                     </div>
                   ))}

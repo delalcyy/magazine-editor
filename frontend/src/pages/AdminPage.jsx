@@ -159,22 +159,35 @@ export default function AdminPage() {
               <div className="adm-table-wrap">
                 <table className="adm-table">
                   <thead>
-                    <tr><th>ID</th><th>Kategori</th><th>PDF</th><th>Tarih</th></tr>
+                    <tr>
+                      <th>Kullanıcı</th>
+                      <th>E-posta</th>
+                      <th>Kategori</th>
+                      <th>Kapak PDF</th>
+                      <th>Editör PDF</th>
+                      <th>Tarih</th>
+                    </tr>
                   </thead>
                   <tbody>
                     {siparisler.map(s => (
-                      <tr key={s.orderId}>
-                        <td><code className="adm-code">{s.orderId?.slice(0,8)}…</code></td>
-                        <td>{s.category}</td>
+                      <tr key={s.order_id}>
+                        <td>{s.ad || '—'} {s.soyad || ''}</td>
+                        <td>{s.email || '—'}</td>
+                        <td>{s.kategori}</td>
                         <td>
-                          {s.pdfFileName
-                            ? <a href={`/pdfs/${s.pdfFileName}`} target="_blank" rel="noopener noreferrer" className="adm-link">İndir</a>
+                          {s.kapak_pdf
+                            ? <a href={`/pdfs/${s.kapak_pdf}`} target="_blank" rel="noopener noreferrer" className="adm-link">İndir</a>
                             : '—'}
                         </td>
-                        <td>{new Date(s.createdAt).toLocaleDateString('tr-TR')}</td>
+                        <td>
+                          {s.pdf_dosya
+                            ? <a href={`/pdfs/${s.pdf_dosya}`} target="_blank" rel="noopener noreferrer" className="adm-link">İndir</a>
+                            : '—'}
+                        </td>
+                        <td>{new Date(s.created_at).toLocaleDateString('tr-TR')}</td>
                       </tr>
                     ))}
-                    {!siparisler.length && <tr><td colSpan={4} className="adm-empty">Sipariş yok.</td></tr>}
+                    {!siparisler.length && <tr><td colSpan={6} className="adm-empty">Sipariş yok.</td></tr>}
                   </tbody>
                 </table>
               </div>

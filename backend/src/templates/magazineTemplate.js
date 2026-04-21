@@ -25,7 +25,7 @@ function capFirst(str) {
 /* ── Sayfa boyutları ── */
 const PW = 794, PH = 1123
 const PL = 46,  PR = 46, PT = 38
-const IMG_W = 200
+const IMG_W = 220
 
 /* ── Soru satırı HTML ── */
 function qaRowHTML(num, qText, answer, dropCap) {
@@ -82,11 +82,11 @@ function buildPage({ cat, name, nameSize, questions, answers, img1, img2, pgN, u
    *   alt boşluk         : 12px
    * Toplam               : nameSize + 41
    */
-  const MH  = nameSize + 41
+  const MH  = nameSize + 28
   const CT  = PT + MH                      // içerik başlangıcı
   const CB  = PH - 22 - 30 - 8            // içerik bitişi (footer üstü)
   const CH  = CB - CT                      // toplam içerik yüksekliği
-  const GAP = 20                           // görsel-soru arası boşluk
+  const GAP = 30                           // görsel-soru arası boşluk
   const QW  = PW - PL - PR - IMG_W - GAP  // soru genişliği = 482px
 
   /* Her soruya eşit yükseklik */
@@ -94,12 +94,16 @@ function buildPage({ cat, name, nameSize, questions, answers, img1, img2, pgN, u
   const lastH = CH - QH * (qCount - 1)
 
   /* Üst grup: ilk 3 soru — IMG1 SAĞDA */
-  const upper = questions.slice(0, 3)
+  const upper  = questions.slice(0, 3)
   const upperH = upper.length * QH         // ilk 3 sorunun toplam yüksekliği
 
   /* Alt grup: son 2 soru — IMG2 SOLDA */
-  const lower = questions.slice(3)
+  const lower  = questions.slice(3)
   const lowerH = CH - upperH               // kalan yükseklik
+
+  /* Görsel sabit kısa kutu — sorulardan bağımsız */
+  const IMG_H1 = 330
+  const IMG_H2 = 293
 
   /* Görsel kutusu */
   function imgBox(src, label, top, left, h) {
@@ -109,7 +113,7 @@ function buildPage({ cat, name, nameSize, questions, answers, img1, img2, pgN, u
            <span style="font-size:22px;color:#bbb;">▭</span>
            <span style="font-family:Arial,sans-serif;font-size:7px;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;">${label}</span>
          </div>`
-    return `<div style="position:absolute;top:${top}px;left:${left}px;width:${IMG_W}px;height:${h}px;background:#e0e0e0;overflow:hidden;">${inner}</div>`
+    return `<div style="position:absolute;top:${top}px;left:${left}px;width:${IMG_W}px;height:${h}px;background:#f0f0f0;overflow:hidden;border-radius:8px;">${inner}</div>`
   }
 
   /* Soru bloğu */
@@ -117,20 +121,21 @@ function buildPage({ cat, name, nameSize, questions, answers, img1, img2, pgN, u
     const h    = (globalI === qCount - 1) ? lastH : QH
     const bdr  = (globalI < qCount - 1) ? 'border-bottom:1px solid #e0dcd4;' : ''
     const body = qaRowHTML(q._n, q.text, answers[q.id], globalI === 0 && useDropCap)
-    return `<div style="position:absolute;top:${top}px;left:${left}px;width:${w}px;height:${h}px;overflow:hidden;${bdr}display:flex;align-items:center;padding:8px 0;">${body}</div>`
+    return `<div style="position:absolute;top:${top}px;left:${left}px;width:${w}px;height:${h}px;overflow:hidden;${bdr}padding:10px 0;">${body}</div>`
   }
 
   /* ── Üst grup: sorular SOLDA, img1 SAĞDA ── */
-  const img1Left = PL + QW + GAP   // 46 + 482 + 20 = 548
-  const upperQA  = upper.map((q, i) =>
-    qaBlock(q, i, i, CT + i * QH, PL, QW)
+  const img1Left   = PL + QW + GAP
+  const upperQLeft = PL
+  const upperQA    = upper.map((q, i) =>
+    qaBlock(q, i, i, CT + 30 + i * QH, upperQLeft, QW)
   ).join('\n')
 
   /* ── Alt grup: img2 SOLDA, sorular SAĞDA ── */
-  const lowerQLeft = PL + IMG_W + GAP   // 46 + 200 + 20 = 266
+  const lowerQLeft = PL + IMG_W + GAP
   const lowerQA = lower.map((q, i) => {
     const globalI = upper.length + i
-    return qaBlock(q, i, globalI, CT + upperH + i * QH, lowerQLeft, QW)
+    return qaBlock(q, i, globalI, CT + upperH + 10 + i * QH, lowerQLeft, QW)
   }).join('\n')
 
   return `
@@ -147,14 +152,14 @@ function buildPage({ cat, name, nameSize, questions, answers, img1, img2, pgN, u
     <div style="height:1px;background:#111;"></div>
   </div>
 
-  <!-- img1: üst grup sağında -->
-  ${imgBox(img1, 'Görsel 1', CT, img1Left, upperH)}
+  <!-- img1: ilk soruyla hizalı (padding kadar aşağı) -->
+  ${imgBox(img1, 'Görsel 1', CT + 30, img1Left, IMG_H1)}
 
-  <!-- üst sorular (1-3): sol taraf -->
+  <!-- üst sorular (1-3): sağ taraf -->
   ${upperQA}
 
-  <!-- img2: alt grup solunda -->
-  ${imgBox(img2, 'Görsel 2', CT + upperH, PL, lowerH)}
+  <!-- img2: alt grup - 1. soruyla hizalı -->
+  ${imgBox(img2, 'Görsel 2', CT + upperH + 10, PL, IMG_H2)}
 
   <!-- alt sorular (4-5): sağ taraf -->
   ${lowerQA}

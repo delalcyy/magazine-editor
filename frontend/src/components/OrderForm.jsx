@@ -44,28 +44,6 @@ export default function OrderForm({
         <p className="success-sub">
           Röportajınız hazırlanacak ve sizinle paylaşılacak. Teşekkür ederiz.
         </p>
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center', marginTop: 8 }}>
-          {kapakPdfFileName && (
-            <a
-              href={`/pdfs/${kapakPdfFileName}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="success-pdf-link"
-            >
-              Kapak PDF
-            </a>
-          )}
-          {pdfFileName && (
-            <a
-              href={`/pdfs/${pdfFileName}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="success-pdf-link"
-            >
-              Editör PDF
-            </a>
-          )}
-        </div>
         <button type="button" className="success-btn" onClick={onReset}>
           Yeni Form Doldur
         </button>
