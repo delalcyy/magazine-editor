@@ -215,7 +215,7 @@
 
 /* ── Kapak içeriği (container query ile ölçekli) ── */
 .kp-cover-content {
-  position: absolute; inset: 0; z-index: 2;
+  position: absolute; inset: 0; z-index: 10;
   padding: 6cqh 5cqw; color: #fff;
 }
 
