@@ -218,35 +218,11 @@
 .kp-cov-brand {
   position: absolute; top: 2cqh; left: 0; right: 0;
   padding: 0 3cqw;
-  display: flex; flex-direction: column; gap: 0.15cqh;
-  overflow: hidden;
-}
-
-/* Üst satır: logo + fashiontv */
-.kp-cov-brand-row {
-  display: flex; align-items: center; gap: 2cqw; width: 100%;
 }
 
 /* Logo resmi */
 .kp-cov-logo-img {
-  height: 11cqh; width: auto; object-fit: contain; flex-shrink: 0;
-}
-
-/* fashiontv yazısı */
-.kp-cov-ftv-name {
-  font-family: var(--kp-sans); font-size: 11cqh; font-weight: 900;
-  letter-spacing: 0.06em; color: #fff; line-height: 1;
-  white-space: nowrap; overflow: hidden;
-  flex: 1 1 0; min-width: 0; display: block;
-}
-
-/* magazine */
-.kp-cov-ftv-mag {
-  font-family: var(--kp-serif); font-size: 4.2cqh; font-weight: 700;
-  letter-spacing: 0.54em; color: rgba(255,255,255,0.88);
-  text-transform: lowercase; font-style: italic;
-  text-align: right; display: block;
-  margin-left: 43cqw; width: 47cqw; margin-top: -1.2cqh;
+  width: 60%; height: auto; display: block;
 }
 
 

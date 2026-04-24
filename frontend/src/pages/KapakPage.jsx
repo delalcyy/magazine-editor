@@ -416,11 +416,7 @@ export default function KapakPage() {
 
                 {/* Marka - Logo + FashionTV */}
                 <div className="kp-cov-brand">
-                  <div className="kp-cov-brand-row">
-                    <img src={logoImg} className="kp-cov-logo-img" alt="Logo" />
-                    <span className="kp-cov-ftv-name">fashiontv</span>
-                  </div>
-                  <span className="kp-cov-ftv-mag">magazine</span>
+                  <img src={logoImg} className="kp-cov-logo-img" alt="Logo" />
                 </div>
 
               {/* Sol / sağ yazılar */}
