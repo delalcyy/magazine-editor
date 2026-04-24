@@ -172,10 +172,16 @@ export default function HomePage() {
               </div>
               <div className="hp-about-right">
                 <p className="hp-about-text">
-                  Gerçek güzellik çoğu zaman görünmez kalır. Gerçek hikâyeler anlatılmaz, gerçek potansiyel keşfedilmez.
+                  Dünya Güzellik Yarışması Yapılıyor. Dünyanın En Güzel Kızı Seçiliyor. Peki Gerçekten En Güzel Olanın Haberi Var mı… Ya da İmkânı?
                 </p>
                 <p className="hp-about-text">
-                  Hatıra Dergi bir yarışma değil, bir fırsat platformudur. Burada seçilmeni beklemeye gerek yok — sen kendini anlatırsın, biz seni görünür kılarız.
+                  Bugüne kadar hep aynı hikâyeyi izledik; seçilenler, sahneye çıkanlar, alkışlananlar… Ama artık başka bir hikâye başlıyor. Çünkü biz biliyoruz ki gerçek potansiyel çoğu zaman keşfedilmez, gerçek hikâyeler çoğu zaman anlatılmaz ve gerçek güzellik çoğu zaman görünmez kalır. İşte tam bu noktada Hatıra Dergi devreye girer.
+                </p>
+                <p className="hp-about-text">
+                  Biz bir yarışma değiliz, bir fırsat platformuyuz. Burada seçilmek zorunda değilsin, birilerinin seni fark etmesini beklemek zorunda değilsin. Sen kendini anlatırsın, biz seni görünür kılarız. Hatıra Dergi ile kendi kapağında yer alır, kendi hikâyeni dünyaya sunar ve kendi değerini kendi sözlerinle anlatırsın. Çünkü artık sahneye çıkmak için seçilmene gerek yok; artık görünür olmak için birilerinin onayına ihtiyacın yok.
+                </p>
+                <p className="hp-about-text">
+                  Yeni dönem başlıyor. Seçilenlerin değil, kendini ortaya koyanların dönemi. Eğer anlatacak bir hikâyen varsa, zaten bir adım öndesin. Ve biz o hikâyeyi sadece saklamıyoruz, onu bir değere dönüştürüyoruz.
                 </p>
                 <p className="hp-about-text">
                   <strong>Hatıra Dergi</strong> — görünmeyeni görünür yapan, hayali gerçeğe dönüştüren platform.
