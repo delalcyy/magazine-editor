@@ -1,3 +1,5 @@
+require('dotenv').config(); // 👈 BUNU EKLE (EN ÜSTE)
+
 const mysql = require('mysql2/promise')
 
 const pool = mysql.createPool({

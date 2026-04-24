@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Header from '../components/Header'
+import kapakImg from '../assets/kapak.png'
 import './HomePage.css'
 
 const steps = [
@@ -75,24 +76,7 @@ export default function HomePage() {
 
             <div className="hp-hero-right">
               <div className="hp-cover-stage">
-                <div className="hp-cover">
-                  <div className="hp-cover-portrait" />
-                  <div className="hp-cover-content">
-                    <div className="hp-cover-top">
-                      <span className="hp-cover-logo">HATIRA DERGİ</span>
-                      <span className="hp-cover-issue">N°01<br/><strong>2026</strong></span>
-                    </div>
-                    <div className="hp-cover-headlines">
-                      <span className="hp-cover-tag">Hatıra Dergi</span>
-                      <h3 className="hp-cover-headline">Herkesin <em>Bir Hikâyesi</em> Var</h3>
-                      <span className="hp-cover-sub">Özel Baskı · Kişisel Arşiv</span>
-                    </div>
-                    <div className="hp-cover-footer">
-                      <span>Kış 2026</span>
-                      <span>hatiradergi.com</span>
-                    </div>
-                  </div>
-                </div>
+                <img src={kapakImg} alt="Hatıra Dergi Kapak" className="hp-cover-img" />
               </div>
             </div>
           </div>

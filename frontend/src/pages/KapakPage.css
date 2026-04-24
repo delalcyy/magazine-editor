@@ -214,40 +214,36 @@
   padding: 6cqh 5cqw; color: #fff;
 }
 
-/* Marka */
+/* Marka — grid: logo iki satırı kaplar, fashiontv + magazine aynı sütunda */
 .kp-cov-brand {
-  position: absolute; top: 2cqh; left: 0; right: 0;
+  position: absolute; top: 20cqh; left: 0; right: 0;
   padding: 0 3cqw;
-  display: flex; flex-direction: column; gap: 0.15cqh;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 2cqw; row-gap: 0.15cqh;
   overflow: hidden;
 }
 
-/* Üst satır: logo + fashiontv */
-.kp-cov-brand-row {
-  display: flex; align-items: center; gap: 2cqw; width: 100%;
-}
+/* brand-row şeffaf hale gelir; logo + fashiontv doğrudan grid'e katılır */
+.kp-cov-brand-row { display: contents; }
 
-/* Logo resmi */
+/* Logo resmi — iki satırı kaplar */
 .kp-cov-logo-img {
-  height: 11cqh; width: auto; object-fit: contain; flex-shrink: 0;
+  grid-column: 1; grid-row: 1 / 3; align-self: center;
+  height: 11cqh; width: auto; object-fit: contain;
 }
 
 /* fashiontv yazısı */
 .kp-cov-ftv-name {
+  grid-column: 2; grid-row: 1;
   font-family: var(--kp-sans); font-size: 11cqh; font-weight: 900;
   letter-spacing: 0.06em; color: #fff; line-height: 1;
-  white-space: nowrap; overflow: hidden;
-  flex: 1 1 0; min-width: 0; display: block;
+  white-space: nowrap; overflow: hidden; display: block;
 }
 
-/* magazine */
-.kp-cov-ftv-mag {
-  font-family: var(--kp-serif); font-size: 4.2cqh; font-weight: 700;
-  letter-spacing: 0.54em; color: rgba(255,255,255,0.88);
-  text-transform: lowercase; font-style: italic;
-  text-align: right; display: block;
-  margin-left: 43cqw; width: 47cqw; margin-top: -1.2cqh;
-}
+
+
 
 /* Kapak kaydedilince PDF notice */
 .kp-saved-notice {
