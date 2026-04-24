@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Header from '../components/Header'
 import OrderForm from '../components/OrderForm'
-import logoImg from '../assets/logo.png'
+import logoImg from '../assets/logo.jpeg'
 import { buildEmptyAnswers } from '../data/questions'
 import './KapakPage.css'
 import './EditorPage.css'
@@ -416,11 +416,7 @@ export default function KapakPage() {
 
                 {/* Marka - Logo + FashionTV */}
                 <div className="kp-cov-brand">
-                  <div className="kp-cov-brand-row">
-                    <img src={logoImg} className="kp-cov-logo-img" alt="Logo" />
-                    <span className="kp-cov-ftv-name">fashiontv</span>
-                  </div>
-                  <span className="kp-cov-ftv-mag">magazine</span>
+                  <img src={logoImg} className="kp-cov-logo-img" alt="Logo" />
                 </div>
 
               {/* Sol / sağ yazılar */}
