@@ -174,6 +174,41 @@
 .hp-testimonial-text { font-family: var(--hp-serif); font-size: 1.1rem; line-height: 1.6; color: var(--hp-ink); font-style: italic; }
 .hp-testimonial-name { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--hp-muted); }
 
+/* ── Galeri ── */
+.hp-gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 40px;
+}
+.hp-gallery-box {
+  aspect-ratio: 3/4;
+  background: var(--hp-warm);
+  border: 1px dashed var(--hp-line);
+  border-radius: 4px;
+}
+
+/* ── Hakkımızda ── */
+.hp-about {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 60px;
+  align-items: start;
+}
+.hp-about-text {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--hp-ink);
+}
+
+@media (max-width: 960px) {
+  .hp-gallery { grid-template-columns: repeat(2, 1fr); }
+  .hp-about { grid-template-columns: 1fr; gap: 24px; }
+}
+@media (max-width: 580px) {
+  .hp-gallery { grid-template-columns: repeat(2, 1fr); }
+}
+
 /* ── CTA ── */
 .hp-cta { padding: clamp(72px, 9vw, 120px) 0; background: var(--hp-ink); }
 .hp-cta-inner { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px; }

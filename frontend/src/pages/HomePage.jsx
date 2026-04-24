@@ -44,14 +44,14 @@ export default function HomePage() {
                 Herkes Kendi Dergisinin Kapağı Olabilir
               </div>
               <h1 className="hp-h1">
-                Anılarınızı<br />
-                <em>Dergi Sayfasına</em>
+                Her Hikâye <br />
+                <em>Bir Kapak Olmayı</em>
                 <span className="hp-h1-rule" />
-                Dönüştürün
+                Hak Eder
               </h1>
               <p className="hp-lede">
-                Özel anlarınızı, başarılarınızı ve kişisel hikâyelerinizi profesyonel bir dergi röportajı formatında ölümsüzleştirin.
-              </p>
+              FashionTV Magazine kapağının yıldızı siz olun.
+              Hikâyenizi yazın, röportajınızı oluşturun ve lüks bir lifestyle dergide yerinizi alın.              </p>
               <div className="hp-hero-btns">
                 <button onClick={handleCTA} className="hp-btn-primary">
                   Hemen Başla <span className="hp-arr">→</span>
@@ -156,6 +156,41 @@ export default function HomePage() {
                   <span className="hp-testimonial-name">— {t.name}</span>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Görseller ── */}
+        <section className="hp-section">
+          <div className="hp-section-wrap">
+            <div className="hp-section-head">
+              <div>
+                <span className="hp-eyebrow">Galeri</span>
+                <h2 className="hp-section-title">Anlarınızdan <em>Kareler</em></h2>
+              </div>
+            </div>
+            <div className="hp-gallery">
+              <div className="hp-gallery-box" />
+              <div className="hp-gallery-box" />
+              <div className="hp-gallery-box" />
+              <div className="hp-gallery-box" />
+            </div>
+          </div>
+        </section>
+
+        {/* ── Hakkımızda ── */}
+        <section className="hp-section hp-section-warm">
+          <div className="hp-section-wrap">
+            <div className="hp-about">
+              <div className="hp-about-left">
+                <span className="hp-eyebrow">Hakkımızda</span>
+                <h2 className="hp-section-title">Biz <em>Kimiz?</em></h2>
+              </div>
+              <div className="hp-about-right">
+                <p className="hp-about-text">
+                  Buraya hakkınızda yazmak istediğiniz metni ekleyin.
+                </p>
+              </div>
             </div>
           </div>
         </section>
