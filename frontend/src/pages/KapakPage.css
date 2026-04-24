@@ -217,12 +217,12 @@
 /* Marka */
 .kp-cov-brand {
   position: absolute; top: 0; left: 0; right: 0;
-  padding: 0;
+  padding: 0 6cqw;
 }
 
 /* Logo resmi */
 .kp-cov-logo-img {
-  width: 100%; height: 70cqw; object-fit: contain; display: block;
+  width: 100%; height: auto; display: block;
 }
 
 
