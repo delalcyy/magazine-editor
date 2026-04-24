@@ -19,9 +19,9 @@ const steps = [
 const categories = ['Doğum Günü', 'Evlilik', 'Kariyer', 'Bebek', 'Mezuniyet']
 
 const testimonials = [
-  { name: 'Elif K.',    text: 'Eşime sürpriz olarak hazırladım. Gözleri doldu. Çok özel bir hediye oldu.' },
-  { name: 'Murat B.',  text: 'Mezuniyetim için bir sayfa oluşturdum. Gerçek bir dergi gibi görünüyor!' },
-  { name: 'Selin T.',  text: 'Annemin doğum günü için kullandım. Tüm aile hayran kaldı.' },
+  { name: 'Elif K.', title: 'Eş & Anne', text: 'Eşime sürpriz olarak hazırladım. Gözleri doldu. Yıllardır bu kadar özel bir hediye almamıştı. Tasarımı gerçekten bir dergiden ayırt edemiyorsunuz, inanılmaz kaliteli çıktı.' },
+  { name: 'Murat B.', title: 'Mezun', text: 'Mezuniyetim için bir sayfa oluşturdum. Gerçek bir dergi gibi görünüyor! Ailem ve arkadaşlarım çok beğendi, hatta birkaç kişi daha sipariş vermek istedi. Kesinlikle tavsiye ederim.' },
+  { name: 'Selin T.', title: 'Kız Evladı', text: 'Annemin doğum günü için kullandım. Tüm aile hayran kaldı. Annem o kadar mutlu oldu ki çerçevelettirip duvara astı. Bu kadar kişisel ve anlamlı bir hediye bulmak gerçekten zordu.' },
 ]
 
 export default function HomePage() {
@@ -144,26 +144,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── Yorumlar ── */}
-        <section className="hp-section">
-          <div className="hp-section-wrap">
-            <div className="hp-section-head">
-              <div>
-                <span className="hp-eyebrow">Yorumlar</span>
-                <h2 className="hp-section-title">Kullanıcılarımız <em>Ne Diyor?</em></h2>
-              </div>
-            </div>
-            <div className="hp-testimonials">
-              {testimonials.map((t, i) => (
-                <div key={i} className="hp-testimonial">
-                  <p className="hp-testimonial-text">"{t.text}"</p>
-                  <span className="hp-testimonial-name">— {t.name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ── Görseller ── */}
         <section className="hp-section">
           <div className="hp-section-wrap">
@@ -192,9 +172,58 @@ export default function HomePage() {
               </div>
               <div className="hp-about-right">
                 <p className="hp-about-text">
-                  Buraya hakkınızda yazmak istediğiniz metni ekleyin.
+                  Dünya Güzellik Yarışması Yapılıyor. Dünyanın En Güzel Kızı Seçiliyor.<br /><br />
+                  Peki Gerçekten En Güzel Olanın Haberi Var mı… Ya da İmkânı?<br /><br />
+                  Bugüne kadar hep aynı hikâyeyi izledik.<br />
+                  Seçilenler, sahneye çıkanlar, alkışlananlar…<br /><br />
+                  Ama artık başka bir hikâye başlıyor.<br /><br />
+                  Çünkü biz biliyoruz:<br />
+                  Gerçek potansiyel, çoğu zaman keşfedilmez.<br />
+                  Gerçek hikâyeler, çoğu zaman anlatılmaz.<br />
+                  Gerçek güzellik, çoğu zaman görünmez kalır.<br /><br />
+                  İşte tam bu noktada Hatıra Dergi devreye girer.<br /><br />
+                  Biz bir yarışma değiliz.<br />
+                  Biz bir fırsat platformuyuz.<br /><br />
+                  Burada seçilmek zorunda değilsin.<br />
+                  Burada birilerinin seni fark etmesini beklemek zorunda değilsin.<br /><br />
+                  Sen kendini anlatırsın, biz seni görünür kılalım.<br /><br />
+                  Hatıra Dergi ile:<br />
+                  Kendi kapağında yer alırsın.<br />
+                  Kendi hikâyeni dünyaya sunarsın.<br />
+                  Kendi değerini, kendi sözlerinle anlatırsın.<br /><br />
+                  Çünkü artık sahneye çıkmak için seçilmene gerek yok.<br />
+                  Artık görünür olmak için birilerinin onayına ihtiyacın yok.<br /><br />
+                  Yeni dönem başlıyor.<br />
+                  Seçilenlerin değil, kendini ortaya koyanların dönemi.<br /><br />
+                  Eğer anlatacak bir hikâyen varsa, zaten bir adım öndesin.<br /><br />
+                  Ve biz o hikâyeyi sadece saklamıyoruz… onu bir değere dönüştürüyoruz.<br /><br />
+                  <strong>Hatıra Dergi</strong> — görünmeyeni görünür yapan, hayali gerçeğe dönüştüren platform.
                 </p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Yorumlar ── */}
+        <section className="hp-section">
+          <div className="hp-section-wrap">
+            <div className="hp-section-head">
+              <div>
+                <span className="hp-eyebrow">Yorumlar</span>
+                <h2 className="hp-section-title">Kullanıcılarımız <em>Ne Diyor?</em></h2>
+              </div>
+            </div>
+            <div className="hp-testimonials">
+              {testimonials.map((t, i) => (
+                <div key={i} className="hp-testimonial-card">
+                  <div className="hp-testimonial-quote">"</div>
+                  <p className="hp-testimonial-text">{t.text}</p>
+                  <div className="hp-testimonial-footer">
+                    <span className="hp-testimonial-name">{t.name}</span>
+                    <span className="hp-testimonial-title">{t.title}</span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
