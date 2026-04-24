@@ -54,7 +54,7 @@ export default function HomePage() {
                 Hak Eder
               </h1>
               <p className="hp-lede">
-              FashionTV Magazine kapağının yıldızı siz olun.
+              fashiontv magazine kapağının yıldızı siz olun.
               Hikâyenizi yazın, röportajınızı oluşturun ve lüks bir lifestyle dergide yerinizi alın.              </p>
               <div className="hp-hero-btns">
                 <button onClick={handleCTA} className="hp-btn-primary">
@@ -172,31 +172,12 @@ export default function HomePage() {
               </div>
               <div className="hp-about-right">
                 <p className="hp-about-text">
-                  Dünya Güzellik Yarışması Yapılıyor. Dünyanın En Güzel Kızı Seçiliyor.<br /><br />
-                  Peki Gerçekten En Güzel Olanın Haberi Var mı… Ya da İmkânı?<br /><br />
-                  Bugüne kadar hep aynı hikâyeyi izledik.<br />
-                  Seçilenler, sahneye çıkanlar, alkışlananlar…<br /><br />
-                  Ama artık başka bir hikâye başlıyor.<br /><br />
-                  Çünkü biz biliyoruz:<br />
-                  Gerçek potansiyel, çoğu zaman keşfedilmez.<br />
-                  Gerçek hikâyeler, çoğu zaman anlatılmaz.<br />
-                  Gerçek güzellik, çoğu zaman görünmez kalır.<br /><br />
-                  İşte tam bu noktada Hatıra Dergi devreye girer.<br /><br />
-                  Biz bir yarışma değiliz.<br />
-                  Biz bir fırsat platformuyuz.<br /><br />
-                  Burada seçilmek zorunda değilsin.<br />
-                  Burada birilerinin seni fark etmesini beklemek zorunda değilsin.<br /><br />
-                  Sen kendini anlatırsın, biz seni görünür kılalım.<br /><br />
-                  Hatıra Dergi ile:<br />
-                  Kendi kapağında yer alırsın.<br />
-                  Kendi hikâyeni dünyaya sunarsın.<br />
-                  Kendi değerini, kendi sözlerinle anlatırsın.<br /><br />
-                  Çünkü artık sahneye çıkmak için seçilmene gerek yok.<br />
-                  Artık görünür olmak için birilerinin onayına ihtiyacın yok.<br /><br />
-                  Yeni dönem başlıyor.<br />
-                  Seçilenlerin değil, kendini ortaya koyanların dönemi.<br /><br />
-                  Eğer anlatacak bir hikâyen varsa, zaten bir adım öndesin.<br /><br />
-                  Ve biz o hikâyeyi sadece saklamıyoruz… onu bir değere dönüştürüyoruz.<br /><br />
+                  Gerçek güzellik çoğu zaman görünmez kalır. Gerçek hikâyeler anlatılmaz, gerçek potansiyel keşfedilmez.
+                </p>
+                <p className="hp-about-text">
+                  Hatıra Dergi bir yarışma değil, bir fırsat platformudur. Burada seçilmeni beklemeye gerek yok — sen kendini anlatırsın, biz seni görünür kılarız.
+                </p>
+                <p className="hp-about-text">
                   <strong>Hatıra Dergi</strong> — görünmeyeni görünür yapan, hayali gerçeğe dönüştüren platform.
                 </p>
               </div>

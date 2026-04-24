@@ -212,7 +212,9 @@
   font-size: 16px;
   line-height: 1.8;
   color: var(--hp-ink);
+  margin-bottom: 16px;
 }
+.hp-about-text:last-child { margin-bottom: 0; }
 
 @media (max-width: 960px) {
   .hp-gallery { grid-template-columns: repeat(2, 1fr); }
