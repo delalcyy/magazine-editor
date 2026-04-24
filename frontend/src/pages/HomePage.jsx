@@ -8,7 +8,7 @@ import './HomePage.css'
 const steps = [
   { n: '01', title: 'Kayıt Olun', desc: 'Adınızı, e-postanızı ve şifrenizi girerek ücretsiz hesap oluşturun.' },
   { n: '02', title: 'Abone Olun', desc: 'Adres bilgilerinizi tamamlayın ve Hatıra Dergi üyeliğinizi başlatın.' },
-  { n: '03', title: 'Soruları Yanıtlayın', desc: 'Kategorinizi seçin, fotoğraflarınızı yükleyin ve röportaj sorularını doldurun.' },
+  { n: '03', title: 'Kapak Tasarlayın', desc: 'Kapağınızı Tasarlayın.Kategorinizi seçin, fotoğraflarınızı yükleyin ve röportaj sorularını doldurun.' },
   { n: '04', title: 'PDF\'inizi Alın', desc: 'Kişisel dergi sayfanız anında oluşturulur, indirmeye hazır.' },
 ]
 
@@ -27,7 +27,7 @@ export default function HomePage() {
   function handleCTA() {
     if (!user) { navigate('/kayit'); return }
     if (!hasAbonelik) { navigate('/abonelik'); return }
-    navigate('/editor')
+    navigate('/kapak')
   }
 
   return (
@@ -105,8 +105,7 @@ export default function HomePage() {
                 <h2 className="hp-section-title">Dört Adımda <em>Kendi Derginiz</em></h2>
               </div>
               <p className="hp-section-lede">
-                Kayıt olmaktan PDF indirmeye kadar tüm süreç birkaç dakika içinde tamamlanır.
-              </p>
+              Kapak tasarla, röportajını oluştur ve birkaç dakika içinde kapak yıldızı ol.            </p>
             </div>
             <div className="hp-steps">
               {steps.map(s => (
