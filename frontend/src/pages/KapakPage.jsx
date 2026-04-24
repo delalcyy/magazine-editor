@@ -392,6 +392,9 @@ export default function KapakPage() {
 
               {/* Arka plan */}
               <div className="kp-cover-bg">
+                <div className="kp-cov-brand">
+                  <img src={logoImg} className="kp-cov-logo-img" alt="Logo" />
+                </div>
                 {photo && <img className="kp-cover-img" src={photo} alt="" />}
                 <div className="kp-cover-overlay" />
               </div>
@@ -413,11 +416,6 @@ export default function KapakPage() {
 
               {/* Kapak içeriği */}
               <div className="kp-cover-content">
-
-                {/* Marka - Logo + FashionTV */}
-                <div className="kp-cov-brand">
-                  <img src={logoImg} className="kp-cov-logo-img" alt="Logo" />
-                </div>
 
               {/* Sol / sağ yazılar */}
                 <div className="kp-cov-side kp-cov-side-left">
