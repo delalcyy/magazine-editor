@@ -3,6 +3,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Header from '../components/Header'
 import kapakImg from '../assets/kapak.png'
+import ornekkapak1 from '../assets/ornekkapak1.jpeg'
+import ornekkapak4 from '../assets/ornekkapak4.png'
+import ornekkapak5 from '../assets/ornekkapak5.png'
+import ornekkapak6 from '../assets/ornekkapak6.png'
 import './HomePage.css'
 
 const steps = [
@@ -170,10 +174,10 @@ export default function HomePage() {
               </div>
             </div>
             <div className="hp-gallery">
-              <div className="hp-gallery-box" />
-              <div className="hp-gallery-box" />
-              <div className="hp-gallery-box" />
-              <div className="hp-gallery-box" />
+              <div className="hp-gallery-box"><img src={ornekkapak1} alt="Örnek Kapak 1" /></div>
+              <div className="hp-gallery-box"><img src={ornekkapak4} alt="Örnek Kapak 4" /></div>
+              <div className="hp-gallery-box"><img src={ornekkapak5} alt="Örnek Kapak 5" /></div>
+              <div className="hp-gallery-box"><img src={ornekkapak6} alt="Örnek Kapak 6" /></div>
             </div>
           </div>
         </section>

@@ -184,8 +184,11 @@
 .hp-gallery-box {
   aspect-ratio: 3/4;
   background: var(--hp-warm);
-  border: 1px dashed var(--hp-line);
   border-radius: 4px;
+  overflow: hidden;
+}
+.hp-gallery-box img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
 }
 
 /* ── Hakkımızda ── */
