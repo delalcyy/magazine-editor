@@ -194,7 +194,7 @@
 .kp-cover-fg {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: center top;
-  display: block; z-index: 4; pointer-events: none;
+  display: block; z-index: 6; pointer-events: none;
 }
 
 /* Boş durum */
@@ -223,7 +223,7 @@
 .kp-cov-brand {
   position: absolute; top: 2cqh; left: 0; right: 0;
   padding: 0 1cqw; z-index: 3;
-  pointer-events: none;
+  pointer-events: none; isolation: isolate;
 }
 
 /* Logo resmi */

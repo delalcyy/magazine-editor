@@ -440,16 +440,16 @@ export default function KapakPage() {
                 </div>
               )}
 
+              {/* Logo — kp-cover-content dışında, doğrudan kp-cover içinde */}
+              <div className="kp-cov-brand">
+                <img src={logoImg} className="kp-cov-logo-img" alt="Logo" />
+              </div>
+
               {/* Ön plan kişi katmanı */}
               {fgPhoto && <img className="kp-cover-fg" src={fgPhoto} alt="" />}
 
               {/* Kapak içeriği */}
               <div className="kp-cover-content">
-
-                {/* Marka - Logo */}
-                <div className="kp-cov-brand">
-                  <img src={logoImg} className="kp-cov-logo-img" alt="Logo" />
-                </div>
 
               {/* Sol / sağ yazılar */}
                 <div className="kp-cov-side kp-cov-side-left">
