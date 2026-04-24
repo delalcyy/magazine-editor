@@ -421,7 +421,7 @@ export default function KapakPage() {
 
               {/* Sol / sağ yazılar */}
                 <div className="kp-cov-side kp-cov-side-left">
-                  YENİ STİL KODLARI{'\n'}MODA DOSYASI{'\n'}İLHAM VEREN SEÇKİLER
+                  MODANIN KALBİ{'\n'}TÜRKİYE'DE ATACAK
                 </div>
                 <div className="kp-cov-side kp-cov-side-right">
                   ÖZEL RÖPORTAJLAR{'\n'}GÜÇLÜ İSİMLER{'\n'}YENİ SEZON
