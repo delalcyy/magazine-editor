@@ -44,6 +44,8 @@ export default function KapakPage() {
   /* ── Kapak state ── */
   const [photo, setPhoto]             = useState(null)
   const [photoBase64, setPhotoBase64] = useState(null)
+  const [fgPhoto, setFgPhoto]         = useState(null)
+  const fgRef = useRef(null)
   const [head,  setHead]              = useState('')
   const [sub,   setSub]               = useState('')
   const [exporting, setExporting]     = useState(false)
@@ -93,10 +95,19 @@ export default function KapakPage() {
     handleFile(e.dataTransfer.files?.[0])
   }
 
+  /* ── Ön plan fotoğrafı ── */
+  function onFgChange(e) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    if (fgPhoto) URL.revokeObjectURL(fgPhoto)
+    setFgPhoto(URL.createObjectURL(file))
+  }
+
   /* ── Kapak: sıfırla ── */
   function handleReset() {
     if (photo) URL.revokeObjectURL(photo)
-    setPhoto(null); setPhotoBase64(null); setHead(''); setSub(''); setSavedPdf(null)
+    if (fgPhoto) URL.revokeObjectURL(fgPhoto)
+    setPhoto(null); setPhotoBase64(null); setFgPhoto(null); setHead(''); setSub(''); setSavedPdf(null)
     showToast('Editör sıfırlandı')
   }
 
@@ -329,6 +340,24 @@ export default function KapakPage() {
                   <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(photo); setPhoto(null) }}>✕ Kaldır</button>
                 </div>
               )}
+
+              {/* Ön plan kişi fotoğrafı */}
+              <div className="kp-upload kp-upload-fg" onClick={() => fgRef.current?.click()}>
+                <div className="kp-upload-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b8880" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/>
+                  </svg>
+                </div>
+                <span className="kp-upload-title">Kişi / Ön Plan PNG</span>
+                <span className="kp-upload-hint">Arka planı silinmiş PNG · Logo önünde görünür</span>
+                <input ref={fgRef} type="file" accept="image/png" style={{ display:'none' }} onChange={onFgChange} />
+              </div>
+              {fgPhoto && (
+                <div className="kp-thumb">
+                  <img src={fgPhoto} alt="Ön plan" />
+                  <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(fgPhoto); setFgPhoto(null) }}>✕ Kaldır</button>
+                </div>
+              )}
             </div>
 
             {/* 02 Metinler */}
@@ -410,6 +439,9 @@ export default function KapakPage() {
                   <div className="kp-cover-empty-sub">Fotoğraf yükleyin</div>
                 </div>
               )}
+
+              {/* Ön plan kişi katmanı */}
+              {fgPhoto && <img className="kp-cover-fg" src={fgPhoto} alt="" />}
 
               {/* Kapak içeriği */}
               <div className="kp-cover-content">
