@@ -46,7 +46,11 @@ export default function KapakPage() {
   const [photoBase64, setPhotoBase64] = useState(null)
   const [fgPhoto, setFgPhoto]         = useState(null)
   const [bgZoom, setBgZoom]           = useState(1)
+  const [bgRotate, setBgRotate]       = useState(0)
+  const [bgMirror, setBgMirror]       = useState(false)
   const [fgZoom, setFgZoom]           = useState(1)
+  const [fgRotate, setFgRotate]       = useState(0)
+  const [fgMirror, setFgMirror]       = useState(false)
   const fgRef = useRef(null)
   const [head,  setHead]              = useState('')
   const [sub,   setSub]               = useState('')
@@ -85,7 +89,7 @@ export default function KapakPage() {
     if (!file.type.startsWith('image/')) { showToast('Sadece görsel dosyaları'); return }
     if (file.size > 20 * 1024 * 1024)   { showToast("Dosya 20 MB'den büyük");   return }
     if (photo) URL.revokeObjectURL(photo)
-    setBgZoom(1)
+    setBgZoom(1); setBgRotate(0); setBgMirror(false)
     setPhoto(URL.createObjectURL(file))
     const reader = new FileReader()
     reader.onload = () => setPhotoBase64(reader.result)
@@ -103,7 +107,7 @@ export default function KapakPage() {
     const file = e.target.files?.[0]
     if (!file) return
     if (fgPhoto) URL.revokeObjectURL(fgPhoto)
-    setFgZoom(1)
+    setFgZoom(1); setFgRotate(0); setFgMirror(false)
     setFgPhoto(URL.createObjectURL(file))
   }
 
@@ -112,7 +116,8 @@ export default function KapakPage() {
     if (photo) URL.revokeObjectURL(photo)
     if (fgPhoto) URL.revokeObjectURL(fgPhoto)
     setPhoto(null); setPhotoBase64(null); setFgPhoto(null); setHead(''); setSub(''); setSavedPdf(null)
-    setBgZoom(1); setFgZoom(1)
+    setBgZoom(1); setBgRotate(0); setBgMirror(false)
+    setFgZoom(1); setFgRotate(0); setFgMirror(false)
     showToast('Editör sıfırlandı')
   }
 
@@ -342,24 +347,24 @@ export default function KapakPage() {
               {photo && (
                 <div className="kp-thumb">
                   <img src={photo} alt="Yüklenen fotoğraf" />
-                  <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(photo); setPhoto(null); setBgZoom(1) }}>✕ Kaldır</button>
+                  <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(photo); setPhoto(null); setBgZoom(1); setBgRotate(0); setBgMirror(false) }}>✕ Kaldır</button>
                 </div>
               )}
               {photo && (
-                <div className="kp-zoom-bar">
-                  <span className="kp-zoom-bar-label">🔍 Arka Plan Büyüklüğü</span>
-                  <div className="kp-zoom-bar-ctrl">
-                    <button className="kp-zoom-bar-btn" onClick={() => setBgZoom(z => Math.max(1, +(z - 0.1).toFixed(2)))} disabled={bgZoom <= 1}>−</button>
-                    <div className="kp-zoom-bar-track">
-                      <input
-                        type="range" min="100" max="300" step="5"
-                        value={Math.round(bgZoom * 100)}
-                        onChange={e => setBgZoom(+(e.target.value / 100).toFixed(2))}
-                        className="kp-zoom-slider"
-                      />
-                    </div>
-                    <button className="kp-zoom-bar-btn" onClick={() => setBgZoom(z => Math.min(3, +(z + 0.1).toFixed(2)))} disabled={bgZoom >= 3}>+</button>
-                    <span className="kp-zoom-bar-val">%{Math.round(bgZoom * 100)}</span>
+                <div className="kp-img-controls">
+                  <div className="kp-img-ctrl-row">
+                    <span className="kp-img-ctrl-label">Boyut</span>
+                    <button className="kp-ic-btn" onClick={() => setBgZoom(z => Math.max(0.3, +(z - 0.1).toFixed(2)))}>−</button>
+                    <input type="range" min="30" max="300" step="5" value={Math.round(bgZoom * 100)} onChange={e => setBgZoom(+(e.target.value / 100).toFixed(2))} className="kp-zoom-slider" />
+                    <button className="kp-ic-btn" onClick={() => setBgZoom(z => Math.min(3, +(z + 0.1).toFixed(2)))}>+</button>
+                    <span className="kp-img-ctrl-val">%{Math.round(bgZoom * 100)}</span>
+                  </div>
+                  <div className="kp-img-ctrl-row">
+                    <span className="kp-img-ctrl-label">Döndür</span>
+                    <button className="kp-ic-btn" onClick={() => setBgRotate(r => r - 90)}>↺</button>
+                    <span className="kp-img-ctrl-val kp-img-ctrl-val--mid">{((bgRotate % 360) + 360) % 360}°</span>
+                    <button className="kp-ic-btn" onClick={() => setBgRotate(r => r + 90)}>↻</button>
+                    <button className={`kp-ic-btn kp-ic-btn--mirror ${bgMirror ? 'kp-ic-btn--on' : ''}`} onClick={() => setBgMirror(m => !m)}>⟺ Ayna</button>
                   </div>
                 </div>
               )}
@@ -378,24 +383,24 @@ export default function KapakPage() {
               {fgPhoto && (
                 <div className="kp-thumb">
                   <img src={fgPhoto} alt="Ön plan" />
-                  <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(fgPhoto); setFgPhoto(null); setFgZoom(1) }}>✕ Kaldır</button>
+                  <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(fgPhoto); setFgPhoto(null); setFgZoom(1); setFgRotate(0); setFgMirror(false) }}>✕ Kaldır</button>
                 </div>
               )}
               {fgPhoto && (
-                <div className="kp-zoom-bar">
-                  <span className="kp-zoom-bar-label">🔍 Ön Plan Büyüklüğü</span>
-                  <div className="kp-zoom-bar-ctrl">
-                    <button className="kp-zoom-bar-btn" onClick={() => setFgZoom(z => Math.max(1, +(z - 0.1).toFixed(2)))} disabled={fgZoom <= 1}>−</button>
-                    <div className="kp-zoom-bar-track">
-                      <input
-                        type="range" min="100" max="300" step="5"
-                        value={Math.round(fgZoom * 100)}
-                        onChange={e => setFgZoom(+(e.target.value / 100).toFixed(2))}
-                        className="kp-zoom-slider"
-                      />
-                    </div>
-                    <button className="kp-zoom-bar-btn" onClick={() => setFgZoom(z => Math.min(3, +(z + 0.1).toFixed(2)))} disabled={fgZoom >= 3}>+</button>
-                    <span className="kp-zoom-bar-val">%{Math.round(fgZoom * 100)}</span>
+                <div className="kp-img-controls">
+                  <div className="kp-img-ctrl-row">
+                    <span className="kp-img-ctrl-label">Boyut</span>
+                    <button className="kp-ic-btn" onClick={() => setFgZoom(z => Math.max(0.3, +(z - 0.1).toFixed(2)))}>−</button>
+                    <input type="range" min="30" max="300" step="5" value={Math.round(fgZoom * 100)} onChange={e => setFgZoom(+(e.target.value / 100).toFixed(2))} className="kp-zoom-slider" />
+                    <button className="kp-ic-btn" onClick={() => setFgZoom(z => Math.min(3, +(z + 0.1).toFixed(2)))}>+</button>
+                    <span className="kp-img-ctrl-val">%{Math.round(fgZoom * 100)}</span>
+                  </div>
+                  <div className="kp-img-ctrl-row">
+                    <span className="kp-img-ctrl-label">Döndür</span>
+                    <button className="kp-ic-btn" onClick={() => setFgRotate(r => r - 90)}>↺</button>
+                    <span className="kp-img-ctrl-val kp-img-ctrl-val--mid">{((fgRotate % 360) + 360) % 360}°</span>
+                    <button className="kp-ic-btn" onClick={() => setFgRotate(r => r + 90)}>↻</button>
+                    <button className={`kp-ic-btn kp-ic-btn--mirror ${fgMirror ? 'kp-ic-btn--on' : ''}`} onClick={() => setFgMirror(m => !m)}>⟺ Ayna</button>
                   </div>
                 </div>
               )}
@@ -462,7 +467,7 @@ export default function KapakPage() {
 
               {/* Arka plan */}
               <div className="kp-cover-bg">
-                {photo && <img className="kp-cover-img" src={photo} alt="" style={{ transform: `scale(${bgZoom})`, transformOrigin: 'center center' }} />}
+                {photo && <img className="kp-cover-img" src={photo} alt="" style={{ transform: `scale(${bgMirror ? -bgZoom : bgZoom}, ${bgZoom}) rotate(${bgRotate}deg)`, transformOrigin: 'center center' }} />}
                 <div className="kp-cover-overlay" />
               </div>
 
@@ -487,7 +492,7 @@ export default function KapakPage() {
               </div>
 
               {/* Ön plan kişi katmanı */}
-              {fgPhoto && <img className="kp-cover-fg" src={fgPhoto} alt="" style={{ transform: `scale(${fgZoom})`, transformOrigin: 'center top' }} />}
+              {fgPhoto && <img className="kp-cover-fg" src={fgPhoto} alt="" style={{ transform: `scale(${fgMirror ? -fgZoom : fgZoom}, ${fgZoom}) rotate(${fgRotate}deg)`, transformOrigin: 'center top' }} />}
 
               {/* Kapak içeriği */}
               <div className="kp-cover-content">
