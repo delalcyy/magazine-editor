@@ -51,6 +51,15 @@ export default function KapakPage() {
   const [fgZoom, setFgZoom]           = useState(1)
   const [fgRotate, setFgRotate]       = useState(0)
   const [fgMirror, setFgMirror]       = useState(false)
+
+  /* ── Yan yazı state ── */
+  const [leftText,  setLeftText]  = useState("MODANIN KALBİ\nTÜRKİYE'DE ATACAK")
+  const [rightText, setRightText] = useState("ÖZEL RÖPORTAJLAR\nGÜÇLÜ İSİMLER\nYENİ SEZON")
+  const [leftColor,  setLeftColor]  = useState('#ffffff')
+  const [rightColor, setRightColor] = useState('#ffffff')
+  const [leftPos,  setLeftPos]  = useState({ x: 2,  y: 60 })
+  const [rightPos, setRightPos] = useState({ x: 58, y: 32 })
+
   const fgRef = useRef(null)
   const [head,  setHead]              = useState('')
   const [sub,   setSub]               = useState('')
@@ -118,7 +127,42 @@ export default function KapakPage() {
     setPhoto(null); setPhotoBase64(null); setFgPhoto(null); setHead(''); setSub(''); setSavedPdf(null)
     setBgZoom(1); setBgRotate(0); setBgMirror(false)
     setFgZoom(1); setFgRotate(0); setFgMirror(false)
+    setLeftPos({ x: 2, y: 60 }); setRightPos({ x: 58, y: 32 })
+    setLeftColor('#ffffff'); setRightColor('#ffffff')
+    setLeftText("MODANIN KALBİ\nTÜRKİYE'DE ATACAK")
+    setRightText("ÖZEL RÖPORTAJLAR\nGÜÇLÜ İSİMLER\nYENİ SEZON")
     showToast('Editör sıfırlandı')
+  }
+
+  /* ── Yazı sürükleme ── */
+  function startTextDrag(e, side) {
+    e.preventDefault(); e.stopPropagation()
+    const pos = side === 'left' ? leftPos : rightPos
+    const startX = e.touches ? e.touches[0].clientX : e.clientX
+    const startY = e.touches ? e.touches[0].clientY : e.clientY
+    const startPosX = pos.x; const startPosY = pos.y
+
+    function move(ev) {
+      if (ev.cancelable) ev.preventDefault()
+      const cx = ev.touches ? ev.touches[0].clientX : ev.clientX
+      const cy = ev.touches ? ev.touches[0].clientY : ev.clientY
+      if (!coverRef.current) return
+      const rect = coverRef.current.getBoundingClientRect()
+      const nx = Math.max(0, Math.min(80, startPosX + ((cx - startX) / rect.width) * 100))
+      const ny = Math.max(22, Math.min(70, startPosY + ((cy - startY) / rect.height) * 100))
+      if (side === 'left') setLeftPos({ x: nx, y: ny })
+      else setRightPos({ x: nx, y: ny })
+    }
+    function up() {
+      document.removeEventListener('mousemove', move)
+      document.removeEventListener('mouseup', up)
+      document.removeEventListener('touchmove', move)
+      document.removeEventListener('touchend', up)
+    }
+    document.addEventListener('mousemove', move)
+    document.addEventListener('mouseup', up)
+    document.addEventListener('touchmove', move, { passive: false })
+    document.addEventListener('touchend', up)
   }
 
   /* ── Kapak: PNG indir ── */
@@ -439,6 +483,51 @@ export default function KapakPage() {
               </div>
             </div>
 
+            {/* 03 Yan Yazılar */}
+            <div className="kp-section">
+              <div className="kp-section-head">
+                <span className="kp-section-num">03</span>
+                <span className="kp-section-title">Yan Yazılar</span>
+              </div>
+              <p className="kp-drag-hint">Önizlemede yazıların üzerine basılı tutarak sürükleyebilirsiniz.</p>
+
+              <div className="kp-side-group">
+                <div className="kp-side-group-head">
+                  <span className="kp-side-group-label">Sol Yazı</span>
+                  <label className="kp-color-wrap">
+                    <span>Renk</span>
+                    <input type="color" value={leftColor} onChange={e => setLeftColor(e.target.value)} className="kp-color-input" />
+                  </label>
+                </div>
+                <textarea
+                  className="kp-input"
+                  value={leftText}
+                  onChange={e => setLeftText(e.target.value)}
+                  rows={2}
+                  maxLength={80}
+                  placeholder="Sol yazı..."
+                />
+              </div>
+
+              <div className="kp-side-group">
+                <div className="kp-side-group-head">
+                  <span className="kp-side-group-label">Sağ Yazı</span>
+                  <label className="kp-color-wrap">
+                    <span>Renk</span>
+                    <input type="color" value={rightColor} onChange={e => setRightColor(e.target.value)} className="kp-color-input" />
+                  </label>
+                </div>
+                <textarea
+                  className="kp-input"
+                  value={rightText}
+                  onChange={e => setRightText(e.target.value)}
+                  rows={2}
+                  maxLength={80}
+                  placeholder="Sağ yazı..."
+                />
+              </div>
+            </div>
+
             {/* Mobil aksiyonlar */}
             <div className="kp-editor-actions">
               <button className="kp-btn kp-btn-ghost" onClick={handleReset}>Sıfırla</button>
@@ -494,16 +583,22 @@ export default function KapakPage() {
               {/* Ön plan kişi katmanı */}
               {fgPhoto && <img className="kp-cover-fg" src={fgPhoto} alt="" style={{ transform: `scale(${fgMirror ? -fgZoom : fgZoom}, ${fgZoom}) rotate(${fgRotate}deg)`, transformOrigin: 'center top' }} />}
 
+              {/* Sürüklenebilir yazılar */}
+              <div
+                className="kp-cov-side-drag"
+                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left' }}
+                onMouseDown={e => startTextDrag(e, 'left')}
+                onTouchStart={e => startTextDrag(e, 'left')}
+              >{leftText}</div>
+              <div
+                className="kp-cov-side-drag"
+                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right' }}
+                onMouseDown={e => startTextDrag(e, 'right')}
+                onTouchStart={e => startTextDrag(e, 'right')}
+              >{rightText}</div>
+
               {/* Kapak içeriği */}
               <div className="kp-cover-content">
-
-              {/* Sol / sağ yazılar */}
-                <div className="kp-cov-side kp-cov-side-left">
-                  MODANIN KALBİ{'\n'}TÜRKİYE'DE ATACAK
-                </div>
-                <div className="kp-cov-side kp-cov-side-right">
-                  ÖZEL RÖPORTAJLAR{'\n'}GÜÇLÜ İSİMLER{'\n'}YENİ SEZON
-                </div>
 
                 {/* Alt bilgi */}
                 <div className="kp-cov-bottom">
