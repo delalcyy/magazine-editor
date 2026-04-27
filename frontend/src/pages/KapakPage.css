@@ -92,32 +92,38 @@
   font-family: var(--kp-sans);
 }
 
-/* Zoom kontrolleri */
-.kp-zoom-row {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 12px; background: var(--kp-paper-alt);
-  border: 1px solid var(--kp-line); border-radius: var(--kp-radius);
+/* Zoom bar */
+.kp-zoom-bar {
+  background: var(--kp-gold-soft);
+  border: 1.5px solid var(--kp-gold);
+  border-radius: 8px; padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 10px;
 }
-.kp-zoom-label {
-  font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--kp-muted);
+.kp-zoom-bar-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+  color: var(--kp-gold); text-transform: uppercase;
 }
-.kp-zoom-ctrl {
+.kp-zoom-bar-ctrl {
   display: flex; align-items: center; gap: 10px;
 }
-.kp-zoom-btn {
-  width: 28px; height: 28px; border-radius: 50%;
-  border: 1px solid var(--kp-line-str); background: #fff;
-  color: var(--kp-ink); font-size: 16px; line-height: 1;
+.kp-zoom-bar-btn {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+  border: 2px solid var(--kp-gold); background: #fff;
+  color: var(--kp-gold); font-size: 22px; line-height: 1;
   cursor: pointer; display: flex; align-items: center; justify-content: center;
-  transition: border-color .15s, background .15s;
-  font-family: var(--kp-sans); padding: 0;
+  font-family: var(--kp-sans); padding: 0; font-weight: 700;
+  transition: background .15s, color .15s;
 }
-.kp-zoom-btn:hover:not(:disabled) { border-color: var(--kp-gold); color: var(--kp-gold); background: var(--kp-gold-soft); }
-.kp-zoom-btn:disabled { opacity: .35; cursor: not-allowed; }
-.kp-zoom-val {
-  font-size: 12px; font-weight: 600; color: var(--kp-ink);
-  min-width: 38px; text-align: center; font-family: var(--kp-sans);
+.kp-zoom-bar-btn:hover:not(:disabled) { background: var(--kp-gold); color: #fff; }
+.kp-zoom-bar-btn:disabled { opacity: .3; cursor: not-allowed; }
+.kp-zoom-bar-track { flex: 1; }
+.kp-zoom-slider {
+  width: 100%; height: 4px; cursor: pointer;
+  accent-color: var(--kp-gold);
+}
+.kp-zoom-bar-val {
+  font-size: 13px; font-weight: 700; color: var(--kp-gold);
+  min-width: 40px; text-align: right; font-family: var(--kp-sans);
 }
 
 /* Fields */

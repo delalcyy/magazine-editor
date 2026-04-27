@@ -346,12 +346,20 @@ export default function KapakPage() {
                 </div>
               )}
               {photo && (
-                <div className="kp-zoom-row">
-                  <span className="kp-zoom-label">Arka Plan Zoom</span>
-                  <div className="kp-zoom-ctrl">
-                    <button className="kp-zoom-btn" onClick={() => setBgZoom(z => Math.max(1, +(z - 0.1).toFixed(2)))} disabled={bgZoom <= 1}>−</button>
-                    <span className="kp-zoom-val">{Math.round(bgZoom * 100)}%</span>
-                    <button className="kp-zoom-btn" onClick={() => setBgZoom(z => Math.min(3, +(z + 0.1).toFixed(2)))} disabled={bgZoom >= 3}>+</button>
+                <div className="kp-zoom-bar">
+                  <span className="kp-zoom-bar-label">🔍 Arka Plan Büyüklüğü</span>
+                  <div className="kp-zoom-bar-ctrl">
+                    <button className="kp-zoom-bar-btn" onClick={() => setBgZoom(z => Math.max(1, +(z - 0.1).toFixed(2)))} disabled={bgZoom <= 1}>−</button>
+                    <div className="kp-zoom-bar-track">
+                      <input
+                        type="range" min="100" max="300" step="5"
+                        value={Math.round(bgZoom * 100)}
+                        onChange={e => setBgZoom(+(e.target.value / 100).toFixed(2))}
+                        className="kp-zoom-slider"
+                      />
+                    </div>
+                    <button className="kp-zoom-bar-btn" onClick={() => setBgZoom(z => Math.min(3, +(z + 0.1).toFixed(2)))} disabled={bgZoom >= 3}>+</button>
+                    <span className="kp-zoom-bar-val">%{Math.round(bgZoom * 100)}</span>
                   </div>
                 </div>
               )}
@@ -374,12 +382,20 @@ export default function KapakPage() {
                 </div>
               )}
               {fgPhoto && (
-                <div className="kp-zoom-row">
-                  <span className="kp-zoom-label">Ön Plan Zoom</span>
-                  <div className="kp-zoom-ctrl">
-                    <button className="kp-zoom-btn" onClick={() => setFgZoom(z => Math.max(1, +(z - 0.1).toFixed(2)))} disabled={fgZoom <= 1}>−</button>
-                    <span className="kp-zoom-val">{Math.round(fgZoom * 100)}%</span>
-                    <button className="kp-zoom-btn" onClick={() => setFgZoom(z => Math.min(3, +(z + 0.1).toFixed(2)))} disabled={fgZoom >= 3}>+</button>
+                <div className="kp-zoom-bar">
+                  <span className="kp-zoom-bar-label">🔍 Ön Plan Büyüklüğü</span>
+                  <div className="kp-zoom-bar-ctrl">
+                    <button className="kp-zoom-bar-btn" onClick={() => setFgZoom(z => Math.max(1, +(z - 0.1).toFixed(2)))} disabled={fgZoom <= 1}>−</button>
+                    <div className="kp-zoom-bar-track">
+                      <input
+                        type="range" min="100" max="300" step="5"
+                        value={Math.round(fgZoom * 100)}
+                        onChange={e => setFgZoom(+(e.target.value / 100).toFixed(2))}
+                        className="kp-zoom-slider"
+                      />
+                    </div>
+                    <button className="kp-zoom-bar-btn" onClick={() => setFgZoom(z => Math.min(3, +(z + 0.1).toFixed(2)))} disabled={fgZoom >= 3}>+</button>
+                    <span className="kp-zoom-bar-val">%{Math.round(fgZoom * 100)}</span>
                   </div>
                 </div>
               )}
