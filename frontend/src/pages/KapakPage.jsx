@@ -53,6 +53,7 @@ export default function KapakPage() {
   const [fgMirror, setFgMirror]       = useState(false)
 
   /* ── Yan yazı state ── */
+  const [headColor, setHeadColor] = useState('#ffffff')
   const [leftText,  setLeftText]  = useState("MODANIN KALBİ\nTÜRKİYE'DE ATACAK")
   const [rightText, setRightText] = useState("ÖZEL RÖPORTAJLAR\nGÜÇLÜ İSİMLER\nYENİ SEZON")
   const [leftColor,  setLeftColor]  = useState('#ffffff')
@@ -128,7 +129,7 @@ export default function KapakPage() {
     setBgZoom(1); setBgRotate(0); setBgMirror(false)
     setFgZoom(1); setFgRotate(0); setFgMirror(false)
     setLeftPos({ x: 2, y: 60 }); setRightPos({ x: 58, y: 32 })
-    setLeftColor('#ffffff'); setRightColor('#ffffff')
+    setHeadColor('#ffffff'); setLeftColor('#ffffff'); setRightColor('#ffffff')
     setLeftText("MODANIN KALBİ\nTÜRKİYE'DE ATACAK")
     setRightText("ÖZEL RÖPORTAJLAR\nGÜÇLÜ İSİMLER\nYENİ SEZON")
     showToast('Editör sıfırlandı')
@@ -459,7 +460,13 @@ export default function KapakPage() {
 
               <div className="kp-fields">
                 <div className="kp-field kp-field-full">
-                  <label className="kp-label">Ad Soyad</label>
+                  <div className="kp-label-row">
+                    <label className="kp-label">Ad Soyad</label>
+                    <label className="kp-color-wrap">
+                      <span>Renk</span>
+                      <input type="color" value={headColor} onChange={e => setHeadColor(e.target.value)} className="kp-color-input" />
+                    </label>
+                  </div>
                   <input
                     className="kp-input"
                     type="text"
@@ -588,7 +595,7 @@ export default function KapakPage() {
 
                 {/* Alt bilgi */}
                 <div className="kp-cov-bottom">
-                  <div className="kp-cov-headline">{displayHead.toUpperCase()}</div>
+                  <div className="kp-cov-headline" style={{ color: headColor }}>{displayHead.toUpperCase()}</div>
                   {sub.trim() && <div className="kp-cov-sub">{sub.trim()}</div>}
                   <div className="kp-cov-edition">İLKBAHAR 2026</div>
                 </div>

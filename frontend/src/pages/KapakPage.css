@@ -141,6 +141,9 @@
   font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--kp-muted);
 }
+.kp-label-row {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px;
+}
 .kp-color-wrap {
   display: flex; align-items: center; gap: 6px; cursor: pointer;
   font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
