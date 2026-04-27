@@ -583,20 +583,6 @@ export default function KapakPage() {
               {/* Ön plan kişi katmanı */}
               {fgPhoto && <img className="kp-cover-fg" src={fgPhoto} alt="" style={{ transform: `scale(${fgMirror ? -fgZoom : fgZoom}, ${fgZoom}) rotate(${fgRotate}deg)`, transformOrigin: 'center top' }} />}
 
-              {/* Sürüklenebilir yazılar */}
-              <div
-                className="kp-cov-side-drag"
-                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left' }}
-                onMouseDown={e => startTextDrag(e, 'left')}
-                onTouchStart={e => startTextDrag(e, 'left')}
-              >{leftText}</div>
-              <div
-                className="kp-cov-side-drag"
-                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right' }}
-                onMouseDown={e => startTextDrag(e, 'right')}
-                onTouchStart={e => startTextDrag(e, 'right')}
-              >{rightText}</div>
-
               {/* Kapak içeriği */}
               <div className="kp-cover-content">
 
@@ -611,6 +597,20 @@ export default function KapakPage() {
                 <div className="kp-cov-barcode">{BARCODE}</div>
 
               </div>
+
+              {/* Sürüklenebilir yazılar — kp-cover-content üstünde, z-index:11 */}
+              <div
+                className="kp-cov-side-drag"
+                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left' }}
+                onMouseDown={e => startTextDrag(e, 'left')}
+                onTouchStart={e => startTextDrag(e, 'left')}
+              >{leftText}</div>
+              <div
+                className="kp-cov-side-drag"
+                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right' }}
+                onMouseDown={e => startTextDrag(e, 'right')}
+                onTouchStart={e => startTextDrag(e, 'right')}
+              >{rightText}</div>
             </div>
           </div>
 

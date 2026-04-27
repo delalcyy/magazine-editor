@@ -310,7 +310,7 @@
   position: absolute; font-size: 1.9cqh; line-height: 1.5; font-weight: 500;
   letter-spacing: 0.1em; text-transform: uppercase;
   max-width: 38cqw; white-space: pre-line;
-  cursor: grab; z-index: 9; user-select: none;
+  cursor: grab; z-index: 11; user-select: none;
   text-shadow: 0 1px 4px rgba(0,0,0,.6);
   transition: outline .15s;
 }
