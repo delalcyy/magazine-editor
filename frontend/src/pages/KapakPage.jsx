@@ -45,6 +45,8 @@ export default function KapakPage() {
   const [photo, setPhoto]             = useState(null)
   const [photoBase64, setPhotoBase64] = useState(null)
   const [fgPhoto, setFgPhoto]         = useState(null)
+  const [bgZoom, setBgZoom]           = useState(1)
+  const [fgZoom, setFgZoom]           = useState(1)
   const fgRef = useRef(null)
   const [head,  setHead]              = useState('')
   const [sub,   setSub]               = useState('')
@@ -83,6 +85,7 @@ export default function KapakPage() {
     if (!file.type.startsWith('image/')) { showToast('Sadece görsel dosyaları'); return }
     if (file.size > 20 * 1024 * 1024)   { showToast("Dosya 20 MB'den büyük");   return }
     if (photo) URL.revokeObjectURL(photo)
+    setBgZoom(1)
     setPhoto(URL.createObjectURL(file))
     const reader = new FileReader()
     reader.onload = () => setPhotoBase64(reader.result)
@@ -100,6 +103,7 @@ export default function KapakPage() {
     const file = e.target.files?.[0]
     if (!file) return
     if (fgPhoto) URL.revokeObjectURL(fgPhoto)
+    setFgZoom(1)
     setFgPhoto(URL.createObjectURL(file))
   }
 
@@ -108,6 +112,7 @@ export default function KapakPage() {
     if (photo) URL.revokeObjectURL(photo)
     if (fgPhoto) URL.revokeObjectURL(fgPhoto)
     setPhoto(null); setPhotoBase64(null); setFgPhoto(null); setHead(''); setSub(''); setSavedPdf(null)
+    setBgZoom(1); setFgZoom(1)
     showToast('Editör sıfırlandı')
   }
 
@@ -337,7 +342,17 @@ export default function KapakPage() {
               {photo && (
                 <div className="kp-thumb">
                   <img src={photo} alt="Yüklenen fotoğraf" />
-                  <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(photo); setPhoto(null) }}>✕ Kaldır</button>
+                  <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(photo); setPhoto(null); setBgZoom(1) }}>✕ Kaldır</button>
+                </div>
+              )}
+              {photo && (
+                <div className="kp-zoom-row">
+                  <span className="kp-zoom-label">Arka Plan Zoom</span>
+                  <div className="kp-zoom-ctrl">
+                    <button className="kp-zoom-btn" onClick={() => setBgZoom(z => Math.max(1, +(z - 0.1).toFixed(2)))} disabled={bgZoom <= 1}>−</button>
+                    <span className="kp-zoom-val">{Math.round(bgZoom * 100)}%</span>
+                    <button className="kp-zoom-btn" onClick={() => setBgZoom(z => Math.min(3, +(z + 0.1).toFixed(2)))} disabled={bgZoom >= 3}>+</button>
+                  </div>
                 </div>
               )}
 
@@ -355,7 +370,17 @@ export default function KapakPage() {
               {fgPhoto && (
                 <div className="kp-thumb">
                   <img src={fgPhoto} alt="Ön plan" />
-                  <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(fgPhoto); setFgPhoto(null) }}>✕ Kaldır</button>
+                  <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(fgPhoto); setFgPhoto(null); setFgZoom(1) }}>✕ Kaldır</button>
+                </div>
+              )}
+              {fgPhoto && (
+                <div className="kp-zoom-row">
+                  <span className="kp-zoom-label">Ön Plan Zoom</span>
+                  <div className="kp-zoom-ctrl">
+                    <button className="kp-zoom-btn" onClick={() => setFgZoom(z => Math.max(1, +(z - 0.1).toFixed(2)))} disabled={fgZoom <= 1}>−</button>
+                    <span className="kp-zoom-val">{Math.round(fgZoom * 100)}%</span>
+                    <button className="kp-zoom-btn" onClick={() => setFgZoom(z => Math.min(3, +(z + 0.1).toFixed(2)))} disabled={fgZoom >= 3}>+</button>
+                  </div>
                 </div>
               )}
             </div>
@@ -421,7 +446,7 @@ export default function KapakPage() {
 
               {/* Arka plan */}
               <div className="kp-cover-bg">
-                {photo && <img className="kp-cover-img" src={photo} alt="" />}
+                {photo && <img className="kp-cover-img" src={photo} alt="" style={{ transform: `scale(${bgZoom})`, transformOrigin: 'center center' }} />}
                 <div className="kp-cover-overlay" />
               </div>
 
@@ -446,7 +471,7 @@ export default function KapakPage() {
               </div>
 
               {/* Ön plan kişi katmanı */}
-              {fgPhoto && <img className="kp-cover-fg" src={fgPhoto} alt="" />}
+              {fgPhoto && <img className="kp-cover-fg" src={fgPhoto} alt="" style={{ transform: `scale(${fgZoom})`, transformOrigin: 'center top' }} />}
 
               {/* Kapak içeriği */}
               <div className="kp-cover-content">
