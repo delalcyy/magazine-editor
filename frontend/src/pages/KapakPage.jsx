@@ -74,7 +74,7 @@ export default function KapakPage() {
   const [rightSize, setRightSize] = useState(1.9)
   const [leftFont,  setLeftFont]  = useState('Inter')
   const [rightFont, setRightFont] = useState('Inter')
-  const [leftPos,  setLeftPos]  = useState({ x: 10, y: 55 })
+  const [leftPos,  setLeftPos]  = useState({ x: 5,  y: 55 })
   const [rightPos, setRightPos] = useState({ x: 58, y: 32 })
 
   const fgRef = useRef(null)
@@ -144,7 +144,7 @@ export default function KapakPage() {
     setPhoto(null); setPhotoBase64(null); setFgPhoto(null); setHead(''); setSub(''); setSavedPdf(null)
     setBgZoom(1); setBgRotate(0); setBgMirror(false); setBgOffsetX(0); setBgOffsetY(0)
     setFgZoom(1); setFgRotate(0); setFgMirror(false)
-    setLeftPos({ x: 10, y: 55 }); setRightPos({ x: 58, y: 32 })
+    setLeftPos({ x: 5,  y: 55 }); setRightPos({ x: 58, y: 32 })
     setLeftSize(1.9); setRightSize(1.9)
     setLeftFont('Inter'); setRightFont('Inter')
     setHeadColor('#ffffff'); setLeftColor('#ffffff'); setRightColor('#ffffff')
@@ -167,10 +167,10 @@ export default function KapakPage() {
       const cy = ev.touches ? ev.touches[0].clientY : ev.clientY
       if (!coverRef.current) return
       const rect = coverRef.current.getBoundingClientRect()
-      const xMin = side === 'left' ? 10 : 3
+      const xMin = side === 'left' ? 5 : 3
       const nx = Math.max(xMin, Math.min(68, startPosX + ((cx - startX) / rect.width) * 100))
-      // Sol: ad soyad üstü ≈ %68 | Sağ: barkod üst kenarı öncesi ≈ %80
-      const yMax = side === 'left' ? 68 : 80
+      // Sol: ad soyad üstü ≈ %68 | Sağ: barkod bitişi ≈ %87
+      const yMax = side === 'left' ? 68 : 87
       const ny = Math.max(22, Math.min(yMax, startPosY + ((cy - startY) / rect.height) * 100))
       if (side === 'left') setLeftPos({ x: nx, y: ny })
       else setRightPos({ x: nx, y: ny })
