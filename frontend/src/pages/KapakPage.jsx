@@ -74,8 +74,8 @@ export default function KapakPage() {
   const [rightSize, setRightSize] = useState(1.9)
   const [leftFont,  setLeftFont]  = useState('Inter')
   const [rightFont, setRightFont] = useState('Inter')
-  const [leftPos,  setLeftPos]  = useState({ x: 8,  y: 55 })
-  const [rightPos, setRightPos] = useState({ x: 55, y: 32 })
+  const [leftPos,  setLeftPos]  = useState({ x: 3,  y: 58 })
+  const [rightPos, setRightPos] = useState({ x: 58, y: 32 })
 
   const fgRef = useRef(null)
   const [head,  setHead]              = useState('')
@@ -144,7 +144,7 @@ export default function KapakPage() {
     setPhoto(null); setPhotoBase64(null); setFgPhoto(null); setHead(''); setSub(''); setSavedPdf(null)
     setBgZoom(1); setBgRotate(0); setBgMirror(false); setBgOffsetX(0); setBgOffsetY(0)
     setFgZoom(1); setFgRotate(0); setFgMirror(false)
-    setLeftPos({ x: 8, y: 55 }); setRightPos({ x: 55, y: 32 })
+    setLeftPos({ x: 3, y: 58 }); setRightPos({ x: 58, y: 32 })
     setLeftSize(1.9); setRightSize(1.9)
     setLeftFont('Inter'); setRightFont('Inter')
     setHeadColor('#ffffff'); setLeftColor('#ffffff'); setRightColor('#ffffff')
@@ -167,12 +167,9 @@ export default function KapakPage() {
       const cy = ev.touches ? ev.touches[0].clientY : ev.clientY
       if (!coverRef.current) return
       const rect = coverRef.current.getBoundingClientRect()
-      // Sol yazı: soldan min %8, sağdan max %55 | Sağ yazı: soldan min %3, sağdan max %62
-      const xMin = side === 'left' ? 8 : 3
-      const xMax = side === 'left' ? 55 : 62
-      const nx = Math.max(xMin, Math.min(xMax, startPosX + ((cx - startX) / rect.width) * 100))
-      // Her iki yazı da barkod üst sınırını (yaklaşık %68) geçemesin
-      const ny = Math.max(22, Math.min(68, startPosY + ((cy - startY) / rect.height) * 100))
+      const nx = Math.max(3, Math.min(68, startPosX + ((cx - startX) / rect.width) * 100))
+      // Ad soyad başlangıcı / barkod üst sınırı ≈ %75
+      const ny = Math.max(22, Math.min(75, startPosY + ((cy - startY) / rect.height) * 100))
       if (side === 'left') setLeftPos({ x: nx, y: ny })
       else setRightPos({ x: nx, y: ny })
     }
