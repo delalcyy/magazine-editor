@@ -8,11 +8,30 @@ import { buildEmptyAnswers } from '../data/questions'
 import './KapakPage.css'
 import './EditorPage.css'
 
+const BG_FILTERS = [
+  { label: 'Normal', value: 'none',                                      preview: 'linear-gradient(135deg,#888,#444)' },
+  { label: 'Siyah',  value: 'grayscale(100%) brightness(30%)',            preview: '#111' },
+  { label: 'Beyaz',  value: 'grayscale(100%) brightness(190%)',           preview: '#eee' },
+  { label: 'Gri',    value: 'grayscale(100%)',                            preview: '#888' },
+  { label: 'Altın',  value: 'sepia(90%) saturate(130%) brightness(95%)', preview: '#a98947' },
+]
+
 const BG_COLORS = [
-  { label: 'Siyah',  value: '#111111' },
-  { label: 'Beyaz',  value: '#f5f5f0' },
-  { label: 'Gri',    value: '#6b6b6b' },
-  { label: 'Altın',  value: '#a98947' },
+  { label: 'Siyah',    value: '#111111', dark: false },
+  { label: 'Antrasit', value: '#2c2c2c', dark: false },
+  { label: 'Gri',      value: '#6b6b6b', dark: false },
+  { label: 'Krem',     value: '#e8e0d0', dark: true  },
+  { label: 'Beyaz',    value: '#f5f5f0', dark: true  },
+  { label: 'Altın',    value: '#a98947', dark: false },
+]
+
+const FRAME_COLORS = [
+  { label: 'Siyah',     value: '#0a0a0a', dark: false },
+  { label: 'Koyu Gri',  value: '#2a2a2a', dark: false },
+  { label: 'Gri',       value: '#888888', dark: false },
+  { label: 'Açık Gri',  value: '#cccccc', dark: true  },
+  { label: 'Beyaz',     value: '#f5f5f5', dark: true  },
+  { label: 'Altın',     value: '#a98947', dark: false },
 ]
 
 const FONTS = [
@@ -60,6 +79,7 @@ export default function KapakPage() {
 
   /* ── Kapak state ── */
   const [bgColor, setBgColor]         = useState('#111111')
+  const [frameColor, setFrameColor]   = useState('#a98947')
   const [photo, setPhoto]             = useState(null)
   const [photoBase64, setPhotoBase64] = useState(null)
   const [fgPhoto, setFgPhoto]         = useState(null)
@@ -152,6 +172,7 @@ export default function KapakPage() {
     if (photo) URL.revokeObjectURL(photo)
     if (fgPhoto) URL.revokeObjectURL(fgPhoto)
     setBgColor('#111111')
+    setFrameColor('#a98947')
     setPhoto(null); setPhotoBase64(null); setFgPhoto(null); setHead(''); setSub(''); setSavedPdf(null)
     setBgZoom(1); setBgRotate(0); setBgMirror(false); setBgOffsetX(0); setBgOffsetY(0)
     setFgZoom(1); setFgRotate(0); setFgMirror(false)
@@ -629,7 +650,33 @@ export default function KapakPage() {
                     onClick={() => setBgColor(c.value)}
                     title={c.label}
                   >
-                    {bgColor === c.value && <span className="kp-bg-swatch-check">✓</span>}
+                    {bgColor === c.value && (
+                      <span className="kp-bg-swatch-check" style={{ color: c.dark ? '#111' : '#fff' }}>✓</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 05 Çerçeve Rengi */}
+            <div className="kp-section">
+              <div className="kp-section-head">
+                <span className="kp-section-num">05</span>
+                <span className="kp-section-title">Çerçeve Rengi</span>
+              </div>
+              <p className="kp-drag-hint">Dergiye basıldığında kapak etrafındaki 2 cm boşluk bu renkle doldurulur.</p>
+              <div className="kp-bg-swatches">
+                {FRAME_COLORS.map(c => (
+                  <button
+                    key={c.value}
+                    className={`kp-bg-swatch ${frameColor === c.value ? 'kp-bg-swatch--active' : ''}`}
+                    style={{ background: c.value }}
+                    onClick={() => setFrameColor(c.value)}
+                    title={c.label}
+                  >
+                    {frameColor === c.value && (
+                      <span className="kp-bg-swatch-check" style={{ color: c.dark ? '#111' : '#fff' }}>✓</span>
+                    )}
                   </button>
                 ))}
               </div>
@@ -726,7 +773,14 @@ export default function KapakPage() {
                 onMouseDown={e => startTextDrag(e, 'right')}
                 onTouchStart={e => startTextDrag(e, 'right')}
               >{rightText}</div>
+
+              {/* ── Çerçeve barları (kp-cover içinde, her şeyin üstünde) ── */}
+              <div style={{ position:'absolute', top:0,    left:0, right:0,           height:33, background:frameColor, zIndex:9999, pointerEvents:'none' }} />
+              <div style={{ position:'absolute', bottom:0, left:0, right:0,           height:33, background:frameColor, zIndex:9999, pointerEvents:'none' }} />
+              <div style={{ position:'absolute', top:0,    left:0, bottom:0, width:33,           background:frameColor, zIndex:9999, pointerEvents:'none' }} />
+              <div style={{ position:'absolute', top:0,    right:0,bottom:0, width:33,           background:frameColor, zIndex:9999, pointerEvents:'none' }} />
             </div>
+
           </div>
 
           <span className="kp-preview-size">21,6 × 27,9 cm · 300 dpi</span>
