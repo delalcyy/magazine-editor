@@ -168,8 +168,9 @@ export default function KapakPage() {
       if (!coverRef.current) return
       const rect = coverRef.current.getBoundingClientRect()
       const nx = Math.max(3, Math.min(68, startPosX + ((cx - startX) / rect.width) * 100))
-      // Ad soyad başlangıcı / barkod üst sınırı ≈ %75
-      const ny = Math.max(22, Math.min(75, startPosY + ((cy - startY) / rect.height) * 100))
+      // Sol yazı: ad soyad başlangıcı ≈ %75 | Sağ yazı: barkod üst kenarı ≈ %87
+      const yMax = side === 'left' ? 75 : 87
+      const ny = Math.max(22, Math.min(yMax, startPosY + ((cy - startY) / rect.height) * 100))
       if (side === 'left') setLeftPos({ x: nx, y: ny })
       else setRightPos({ x: nx, y: ny })
     }
