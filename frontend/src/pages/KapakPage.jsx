@@ -86,6 +86,8 @@ export default function KapakPage() {
   const [rightPos, setRightPos] = useState({ x: 58, y: 32 })
 
   const fgRef = useRef(null)
+  const leftDragRef  = useRef(null)
+  const rightDragRef = useRef(null)
   const [head,  setHead]              = useState('')
   const [sub,   setSub]               = useState('')
   const [exporting, setExporting]     = useState(false)
@@ -176,9 +178,13 @@ export default function KapakPage() {
       const cy = ev.touches ? ev.touches[0].clientY : ev.clientY
       if (!coverRef.current) return
       const rect = coverRef.current.getBoundingClientRect()
-      const nx = Math.max(3, Math.min(68, startPosX + ((cx - startX) / rect.width) * 100))
-      const yMax = 78
-      const ny = Math.max(22, Math.min(yMax, startPosY + ((cy - startY) / rect.height) * 100))
+      const textEl = side === 'left' ? leftDragRef.current : rightDragRef.current
+      const textH = textEl ? (textEl.getBoundingClientRect().height / rect.height) * 100 : 0
+      const textW = textEl ? (textEl.getBoundingClientRect().width  / rect.width)  * 100 : 0
+      // Yazının sağ kenarı kapaktan taşmasın
+      const nx = Math.max(3, Math.min(98 - textW, startPosX + ((cx - startX) / rect.width) * 100))
+      // Yazının alt kenarı ad soyad/barkod alanına girmesin (sınır %78)
+      const ny = Math.max(22, Math.min(78 - textH, startPosY + ((cy - startY) / rect.height) * 100))
       if (side === 'left') setLeftPos({ x: nx, y: ny })
       else setRightPos({ x: nx, y: ny })
     }
@@ -707,14 +713,16 @@ export default function KapakPage() {
 
               {/* Sürüklenebilir yazılar — kp-cover-content üstünde, z-index:11 */}
               <div
+                ref={leftDragRef}
                 className="kp-cov-side-drag"
-                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left', fontSize: `${leftSize}cqh`, fontFamily: leftFont, maxWidth: `${98 - leftPos.x}cqw` }}
+                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left', fontSize: `${leftSize}cqh`, fontFamily: leftFont }}
                 onMouseDown={e => startTextDrag(e, 'left')}
                 onTouchStart={e => startTextDrag(e, 'left')}
               >{leftText}</div>
               <div
+                ref={rightDragRef}
                 className="kp-cov-side-drag"
-                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh`, fontFamily: rightFont, maxWidth: `${98 - rightPos.x}cqw` }}
+                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh`, fontFamily: rightFont }}
                 onMouseDown={e => startTextDrag(e, 'right')}
                 onTouchStart={e => startTextDrag(e, 'right')}
               >{rightText}</div>
