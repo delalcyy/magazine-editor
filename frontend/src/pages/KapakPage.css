@@ -279,13 +279,14 @@
 .kp-cover-content {
   position: absolute; inset: 0; z-index: 10;
   padding: 6cqh 5cqw; color: #fff;
+  pointer-events: none;
 }
 
 /* Marka */
 .kp-cov-brand {
   position: absolute; top: 2cqh; left: 0; right: 0;
   padding: 0 1cqw; z-index: 3;
-  pointer-events: none; isolation: isolate;
+  pointer-events: none; isolation: isolate; user-select: none;
 }
 
 /* Logo resmi */

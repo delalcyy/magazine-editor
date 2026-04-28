@@ -154,8 +154,8 @@ export default function KapakPage() {
       const cy = ev.touches ? ev.touches[0].clientY : ev.clientY
       if (!coverRef.current) return
       const rect = coverRef.current.getBoundingClientRect()
-      const nx = Math.max(0, Math.min(80, startPosX + ((cx - startX) / rect.width) * 100))
-      const ny = Math.max(22, Math.min(82, startPosY + ((cy - startY) / rect.height) * 100))
+      const nx = Math.max(3, Math.min(72, startPosX + ((cx - startX) / rect.width) * 100))
+      const ny = Math.max(22, Math.min(73, startPosY + ((cy - startY) / rect.height) * 100))
       if (side === 'left') setLeftPos({ x: nx, y: ny })
       else setRightPos({ x: nx, y: ny })
     }
@@ -603,15 +603,16 @@ export default function KapakPage() {
           <span className="kp-preview-label">Canlı Önizleme</span>
 
           <div className="kp-cover-stage">
-            <div className="kp-cover" ref={coverRef}>
+            <div
+              className="kp-cover"
+              ref={coverRef}
+              style={{ cursor: photo ? 'grab' : 'default' }}
+              onMouseDown={startBgDrag}
+              onTouchStart={startBgDrag}
+            >
 
               {/* Arka plan */}
-              <div
-                className="kp-cover-bg"
-                style={{ cursor: photo ? 'grab' : 'default' }}
-                onMouseDown={startBgDrag}
-                onTouchStart={startBgDrag}
-              >
+              <div className="kp-cover-bg">
                 {photo && <img className="kp-cover-img" src={photo} alt="" style={{ transform: `translate(${bgOffsetX}px, ${bgOffsetY}px) scale(${bgMirror ? -bgZoom : bgZoom}, ${bgZoom}) rotate(${bgRotate}deg)`, transformOrigin: 'center center' }} />}
                 <div className="kp-cover-overlay" />
               </div>
