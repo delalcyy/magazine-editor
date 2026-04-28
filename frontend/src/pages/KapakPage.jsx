@@ -48,6 +48,8 @@ export default function KapakPage() {
   const [bgZoom, setBgZoom]           = useState(1)
   const [bgRotate, setBgRotate]       = useState(0)
   const [bgMirror, setBgMirror]       = useState(false)
+  const [bgOffsetX, setBgOffsetX]     = useState(0)
+  const [bgOffsetY, setBgOffsetY]     = useState(0)
   const [fgZoom, setFgZoom]           = useState(1)
   const [fgRotate, setFgRotate]       = useState(0)
   const [fgMirror, setFgMirror]       = useState(false)
@@ -58,6 +60,8 @@ export default function KapakPage() {
   const [rightText, setRightText] = useState("ÖZEL RÖPORTAJLAR\nGÜÇLÜ İSİMLER\nYENİ SEZON")
   const [leftColor,  setLeftColor]  = useState('#ffffff')
   const [rightColor, setRightColor] = useState('#ffffff')
+  const [leftSize,  setLeftSize]  = useState(1.9)
+  const [rightSize, setRightSize] = useState(1.9)
   const [leftPos,  setLeftPos]  = useState({ x: 2,  y: 60 })
   const [rightPos, setRightPos] = useState({ x: 58, y: 32 })
 
@@ -99,7 +103,7 @@ export default function KapakPage() {
     if (!file.type.startsWith('image/')) { showToast('Sadece görsel dosyaları'); return }
     if (file.size > 20 * 1024 * 1024)   { showToast("Dosya 20 MB'den büyük");   return }
     if (photo) URL.revokeObjectURL(photo)
-    setBgZoom(1); setBgRotate(0); setBgMirror(false)
+    setBgZoom(1); setBgRotate(0); setBgMirror(false); setBgOffsetX(0); setBgOffsetY(0)
     setPhoto(URL.createObjectURL(file))
     const reader = new FileReader()
     reader.onload = () => setPhotoBase64(reader.result)
@@ -126,9 +130,10 @@ export default function KapakPage() {
     if (photo) URL.revokeObjectURL(photo)
     if (fgPhoto) URL.revokeObjectURL(fgPhoto)
     setPhoto(null); setPhotoBase64(null); setFgPhoto(null); setHead(''); setSub(''); setSavedPdf(null)
-    setBgZoom(1); setBgRotate(0); setBgMirror(false)
+    setBgZoom(1); setBgRotate(0); setBgMirror(false); setBgOffsetX(0); setBgOffsetY(0)
     setFgZoom(1); setFgRotate(0); setFgMirror(false)
     setLeftPos({ x: 2, y: 60 }); setRightPos({ x: 58, y: 32 })
+    setLeftSize(1.9); setRightSize(1.9)
     setHeadColor('#ffffff'); setLeftColor('#ffffff'); setRightColor('#ffffff')
     setLeftText("MODANIN KALBİ\nTÜRKİYE'DE ATACAK")
     setRightText("ÖZEL RÖPORTAJLAR\nGÜÇLÜ İSİMLER\nYENİ SEZON")
@@ -150,9 +155,36 @@ export default function KapakPage() {
       if (!coverRef.current) return
       const rect = coverRef.current.getBoundingClientRect()
       const nx = Math.max(0, Math.min(80, startPosX + ((cx - startX) / rect.width) * 100))
-      const ny = Math.max(22, Math.min(70, startPosY + ((cy - startY) / rect.height) * 100))
+      const ny = Math.max(22, Math.min(82, startPosY + ((cy - startY) / rect.height) * 100))
       if (side === 'left') setLeftPos({ x: nx, y: ny })
       else setRightPos({ x: nx, y: ny })
+    }
+    function up() {
+      document.removeEventListener('mousemove', move)
+      document.removeEventListener('mouseup', up)
+      document.removeEventListener('touchmove', move)
+      document.removeEventListener('touchend', up)
+    }
+    document.addEventListener('mousemove', move)
+    document.addEventListener('mouseup', up)
+    document.addEventListener('touchmove', move, { passive: false })
+    document.addEventListener('touchend', up)
+  }
+
+  /* ── Arka plan sürükleme ── */
+  function startBgDrag(e) {
+    if (!photo) return
+    e.preventDefault(); e.stopPropagation()
+    const startX = e.touches ? e.touches[0].clientX : e.clientX
+    const startY = e.touches ? e.touches[0].clientY : e.clientY
+    const startOX = bgOffsetX
+    const startOY = bgOffsetY
+    function move(ev) {
+      if (ev.cancelable) ev.preventDefault()
+      const cx = ev.touches ? ev.touches[0].clientX : ev.clientX
+      const cy = ev.touches ? ev.touches[0].clientY : ev.clientY
+      setBgOffsetX(startOX + (cx - startX))
+      setBgOffsetY(startOY + (cy - startY))
     }
     function up() {
       document.removeEventListener('mousemove', move)
@@ -392,7 +424,7 @@ export default function KapakPage() {
               {photo && (
                 <div className="kp-thumb">
                   <img src={photo} alt="Yüklenen fotoğraf" />
-                  <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(photo); setPhoto(null); setBgZoom(1); setBgRotate(0); setBgMirror(false) }}>✕ Kaldır</button>
+                  <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(photo); setPhoto(null); setBgZoom(1); setBgRotate(0); setBgMirror(false); setBgOffsetX(0); setBgOffsetY(0) }}>✕ Kaldır</button>
                 </div>
               )}
               {photo && (
@@ -514,6 +546,12 @@ export default function KapakPage() {
                   maxLength={80}
                   placeholder="Sol yazı..."
                 />
+                <div className="kp-img-ctrl-row">
+                  <span className="kp-img-ctrl-label" style={{ color: 'var(--kp-muted)' }}>Boyut</span>
+                  <button className="kp-ic-btn" style={{ borderColor: 'var(--kp-line-str)', color: 'var(--kp-label)' }} onClick={() => setLeftSize(s => Math.max(0.8, +(s - 0.1).toFixed(1)))}>−</button>
+                  <span className="kp-img-ctrl-val" style={{ color: 'var(--kp-label)' }}>{leftSize.toFixed(1)}</span>
+                  <button className="kp-ic-btn" style={{ borderColor: 'var(--kp-line-str)', color: 'var(--kp-label)' }} onClick={() => setLeftSize(s => Math.min(5, +(s + 0.1).toFixed(1)))}>+</button>
+                </div>
               </div>
 
               <div className="kp-side-group">
@@ -532,6 +570,12 @@ export default function KapakPage() {
                   maxLength={80}
                   placeholder="Sağ yazı..."
                 />
+                <div className="kp-img-ctrl-row">
+                  <span className="kp-img-ctrl-label" style={{ color: 'var(--kp-muted)' }}>Boyut</span>
+                  <button className="kp-ic-btn" style={{ borderColor: 'var(--kp-line-str)', color: 'var(--kp-label)' }} onClick={() => setRightSize(s => Math.max(0.8, +(s - 0.1).toFixed(1)))}>−</button>
+                  <span className="kp-img-ctrl-val" style={{ color: 'var(--kp-label)' }}>{rightSize.toFixed(1)}</span>
+                  <button className="kp-ic-btn" style={{ borderColor: 'var(--kp-line-str)', color: 'var(--kp-label)' }} onClick={() => setRightSize(s => Math.min(5, +(s + 0.1).toFixed(1)))}>+</button>
+                </div>
               </div>
             </div>
 
@@ -562,8 +606,13 @@ export default function KapakPage() {
             <div className="kp-cover" ref={coverRef}>
 
               {/* Arka plan */}
-              <div className="kp-cover-bg">
-                {photo && <img className="kp-cover-img" src={photo} alt="" style={{ transform: `scale(${bgMirror ? -bgZoom : bgZoom}, ${bgZoom}) rotate(${bgRotate}deg)`, transformOrigin: 'center center' }} />}
+              <div
+                className="kp-cover-bg"
+                style={{ cursor: photo ? 'grab' : 'default' }}
+                onMouseDown={startBgDrag}
+                onTouchStart={startBgDrag}
+              >
+                {photo && <img className="kp-cover-img" src={photo} alt="" style={{ transform: `translate(${bgOffsetX}px, ${bgOffsetY}px) scale(${bgMirror ? -bgZoom : bgZoom}, ${bgZoom}) rotate(${bgRotate}deg)`, transformOrigin: 'center center' }} />}
                 <div className="kp-cover-overlay" />
               </div>
 
@@ -608,13 +657,13 @@ export default function KapakPage() {
               {/* Sürüklenebilir yazılar — kp-cover-content üstünde, z-index:11 */}
               <div
                 className="kp-cov-side-drag"
-                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left' }}
+                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left', fontSize: `${leftSize}cqh` }}
                 onMouseDown={e => startTextDrag(e, 'left')}
                 onTouchStart={e => startTextDrag(e, 'left')}
               >{leftText}</div>
               <div
                 className="kp-cov-side-drag"
-                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right' }}
+                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh` }}
                 onMouseDown={e => startTextDrag(e, 'right')}
                 onTouchStart={e => startTextDrag(e, 'right')}
               >{rightText}</div>
