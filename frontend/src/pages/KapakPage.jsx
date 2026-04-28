@@ -8,6 +8,16 @@ import { buildEmptyAnswers } from '../data/questions'
 import './KapakPage.css'
 import './EditorPage.css'
 
+const FONTS = [
+  { label: 'Inter',             value: 'Inter, system-ui, sans-serif' },
+  { label: 'Playfair Display',  value: "'Playfair Display', Georgia, serif" },
+  { label: 'Oswald',            value: "'Oswald', sans-serif" },
+  { label: 'Montserrat',        value: "'Montserrat', sans-serif" },
+  { label: 'Raleway',           value: "'Raleway', sans-serif" },
+  { label: 'Roboto Condensed',  value: "'Roboto Condensed', sans-serif" },
+  { label: 'EB Garamond',       value: "'EB Garamond', Georgia, serif" },
+]
+
 const BARCODE = (
   <svg viewBox="0 0 60 22" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <g fill="#111">
@@ -62,6 +72,8 @@ export default function KapakPage() {
   const [rightColor, setRightColor] = useState('#ffffff')
   const [leftSize,  setLeftSize]  = useState(1.9)
   const [rightSize, setRightSize] = useState(1.9)
+  const [leftFont,  setLeftFont]  = useState('Inter')
+  const [rightFont, setRightFont] = useState('Inter')
   const [leftPos,  setLeftPos]  = useState({ x: 2,  y: 60 })
   const [rightPos, setRightPos] = useState({ x: 58, y: 32 })
 
@@ -134,6 +146,7 @@ export default function KapakPage() {
     setFgZoom(1); setFgRotate(0); setFgMirror(false)
     setLeftPos({ x: 2, y: 60 }); setRightPos({ x: 58, y: 32 })
     setLeftSize(1.9); setRightSize(1.9)
+    setLeftFont('Inter'); setRightFont('Inter')
     setHeadColor('#ffffff'); setLeftColor('#ffffff'); setRightColor('#ffffff')
     setLeftText("MODANIN KALBİ\nTÜRKİYE'DE ATACAK")
     setRightText("ÖZEL RÖPORTAJLAR\nGÜÇLÜ İSİMLER\nYENİ SEZON")
@@ -155,7 +168,7 @@ export default function KapakPage() {
       if (!coverRef.current) return
       const rect = coverRef.current.getBoundingClientRect()
       const nx = Math.max(3, Math.min(72, startPosX + ((cx - startX) / rect.width) * 100))
-      const ny = Math.max(22, Math.min(73, startPosY + ((cy - startY) / rect.height) * 100))
+      const ny = Math.max(22, Math.min(80, startPosY + ((cy - startY) / rect.height) * 100))
       if (side === 'left') setLeftPos({ x: nx, y: ny })
       else setRightPos({ x: nx, y: ny })
     }
@@ -546,6 +559,9 @@ export default function KapakPage() {
                   maxLength={80}
                   placeholder="Sol yazı..."
                 />
+                <select className="kp-font-select" value={leftFont} onChange={e => setLeftFont(e.target.value)}>
+                  {FONTS.map(f => <option key={f.value} value={f.value}>{f.label}</option>)}
+                </select>
                 <div className="kp-img-ctrl-row">
                   <span className="kp-img-ctrl-label" style={{ color: 'var(--kp-muted)' }}>Boyut</span>
                   <button className="kp-ic-btn" style={{ borderColor: 'var(--kp-line-str)', color: 'var(--kp-label)' }} onClick={() => setLeftSize(s => Math.max(0.8, +(s - 0.1).toFixed(1)))}>−</button>
@@ -570,6 +586,9 @@ export default function KapakPage() {
                   maxLength={80}
                   placeholder="Sağ yazı..."
                 />
+                <select className="kp-font-select" value={rightFont} onChange={e => setRightFont(e.target.value)}>
+                  {FONTS.map(f => <option key={f.value} value={f.value}>{f.label}</option>)}
+                </select>
                 <div className="kp-img-ctrl-row">
                   <span className="kp-img-ctrl-label" style={{ color: 'var(--kp-muted)' }}>Boyut</span>
                   <button className="kp-ic-btn" style={{ borderColor: 'var(--kp-line-str)', color: 'var(--kp-label)' }} onClick={() => setRightSize(s => Math.max(0.8, +(s - 0.1).toFixed(1)))}>−</button>
@@ -658,13 +677,13 @@ export default function KapakPage() {
               {/* Sürüklenebilir yazılar — kp-cover-content üstünde, z-index:11 */}
               <div
                 className="kp-cov-side-drag"
-                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left', fontSize: `${leftSize}cqh` }}
+                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left', fontSize: `${leftSize}cqh`, fontFamily: leftFont }}
                 onMouseDown={e => startTextDrag(e, 'left')}
                 onTouchStart={e => startTextDrag(e, 'left')}
               >{leftText}</div>
               <div
                 className="kp-cov-side-drag"
-                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh` }}
+                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh`, fontFamily: rightFont }}
                 onMouseDown={e => startTextDrag(e, 'right')}
                 onTouchStart={e => startTextDrag(e, 'right')}
               >{rightText}</div>
