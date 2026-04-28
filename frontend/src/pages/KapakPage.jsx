@@ -705,7 +705,9 @@ export default function KapakPage() {
         <section className="kp-preview">
           <span className="kp-preview-label">Canlı Önizleme</span>
 
-          <div className="kp-cover-stage">
+          <div className="kp-cover-stage" style={{ background: frameColor }}>
+            {/* 1cm çerçeve wrapper — cover içeriğine dokunmaz */}
+            <div style={{ position:'absolute', top:'3.58%', left:'4.63%', right:'4.63%', bottom:'3.58%' }}>
             <div
               className="kp-cover"
               ref={coverRef}
@@ -774,12 +776,8 @@ export default function KapakPage() {
                 onTouchStart={e => startTextDrag(e, 'right')}
               >{rightText}</div>
 
-              {/* ── Çerçeve barları (kp-cover içinde, her şeyin üstünde) ── */}
-              <div style={{ position:'absolute', top:0,    left:0, right:0,           height:33, background:frameColor, zIndex:9999, pointerEvents:'none' }} />
-              <div style={{ position:'absolute', bottom:0, left:0, right:0,           height:33, background:frameColor, zIndex:9999, pointerEvents:'none' }} />
-              <div style={{ position:'absolute', top:0,    left:0, bottom:0, width:33,           background:frameColor, zIndex:9999, pointerEvents:'none' }} />
-              <div style={{ position:'absolute', top:0,    right:0,bottom:0, width:33,           background:frameColor, zIndex:9999, pointerEvents:'none' }} />
             </div>
+            </div>{/* wrapper kapandı */}
 
           </div>
 
