@@ -8,6 +8,13 @@ import { buildEmptyAnswers } from '../data/questions'
 import './KapakPage.css'
 import './EditorPage.css'
 
+const BG_COLORS = [
+  { label: 'Siyah',  value: '#111111' },
+  { label: 'Beyaz',  value: '#f5f5f0' },
+  { label: 'Gri',    value: '#6b6b6b' },
+  { label: 'Altın',  value: '#a98947' },
+]
+
 const FONTS = [
   { label: 'Inter',             value: 'Inter, system-ui, sans-serif' },
   { label: 'Playfair Display',  value: "'Playfair Display', Georgia, serif" },
@@ -52,6 +59,7 @@ export default function KapakPage() {
   const [step, setStep] = useState(1)   // 1 = kapak, 2 = editör
 
   /* ── Kapak state ── */
+  const [bgColor, setBgColor]         = useState('#111111')
   const [photo, setPhoto]             = useState(null)
   const [photoBase64, setPhotoBase64] = useState(null)
   const [fgPhoto, setFgPhoto]         = useState(null)
@@ -141,6 +149,7 @@ export default function KapakPage() {
   function handleReset() {
     if (photo) URL.revokeObjectURL(photo)
     if (fgPhoto) URL.revokeObjectURL(fgPhoto)
+    setBgColor('#111111')
     setPhoto(null); setPhotoBase64(null); setFgPhoto(null); setHead(''); setSub(''); setSavedPdf(null)
     setBgZoom(1); setBgRotate(0); setBgMirror(false); setBgOffsetX(0); setBgOffsetY(0)
     setFgZoom(1); setFgRotate(0); setFgMirror(false)
@@ -599,6 +608,27 @@ export default function KapakPage() {
               </div>
             </div>
 
+            {/* 04 Arka Plan Rengi */}
+            <div className="kp-section">
+              <div className="kp-section-head">
+                <span className="kp-section-num">04</span>
+                <span className="kp-section-title">Arka Plan Rengi</span>
+              </div>
+              <div className="kp-bg-swatches">
+                {BG_COLORS.map(c => (
+                  <button
+                    key={c.value}
+                    className={`kp-bg-swatch ${bgColor === c.value ? 'kp-bg-swatch--active' : ''}`}
+                    style={{ background: c.value }}
+                    onClick={() => setBgColor(c.value)}
+                    title={c.label}
+                  >
+                    {bgColor === c.value && <span className="kp-bg-swatch-check">✓</span>}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Mobil aksiyonlar */}
             <div className="kp-editor-actions">
               <button className="kp-btn kp-btn-ghost" onClick={handleReset}>Sıfırla</button>
@@ -626,7 +656,7 @@ export default function KapakPage() {
             <div
               className="kp-cover"
               ref={coverRef}
-              style={{ cursor: photo ? 'grab' : 'default' }}
+              style={{ cursor: photo ? 'grab' : 'default', background: bgColor }}
               onMouseDown={startBgDrag}
               onTouchStart={startBgDrag}
             >
