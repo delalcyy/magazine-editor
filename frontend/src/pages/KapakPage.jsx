@@ -202,10 +202,8 @@ export default function KapakPage() {
       const textEl = side === 'left' ? leftDragRef.current : rightDragRef.current
       const textH = textEl ? (textEl.getBoundingClientRect().height / rect.height) * 100 : 0
       const textW = textEl ? (textEl.getBoundingClientRect().width  / rect.width)  * 100 : 0
-      // Yazının sağ kenarı kapaktan taşmasın
-      const nx = Math.max(3, Math.min(98 - textW, startPosX + ((cx - startX) / rect.width) * 100))
-      // Yazının alt kenarı ad soyad/barkod alanına girmesin (sınır %78)
-      const ny = Math.max(22, Math.min(78 - textH, startPosY + ((cy - startY) / rect.height) * 100))
+      const nx = Math.max(3, Math.min(93 - textW, startPosX + ((cx - startX) / rect.width) * 100))
+      const ny = Math.max(22, Math.min(72 - textH, startPosY + ((cy - startY) / rect.height) * 100))
       if (side === 'left') setLeftPos({ x: nx, y: ny })
       else setRightPos({ x: nx, y: ny })
     }
@@ -764,14 +762,14 @@ export default function KapakPage() {
               <div
                 ref={leftDragRef}
                 className="kp-cov-side-drag"
-                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left', fontSize: `${leftSize}cqh`, fontFamily: leftFont }}
+                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left', fontSize: `${leftSize}cqh`, fontFamily: leftFont, maxWidth: `${95 - leftPos.x}%` }}
                 onMouseDown={e => startTextDrag(e, 'left')}
                 onTouchStart={e => startTextDrag(e, 'left')}
               >{leftText}</div>
               <div
                 ref={rightDragRef}
                 className="kp-cov-side-drag"
-                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh`, fontFamily: rightFont }}
+                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh`, fontFamily: rightFont, maxWidth: `${95 - rightPos.x}%` }}
                 onMouseDown={e => startTextDrag(e, 'right')}
                 onTouchStart={e => startTextDrag(e, 'right')}
               >{rightText}</div>
