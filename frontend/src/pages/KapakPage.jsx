@@ -708,13 +708,13 @@ export default function KapakPage() {
               {/* Sürüklenebilir yazılar — kp-cover-content üstünde, z-index:11 */}
               <div
                 className="kp-cov-side-drag"
-                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left', fontSize: `${leftSize}cqh`, fontFamily: leftFont }}
+                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left', fontSize: `${leftSize}cqh`, fontFamily: leftFont, maxWidth: `${98 - leftPos.x}cqw` }}
                 onMouseDown={e => startTextDrag(e, 'left')}
                 onTouchStart={e => startTextDrag(e, 'left')}
               >{leftText}</div>
               <div
                 className="kp-cov-side-drag"
-                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh`, fontFamily: rightFont }}
+                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh`, fontFamily: rightFont, maxWidth: `${98 - rightPos.x}cqw` }}
                 onMouseDown={e => startTextDrag(e, 'right')}
                 onTouchStart={e => startTextDrag(e, 'right')}
               >{rightText}</div>
