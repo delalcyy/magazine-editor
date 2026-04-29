@@ -159,6 +159,7 @@ export default function KapakPage() {
     if (fgPhoto) URL.revokeObjectURL(fgPhoto)
     setFgZoom(1); setFgRotate(0); setFgMirror(false); setFgOffsetX(0); setFgOffsetY(0)
     setFgPhoto(URL.createObjectURL(file))
+    setDragTarget('fg')
   }
 
   /* ── Kapak: sıfırla ── */
@@ -572,13 +573,11 @@ export default function KapakPage() {
                     <button className="kp-ic-btn" onClick={() => setFgRotate(r => r + 90)}>↻</button>
                     <button className={`kp-ic-btn kp-ic-btn--mirror ${fgMirror ? 'kp-ic-btn--on' : ''}`} onClick={() => setFgMirror(m => !m)}>⟺ Ayna</button>
                   </div>
-                  {photo && (
-                    <div className="kp-img-ctrl-row" style={{ marginTop: 4 }}>
-                      <span className="kp-img-ctrl-label">Sürükle</span>
-                      <button className={`kp-ic-btn ${dragTarget === 'bg' ? 'kp-ic-btn--on' : ''}`} onClick={() => setDragTarget('bg')}>Arka</button>
-                      <button className={`kp-ic-btn ${dragTarget === 'fg' ? 'kp-ic-btn--on' : ''}`} onClick={() => setDragTarget('fg')}>Ön</button>
-                    </div>
-                  )}
+                  <div className="kp-img-ctrl-row" style={{ marginTop: 4 }}>
+                    <span className="kp-img-ctrl-label">Sürükle</span>
+                    <button className={`kp-ic-btn ${dragTarget === 'bg' ? 'kp-ic-btn--on' : ''}`} onClick={() => setDragTarget('bg')}>Arka</button>
+                    <button className={`kp-ic-btn ${dragTarget === 'fg' ? 'kp-ic-btn--on' : ''}`} onClick={() => setDragTarget('fg')}>Ön</button>
+                  </div>
                 </div>
               )}
             </div>
