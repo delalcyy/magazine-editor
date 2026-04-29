@@ -175,6 +175,16 @@ export default function KapakPage() {
     showToast('Editör sıfırlandı')
   }
 
+  /* ── Satır başına max 3 kelime ── */
+  function enforceWordLimit(text) {
+    return text.split('\n').map(line => {
+      const words = line.split(/\s+/).filter(w => w)
+      const chunks = []
+      for (let i = 0; i < words.length; i += 3) chunks.push(words.slice(i, i + 3).join(' '))
+      return chunks.length ? chunks.join('\n') : ''
+    }).join('\n')
+  }
+
   /* ── Yazı sürükleme (textarea için) ── */
   function startTextDrag(e, side) {
     e.stopPropagation() // bg drag'i engelle; preventDefault YOK ki focus çalışsın
@@ -587,7 +597,7 @@ export default function KapakPage() {
                 <textarea
                   className="kp-input"
                   value={leftText}
-                  onChange={e => setLeftText(e.target.value)}
+                  onChange={e => setLeftText(enforceWordLimit(e.target.value))}
                   rows={2}
                   maxLength={80}
                   placeholder="Sol yazı..."
@@ -614,7 +624,7 @@ export default function KapakPage() {
                 <textarea
                   className="kp-input"
                   value={rightText}
-                  onChange={e => setRightText(e.target.value)}
+                  onChange={e => setRightText(enforceWordLimit(e.target.value))}
                   rows={2}
                   maxLength={80}
                   placeholder="Sağ yazı..."
@@ -738,7 +748,7 @@ export default function KapakPage() {
                 ref={leftDragRef}
                 className="kp-cov-text-ta"
                 value={leftText}
-                onChange={e => setLeftText(e.target.value)}
+                onChange={e => setLeftText(enforceWordLimit(e.target.value))}
                 onMouseDown={e => startTextDrag(e, 'left')}
                 onTouchStart={e => startTextDrag(e, 'left')}
                 rows={Math.max(1, (leftText.match(/\n/g) || []).length + 1)}
@@ -751,7 +761,7 @@ export default function KapakPage() {
                 ref={rightDragRef}
                 className="kp-cov-text-ta"
                 value={rightText}
-                onChange={e => setRightText(e.target.value)}
+                onChange={e => setRightText(enforceWordLimit(e.target.value))}
                 onMouseDown={e => startTextDrag(e, 'right')}
                 onTouchStart={e => startTextDrag(e, 'right')}
                 rows={Math.max(1, (rightText.match(/\n/g) || []).length + 1)}
