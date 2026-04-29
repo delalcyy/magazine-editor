@@ -348,9 +348,42 @@
   text-shadow: 0 1px 4px rgba(0,0,0,.6);
   transition: outline .15s;
   overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 .kp-cov-side-drag:hover { outline: 1.5px dashed rgba(255,255,255,.6); outline-offset: 5px; }
 .kp-cov-side-drag:active { cursor: grabbing; }
+
+/* Kapak üzeri yazı textarea */
+.kp-cov-text-ta {
+  position: absolute;
+  z-index: 11;
+  background: transparent;
+  border: 1.5px dashed rgba(255,255,255,0);
+  border-radius: 2px;
+  outline: none;
+  resize: none;
+  padding: 2px 4px;
+  cursor: grab;
+  /* Yazıyla aynı stil */
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  font-weight: 500;
+  text-shadow: 0 1px 4px rgba(0,0,0,.6);
+  white-space: pre-line;
+  word-break: break-word;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: text;
+  -webkit-user-select: text;
+}
+.kp-cov-text-ta:hover { border-color: rgba(255,255,255,.4); }
+.kp-cov-text-ta:focus {
+  border-color: rgba(255,255,255,.85);
+  cursor: text;
+  background: rgba(0,0,0,.2);
+  overflow: visible;
+}
 
 /* Alt bilgi */
 .kp-cov-bottom {

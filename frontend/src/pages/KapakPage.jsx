@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Header from '../components/Header'
@@ -175,18 +175,26 @@ export default function KapakPage() {
     showToast('Editör sıfırlandı')
   }
 
-  /* ── Yazı sürükleme ── */
+  /* ── Yazı sürükleme (textarea için) ── */
   function startTextDrag(e, side) {
-    e.preventDefault(); e.stopPropagation()
+    e.stopPropagation() // bg drag'i engelle; preventDefault YOK ki focus çalışsın
     const pos = side === 'left' ? leftPos : rightPos
     const startX = e.touches ? e.touches[0].clientX : e.clientX
     const startY = e.touches ? e.touches[0].clientY : e.clientY
     const startPosX = pos.x; const startPosY = pos.y
+    let dragging = false
 
     function move(ev) {
-      if (ev.cancelable) ev.preventDefault()
       const cx = ev.touches ? ev.touches[0].clientX : ev.clientX
       const cy = ev.touches ? ev.touches[0].clientY : ev.clientY
+      if (!dragging && (Math.abs(cx - startX) > 8 || Math.abs(cy - startY) > 8)) {
+        dragging = true
+        const el = side === 'left' ? leftDragRef.current : rightDragRef.current
+        el?.blur()
+        window.getSelection()?.removeAllRanges()
+      }
+      if (!dragging) return
+      if (ev.cancelable) ev.preventDefault()
       if (!coverRef.current) return
       const rect = coverRef.current.getBoundingClientRect()
       const textEl = side === 'left' ? leftDragRef.current : rightDragRef.current
@@ -566,7 +574,7 @@ export default function KapakPage() {
                 <span className="kp-section-num">03</span>
                 <span className="kp-section-title">Yan Yazılar</span>
               </div>
-              <p className="kp-drag-hint">Önizlemede yazıların üzerine basılı tutarak sürükleyebilirsiniz.</p>
+              <p className="kp-drag-hint">Önizlemede yazılara <strong>tıklayarak</strong> düzenleyebilir, <strong>basılı tutarak</strong> sürükleyebilirsiniz.</p>
 
               <div className="kp-side-group">
                 <div className="kp-side-group-head">
@@ -725,21 +733,31 @@ export default function KapakPage() {
 
               </div>
 
-              {/* Sürüklenebilir yazılar — kp-cover-content üstünde, z-index:11 */}
-              <div
+              {/* Sol yazı — textarea: tıkla/dokun yaz, sürükle taşı */}
+              <textarea
                 ref={leftDragRef}
-                className="kp-cov-side-drag"
-                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left', fontSize: `${leftSize}cqh`, fontFamily: leftFont, maxWidth: `${95 - leftPos.x}%` }}
+                className="kp-cov-text-ta"
+                value={leftText}
+                onChange={e => setLeftText(e.target.value)}
                 onMouseDown={e => startTextDrag(e, 'left')}
                 onTouchStart={e => startTextDrag(e, 'left')}
-              >{leftText}</div>
-              <div
+                rows={Math.max(1, (leftText.match(/\n/g) || []).length + 1)}
+                maxLength={80}
+                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left', fontSize: `${leftSize}cqh`, fontFamily: leftFont, width: `${Math.min(88, 93 - leftPos.x)}%` }}
+              />
+
+              {/* Sağ yazı — textarea: tıkla/dokun yaz, sürükle taşı */}
+              <textarea
                 ref={rightDragRef}
-                className="kp-cov-side-drag"
-                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh`, fontFamily: rightFont, maxWidth: `${95 - rightPos.x}%` }}
+                className="kp-cov-text-ta"
+                value={rightText}
+                onChange={e => setRightText(e.target.value)}
                 onMouseDown={e => startTextDrag(e, 'right')}
                 onTouchStart={e => startTextDrag(e, 'right')}
-              >{rightText}</div>
+                rows={Math.max(1, (rightText.match(/\n/g) || []).length + 1)}
+                maxLength={80}
+                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh`, fontFamily: rightFont, width: `${Math.min(88, 93 - rightPos.x)}%` }}
+              />
 
             </div>
             </div>{/* wrapper kapandı */}
