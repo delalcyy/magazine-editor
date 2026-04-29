@@ -710,6 +710,9 @@ export default function KapakPage() {
                 <div className="kp-cover-overlay" />
               </div>
 
+              {/* Baskı çerçevesi — görsel, export'ta çıkmaz */}
+              <div data-html2canvas-ignore="true" style={{ position:'absolute', top:'3.58%', left:'4.63%', right:'4.63%', bottom:'3.58%', border:'1.5px solid rgba(255,255,255,0.45)', pointerEvents:'none', zIndex:50 }} />
+
               {/* Boş durum */}
               {!photo && (
                 <div className="kp-cover-empty">
