@@ -93,8 +93,8 @@ export default function KapakPage() {
   const [rightSize, setRightSize] = useState(1.9)
   const [leftFont,  setLeftFont]  = useState('Inter')
   const [rightFont, setRightFont] = useState('Inter')
-  const [leftPos,  setLeftPos]  = useState({ x: 5,  y: 55 })
-  const [rightPos, setRightPos] = useState({ x: 58, y: 32 })
+  const [leftPos,  setLeftPos]  = useState({ x: 9.26, y: 55 })
+  const [rightPos, setRightPos] = useState({ x: 58,   y: 32 })
 
   const fgRef = useRef(null)
   const leftDragRef  = useRef(null)
@@ -166,7 +166,7 @@ export default function KapakPage() {
     setPhoto(null); setPhotoBase64(null); setFgPhoto(null); setHead(''); setSub(''); setSavedPdf(null)
     setBgZoom(1); setBgRotate(0); setBgMirror(false); setBgOffsetX(0); setBgOffsetY(0)
     setFgZoom(1); setFgRotate(0); setFgMirror(false)
-    setLeftPos({ x: 5,  y: 55 }); setRightPos({ x: 58, y: 32 })
+    setLeftPos({ x: 9.26, y: 55 }); setRightPos({ x: 58, y: 32 })
     setLeftSize(1.9); setRightSize(1.9)
     setLeftFont('Inter'); setRightFont('Inter')
     setHeadColor('#ffffff'); setLeftColor('#ffffff'); setRightColor('#ffffff')
@@ -760,7 +760,7 @@ export default function KapakPage() {
                 onTouchStart={e => startTextDrag(e, 'left')}
                 rows={Math.max(1, (leftText.match(/\n/g) || []).length + 1)}
                 maxLength={80}
-                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left', fontSize: `${leftSize}cqh`, fontFamily: leftFont, width: `${Math.min(88, 93 - leftPos.x)}%` }}
+                style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left', fontSize: `${leftSize}cqh`, fontFamily: leftFont, width: `${Math.max(10, 90.74 - leftPos.x)}%` }}
               />
 
               {/* Sağ yazı — textarea: tıkla/dokun yaz, sürükle taşı */}
@@ -773,7 +773,7 @@ export default function KapakPage() {
                 onTouchStart={e => startTextDrag(e, 'right')}
                 rows={Math.max(1, (rightText.match(/\n/g) || []).length + 1)}
                 maxLength={80}
-                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh`, fontFamily: rightFont, width: `${Math.min(88, 93 - rightPos.x)}%` }}
+                style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh`, fontFamily: rightFont, width: `${Math.max(10, 90.74 - rightPos.x)}%` }}
               />
 
             </div>
