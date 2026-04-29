@@ -178,10 +178,17 @@ export default function KapakPage() {
   /* ── Satır başına max 3 kelime ── */
   function enforceWordLimit(text) {
     return text.split('\n').map(line => {
-      const words = line.split(/\s+/).filter(w => w)
+      const trailingSpace = line.endsWith(' ')
+      const words = line.trim().split(/\s+/).filter(w => w)
+      if (!words.length) return ''
       const chunks = []
       for (let i = 0; i < words.length; i += 3) chunks.push(words.slice(i, i + 3).join(' '))
-      return chunks.length ? chunks.join('\n') : ''
+      let result = chunks.join('\n')
+      if (trailingSpace) {
+        const lastWords = chunks[chunks.length - 1].split(' ').length
+        result += lastWords < 3 ? ' ' : '\n'  // 3. kelimeden sonra boşluk → yeni satır
+      }
+      return result
     }).join('\n')
   }
 
