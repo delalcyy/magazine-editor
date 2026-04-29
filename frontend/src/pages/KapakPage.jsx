@@ -82,6 +82,8 @@ export default function KapakPage() {
   const [fgZoom, setFgZoom]           = useState(1)
   const [fgRotate, setFgRotate]       = useState(0)
   const [fgMirror, setFgMirror]       = useState(false)
+  const [fgOffsetX, setFgOffsetX]     = useState(0)
+  const [fgOffsetY, setFgOffsetY]     = useState(0)
 
   /* ── Yan yazı state ── */
   const [headColor, setHeadColor] = useState('#ffffff')
@@ -154,7 +156,7 @@ export default function KapakPage() {
     const file = e.target.files?.[0]
     if (!file) return
     if (fgPhoto) URL.revokeObjectURL(fgPhoto)
-    setFgZoom(1); setFgRotate(0); setFgMirror(false)
+    setFgZoom(1); setFgRotate(0); setFgMirror(false); setFgOffsetX(0); setFgOffsetY(0)
     setFgPhoto(URL.createObjectURL(file))
   }
 
@@ -165,7 +167,7 @@ export default function KapakPage() {
     setBgColor('#111111')
     setPhoto(null); setPhotoBase64(null); setFgPhoto(null); setHead(''); setSub(''); setSavedPdf(null)
     setBgZoom(1); setBgRotate(0); setBgMirror(false); setBgOffsetX(0); setBgOffsetY(0)
-    setFgZoom(1); setFgRotate(0); setFgMirror(false)
+    setFgZoom(1); setFgRotate(0); setFgMirror(false); setFgOffsetX(0); setFgOffsetY(0)
     setLeftPos({ x: 1, y: 55 }); setRightPos({ x: 59, y: 32 })
     setLeftSize(1.9); setRightSize(1.9)
     setLeftFont('Inter'); setRightFont('Inter')
@@ -248,6 +250,33 @@ export default function KapakPage() {
       const cy = ev.touches ? ev.touches[0].clientY : ev.clientY
       setBgOffsetX(startOX + (cx - startX))
       setBgOffsetY(startOY + (cy - startY))
+    }
+    function up() {
+      document.removeEventListener('mousemove', move)
+      document.removeEventListener('mouseup', up)
+      document.removeEventListener('touchmove', move)
+      document.removeEventListener('touchend', up)
+    }
+    document.addEventListener('mousemove', move)
+    document.addEventListener('mouseup', up)
+    document.addEventListener('touchmove', move, { passive: false })
+    document.addEventListener('touchend', up)
+  }
+
+  /* ── Ön plan sürükleme ── */
+  function startFgDrag(e) {
+    if (!fgPhoto) return
+    e.preventDefault(); e.stopPropagation()
+    const startX = e.touches ? e.touches[0].clientX : e.clientX
+    const startY = e.touches ? e.touches[0].clientY : e.clientY
+    const startOX = fgOffsetX
+    const startOY = fgOffsetY
+    function move(ev) {
+      if (ev.cancelable) ev.preventDefault()
+      const cx = ev.touches ? ev.touches[0].clientX : ev.clientX
+      const cy = ev.touches ? ev.touches[0].clientY : ev.clientY
+      setFgOffsetX(startOX + (cx - startX))
+      setFgOffsetY(startOY + (cy - startY))
     }
     function up() {
       document.removeEventListener('mousemove', move)
@@ -523,7 +552,7 @@ export default function KapakPage() {
               {fgPhoto && (
                 <div className="kp-thumb">
                   <img src={fgPhoto} alt="Ön plan" />
-                  <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(fgPhoto); setFgPhoto(null); setFgZoom(1); setFgRotate(0); setFgMirror(false) }}>✕ Kaldır</button>
+                  <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(fgPhoto); setFgPhoto(null); setFgZoom(1); setFgRotate(0); setFgMirror(false); setFgOffsetX(0); setFgOffsetY(0) }}>✕ Kaldır</button>
                 </div>
               )}
               {fgPhoto && (
@@ -731,7 +760,7 @@ export default function KapakPage() {
               </div>
 
               {/* Ön plan kişi katmanı */}
-              {fgPhoto && <img className="kp-cover-fg" src={fgPhoto} alt="" style={{ transform: `scale(${fgMirror ? -fgZoom : fgZoom}, ${fgZoom}) rotate(${fgRotate}deg)`, transformOrigin: 'center top' }} />}
+              {fgPhoto && <img className="kp-cover-fg" src={fgPhoto} alt="" style={{ transform: `translate(${fgOffsetX}px, ${fgOffsetY}px) scale(${fgMirror ? -fgZoom : fgZoom}, ${fgZoom}) rotate(${fgRotate}deg)`, transformOrigin: 'center top', cursor: 'grab' }} onMouseDown={startFgDrag} onTouchStart={startFgDrag} />}
 
               {/* Kapak içeriği */}
               <div className="kp-cover-content">
