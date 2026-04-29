@@ -695,7 +695,8 @@ export default function KapakPage() {
         <section className="kp-preview">
           <span className="kp-preview-label">Canlı Önizleme</span>
 
-          <div className="kp-cover-stage">
+          <div className="kp-cover-stage" style={{ background: bgColor }}>
+            <div style={{ position:'absolute', top:'3.58%', left:'4.63%', right:'4.63%', bottom:'3.58%' }}>
             <div
               className="kp-cover"
               ref={coverRef}
@@ -709,9 +710,6 @@ export default function KapakPage() {
                 {photo && <img className="kp-cover-img" src={photo} alt="" style={{ transform: `translate(${bgOffsetX}px, ${bgOffsetY}px) scale(${bgMirror ? -bgZoom : bgZoom}, ${bgZoom}) rotate(${bgRotate}deg)`, transformOrigin: 'center center' }} />}
                 <div className="kp-cover-overlay" />
               </div>
-
-              {/* Baskı çerçevesi — görsel, export'ta çıkmaz */}
-              <div data-html2canvas-ignore="true" style={{ position:'absolute', top:'3.58%', left:'4.63%', right:'4.63%', bottom:'3.58%', border:'1.5px solid rgba(255,255,255,0.45)', pointerEvents:'none', zIndex:50 }} />
 
               {/* Boş durum */}
               {!photo && (
@@ -777,6 +775,7 @@ export default function KapakPage() {
                 style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh`, fontFamily: rightFont, width: '40%' }}
               />
 
+            </div>
             </div>
 
           </div>
