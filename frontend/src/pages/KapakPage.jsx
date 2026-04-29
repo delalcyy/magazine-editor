@@ -758,7 +758,7 @@ export default function KapakPage() {
                 onChange={e => setLeftText(enforceWordLimit(e.target.value))}
                 onMouseDown={e => startTextDrag(e, 'left')}
                 onTouchStart={e => startTextDrag(e, 'left')}
-                rows={Math.max(1, (leftText.match(/\n/g) || []).length + 1)}
+                rows={4}
                 maxLength={80}
                 style={{ left: `${leftPos.x}%`, top: `${leftPos.y}%`, color: leftColor, textAlign: 'left', fontSize: `${leftSize}cqh`, fontFamily: leftFont, width: '50%' }}
               />
@@ -771,7 +771,7 @@ export default function KapakPage() {
                 onChange={e => setRightText(enforceWordLimit(e.target.value))}
                 onMouseDown={e => startTextDrag(e, 'right')}
                 onTouchStart={e => startTextDrag(e, 'right')}
-                rows={Math.max(1, (rightText.match(/\n/g) || []).length + 1)}
+                rows={4}
                 maxLength={80}
                 style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh`, fontFamily: rightFont, width: '40%' }}
               />
