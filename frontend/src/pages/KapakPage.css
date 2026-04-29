@@ -267,7 +267,7 @@
 }
 .kp-cover {
   position: absolute; inset: 0; overflow: hidden;
-  background: #1a1a18;
+  background: transparent;
   container-type: size;
 }
 

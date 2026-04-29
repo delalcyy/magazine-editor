@@ -696,11 +696,11 @@ export default function KapakPage() {
           <span className="kp-preview-label">Canlı Önizleme</span>
 
           <div className="kp-cover-stage" style={{ background: bgColor }}>
-            <div style={{ position:'absolute', top:'3.58%', left:'4.63%', right:'4.63%', bottom:'3.58%' }}>
+            <div style={{ position:'absolute', top:'7.17%', left:'9.26%', right:'9.26%', bottom:'7.17%' }}>
             <div
               className="kp-cover"
               ref={coverRef}
-              style={{ cursor: photo ? 'grab' : 'default', background: bgColor }}
+              style={{ cursor: photo ? 'grab' : 'default' }}
               onMouseDown={startBgDrag}
               onTouchStart={startBgDrag}
             >
