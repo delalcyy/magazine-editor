@@ -263,12 +263,15 @@
 
 /* ── Kapak sahnesi ── */
 .kp-cover-stage {
-  width: 100%; max-width: 360px; aspect-ratio: 8.5/11; position: relative;
+  width: 100%; max-width: 360px; aspect-ratio: 8.5/11;
+  padding: 9.26%; box-sizing: border-box; display: flex;
 }
 .kp-cover {
-  position: absolute; inset: 0; overflow: hidden;
+  flex: 1; min-width: 0; min-height: 0;
+  overflow: hidden;
   background: transparent;
   container-type: size;
+  position: relative;
 }
 
 /* Arka plan */
@@ -483,9 +486,6 @@
   .kp-cover-stage {
     max-width: none; width: auto; height: 100%;
     max-height: calc(100vh - 64px - 120px);
-  }
-  .kp-cover {
-    box-shadow: 0 30px 80px rgba(0,0,0,.22), 0 8px 20px rgba(0,0,0,.10);
   }
 
   .kp-toast { bottom: auto; top: 80px; left: auto; right: 24px; transform: none; }

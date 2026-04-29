@@ -696,7 +696,6 @@ export default function KapakPage() {
           <span className="kp-preview-label">Canlı Önizleme</span>
 
           <div className="kp-cover-stage" style={{ background: bgColor }}>
-            <div style={{ position:'absolute', top:'7.17%', left:'9.26%', right:'9.26%', bottom:'7.17%' }}>
             <div
               className="kp-cover"
               ref={coverRef}
@@ -775,7 +774,6 @@ export default function KapakPage() {
                 style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh`, fontFamily: rightFont, width: '40%' }}
               />
 
-            </div>
             </div>
 
           </div>
