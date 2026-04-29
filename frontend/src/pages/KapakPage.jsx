@@ -179,9 +179,9 @@ export default function KapakPage() {
     showToast('Editör sıfırlandı')
   }
 
-  /* ── Satır başına max 3 kelime ── */
+  /* ── Satır başına max 3 kelime, toplam max 4 satır ── */
   function enforceWordLimit(text) {
-    return text.split('\n').map(line => {
+    const processed = text.split('\n').map(line => {
       const trailingSpace = line.endsWith(' ')
       const words = line.trim().split(/\s+/).filter(w => w)
       if (!words.length) return ''
@@ -190,10 +190,11 @@ export default function KapakPage() {
       let result = chunks.join('\n')
       if (trailingSpace) {
         const lastWords = chunks[chunks.length - 1].split(' ').length
-        result += lastWords < 3 ? ' ' : '\n'  // 3. kelimeden sonra boşluk → yeni satır
+        result += lastWords < 3 ? ' ' : '\n'
       }
       return result
     }).join('\n')
+    return processed.split('\n').slice(0, 4).join('\n')
   }
 
   /* ── Yazı sürükleme (textarea için) ── */
