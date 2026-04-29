@@ -695,7 +695,8 @@ export default function KapakPage() {
         <section className="kp-preview">
           <span className="kp-preview-label">Canlı Önizleme</span>
 
-          <div className="kp-cover-stage">
+          <div className="kp-cover-stage" style={{ background: bgColor }}>
+            <div style={{ position:'absolute', top:'3.58%', left:'4.63%', right:'4.63%', bottom:'3.58%' }}>
             <div
               className="kp-cover"
               ref={coverRef}
@@ -775,6 +776,7 @@ export default function KapakPage() {
               />
 
             </div>
+            </div>{/* wrapper kapandı */}
 
           </div>
 
