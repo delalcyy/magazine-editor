@@ -25,14 +25,6 @@ const BG_COLORS = [
   { label: 'Altın',    value: '#a98947', dark: false },
 ]
 
-const FRAME_COLORS = [
-  { label: 'Siyah',     value: '#0a0a0a', dark: false },
-  { label: 'Koyu Gri',  value: '#2a2a2a', dark: false },
-  { label: 'Gri',       value: '#888888', dark: false },
-  { label: 'Açık Gri',  value: '#cccccc', dark: true  },
-  { label: 'Beyaz',     value: '#f5f5f5', dark: true  },
-  { label: 'Altın',     value: '#a98947', dark: false },
-]
 
 const FONTS = [
   { label: 'Inter',             value: 'Inter, system-ui, sans-serif' },
@@ -79,7 +71,6 @@ export default function KapakPage() {
 
   /* ── Kapak state ── */
   const [bgColor, setBgColor]         = useState('#111111')
-  const [frameColor, setFrameColor]   = useState('#a98947')
   const [photo, setPhoto]             = useState(null)
   const [photoBase64, setPhotoBase64] = useState(null)
   const [fgPhoto, setFgPhoto]         = useState(null)
@@ -172,7 +163,6 @@ export default function KapakPage() {
     if (photo) URL.revokeObjectURL(photo)
     if (fgPhoto) URL.revokeObjectURL(fgPhoto)
     setBgColor('#111111')
-    setFrameColor('#a98947')
     setPhoto(null); setPhotoBase64(null); setFgPhoto(null); setHead(''); setSub(''); setSavedPdf(null)
     setBgZoom(1); setBgRotate(0); setBgMirror(false); setBgOffsetX(0); setBgOffsetY(0)
     setFgZoom(1); setFgRotate(0); setFgMirror(false)
@@ -656,29 +646,6 @@ export default function KapakPage() {
               </div>
             </div>
 
-            {/* 05 Çerçeve Rengi */}
-            <div className="kp-section">
-              <div className="kp-section-head">
-                <span className="kp-section-num">05</span>
-                <span className="kp-section-title">Çerçeve Rengi</span>
-              </div>
-              <p className="kp-drag-hint">Dergiye basıldığında kapak etrafındaki 2 cm boşluk bu renkle doldurulur.</p>
-              <div className="kp-bg-swatches">
-                {FRAME_COLORS.map(c => (
-                  <button
-                    key={c.value}
-                    className={`kp-bg-swatch ${frameColor === c.value ? 'kp-bg-swatch--active' : ''}`}
-                    style={{ background: c.value }}
-                    onClick={() => setFrameColor(c.value)}
-                    title={c.label}
-                  >
-                    {frameColor === c.value && (
-                      <span className="kp-bg-swatch-check" style={{ color: c.dark ? '#111' : '#fff' }}>✓</span>
-                    )}
-                  </button>
-                ))}
-              </div>
-            </div>
 
             {/* Mobil aksiyonlar */}
             <div className="kp-editor-actions">
@@ -703,7 +670,7 @@ export default function KapakPage() {
         <section className="kp-preview">
           <span className="kp-preview-label">Canlı Önizleme</span>
 
-          <div className="kp-cover-stage" style={{ background: frameColor }}>
+          <div className="kp-cover-stage" style={{ background: bgColor }}>
             {/* 1cm çerçeve wrapper — cover içeriğine dokunmaz */}
             <div style={{ position:'absolute', top:'3.58%', left:'4.63%', right:'4.63%', bottom:'3.58%' }}>
             <div
