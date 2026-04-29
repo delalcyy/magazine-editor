@@ -84,6 +84,7 @@ export default function KapakPage() {
   const [fgMirror, setFgMirror]       = useState(false)
   const [fgOffsetX, setFgOffsetX]     = useState(0)
   const [fgOffsetY, setFgOffsetY]     = useState(0)
+  const [dragTarget, setDragTarget]   = useState('bg')
 
   /* ── Yan yazı state ── */
   const [headColor, setHeadColor] = useState('#ffffff')
@@ -167,7 +168,7 @@ export default function KapakPage() {
     setBgColor('#111111')
     setPhoto(null); setPhotoBase64(null); setFgPhoto(null); setHead(''); setSub(''); setSavedPdf(null)
     setBgZoom(1); setBgRotate(0); setBgMirror(false); setBgOffsetX(0); setBgOffsetY(0)
-    setFgZoom(1); setFgRotate(0); setFgMirror(false); setFgOffsetX(0); setFgOffsetY(0)
+    setFgZoom(1); setFgRotate(0); setFgMirror(false); setFgOffsetX(0); setFgOffsetY(0); setDragTarget('bg')
     setLeftPos({ x: 1, y: 55 }); setRightPos({ x: 59, y: 32 })
     setLeftSize(1.9); setRightSize(1.9)
     setLeftFont('Inter'); setRightFont('Inter')
@@ -552,7 +553,7 @@ export default function KapakPage() {
               {fgPhoto && (
                 <div className="kp-thumb">
                   <img src={fgPhoto} alt="Ön plan" />
-                  <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(fgPhoto); setFgPhoto(null); setFgZoom(1); setFgRotate(0); setFgMirror(false); setFgOffsetX(0); setFgOffsetY(0) }}>✕ Kaldır</button>
+                  <button className="kp-thumb-rm" onClick={() => { URL.revokeObjectURL(fgPhoto); setFgPhoto(null); setFgZoom(1); setFgRotate(0); setFgMirror(false); setFgOffsetX(0); setFgOffsetY(0); setDragTarget('bg') }}>✕ Kaldır</button>
                 </div>
               )}
               {fgPhoto && (
@@ -571,6 +572,13 @@ export default function KapakPage() {
                     <button className="kp-ic-btn" onClick={() => setFgRotate(r => r + 90)}>↻</button>
                     <button className={`kp-ic-btn kp-ic-btn--mirror ${fgMirror ? 'kp-ic-btn--on' : ''}`} onClick={() => setFgMirror(m => !m)}>⟺ Ayna</button>
                   </div>
+                  {photo && (
+                    <div className="kp-img-ctrl-row" style={{ marginTop: 4 }}>
+                      <span className="kp-img-ctrl-label">Sürükle</span>
+                      <button className={`kp-ic-btn ${dragTarget === 'bg' ? 'kp-ic-btn--on' : ''}`} onClick={() => setDragTarget('bg')}>Arka</button>
+                      <button className={`kp-ic-btn ${dragTarget === 'fg' ? 'kp-ic-btn--on' : ''}`} onClick={() => setDragTarget('fg')}>Ön</button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -728,9 +736,9 @@ export default function KapakPage() {
             <div
               className="kp-cover"
               ref={coverRef}
-              style={{ cursor: photo ? 'grab' : 'default' }}
-              onMouseDown={startBgDrag}
-              onTouchStart={startBgDrag}
+              style={{ cursor: (photo || fgPhoto) ? 'grab' : 'default' }}
+              onMouseDown={e => dragTarget === 'fg' && fgPhoto ? startFgDrag(e) : startBgDrag(e)}
+              onTouchStart={e => dragTarget === 'fg' && fgPhoto ? startFgDrag(e) : startBgDrag(e)}
             >
 
               {/* Arka plan */}
@@ -760,7 +768,7 @@ export default function KapakPage() {
               </div>
 
               {/* Ön plan kişi katmanı */}
-              {fgPhoto && <img className="kp-cover-fg" src={fgPhoto} alt="" style={{ transform: `translate(${fgOffsetX}px, ${fgOffsetY}px) scale(${fgMirror ? -fgZoom : fgZoom}, ${fgZoom}) rotate(${fgRotate}deg)`, transformOrigin: 'center top', cursor: 'grab' }} onMouseDown={startFgDrag} onTouchStart={startFgDrag} />}
+              {fgPhoto && <img className="kp-cover-fg" src={fgPhoto} alt="" style={{ transform: `translate(${fgOffsetX}px, ${fgOffsetY}px) scale(${fgMirror ? -fgZoom : fgZoom}, ${fgZoom}) rotate(${fgRotate}deg)`, transformOrigin: 'center top' }} />}
 
               {/* Kapak içeriği */}
               <div className="kp-cover-content">
