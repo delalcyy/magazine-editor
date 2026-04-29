@@ -695,7 +695,7 @@ export default function KapakPage() {
         <section className="kp-preview">
           <span className="kp-preview-label">Canlı Önizleme</span>
 
-          <div className="kp-cover-stage" style={{ background: `linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,.28) 45%, rgba(0,0,0,.10) 100%), ${bgColor}` }}>
+          <div className="kp-cover-stage" style={{ background: bgColor }}>
             <div style={{ position:'absolute', top:'3.58%', left:'4.63%', right:'4.63%', bottom:'3.58%' }}>
             <div
               className="kp-cover"
