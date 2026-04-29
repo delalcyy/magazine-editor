@@ -222,7 +222,7 @@ export default function KapakPage() {
       const textH = textEl ? (textEl.getBoundingClientRect().height / rect.height) * 100 : 0
       const textW = textEl ? (textEl.getBoundingClientRect().width  / rect.width)  * 100 : 0
       const nx = Math.max(3, Math.min(93 - textW, startPosX + ((cx - startX) / rect.width) * 100))
-      const ny = Math.max(22, Math.min(72 - textH, startPosY + ((cy - startY) / rect.height) * 100))
+      const ny = Math.max(22, Math.min(88 - textH, startPosY + ((cy - startY) / rect.height) * 100))
       if (side === 'left') setLeftPos({ x: nx, y: ny })
       else setRightPos({ x: nx, y: ny })
     }
