@@ -30,7 +30,6 @@ const LOGO_COLORS = [
   { label: 'Siyah',    filter: 'invert(1)',                                                        preview: '#111111', dark: false },
   { label: 'Altın',    filter: 'sepia(1) saturate(4) hue-rotate(8deg)',                           preview: '#c9a050', dark: false },
   { label: 'Gümüş',    filter: 'brightness(0.65) saturate(0)',                                    preview: '#888888', dark: false },
-  { label: 'Kırmızı',  filter: 'sepia(1) saturate(8) hue-rotate(-30deg) brightness(0.85)',        preview: '#cc2222', dark: false },
   { label: 'Pembe',    filter: 'sepia(1) saturate(5) hue-rotate(295deg) brightness(0.9)',         preview: '#e060a8', dark: false },
 ]
 
