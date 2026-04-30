@@ -90,20 +90,6 @@ export default function HomePage() {
                 </button>
                 <Link to="/abonelik" className="hp-btn-ghost">Planları Gör</Link>
               </div>
-              <div className="hp-hero-meta">
-                <div className="hp-stat">
-                  <span className="hp-stat-num">5<em>+</em></span>
-                  <span className="hp-stat-lbl">Kategori</span>
-                </div>
-                <div className="hp-stat">
-                  <span className="hp-stat-num">10<em>×</em></span>
-                  <span className="hp-stat-lbl">Soru</span>
-                </div>
-                <div className="hp-stat">
-                  <span className="hp-stat-num">PDF<em>.</em></span>
-                  <span className="hp-stat-lbl">Çıktı</span>
-                </div>
-              </div>
             </div>
 
             <div className="hp-hero-right">

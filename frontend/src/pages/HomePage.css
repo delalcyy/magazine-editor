@@ -24,30 +24,30 @@
   padding: clamp(56px, 8vw, 100px) 0 clamp(64px, 9vw, 120px);
   background: var(--hp-paper);
 }
-.hp-hero-wrap { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
+.hp-hero-wrap { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
 
 .hp-kicker {
   display: flex; align-items: center; gap: 14px;
-  font-family: var(--hp-serif); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--hp-muted); font-weight: 600; margin-bottom: 28px;
+  font-family: var(--hp-serif); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--hp-muted); font-weight: 600; margin-bottom: 20px;
 }
 .hp-kicker-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--hp-gold); flex-shrink: 0; }
 
 .hp-h1 {
   font-family: var(--hp-serif);
-  font-size: clamp(2.6rem, 6vw, 5.2rem);
-  font-weight: 600; line-height: 1.05;
-  letter-spacing: 0.14em; margin-bottom: 28px;
+  font-size: clamp(1.8rem, 4vw, 3.4rem);
+  font-weight: 600; line-height: 1.12;
+  letter-spacing: 0.14em; margin-bottom: 20px;
   text-transform: uppercase;
 }
 .hp-h1 em { font-style: italic; color: var(--hp-gold); }
-.hp-h1-rule { display: block; width: 72px; height: 1px; background: var(--hp-ink); margin: 22px 0; }
+.hp-h1-rule { display: block; width: 56px; height: 1px; background: var(--hp-ink); margin: 16px 0; }
 
 .hp-lede {
   font-family: var(--hp-serif);
-  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
   font-weight: 600; letter-spacing: 0.08em;
-  line-height: 1.7; color: var(--hp-muted); margin-bottom: 36px; max-width: 46ch;
+  line-height: 1.7; color: var(--hp-muted); margin-bottom: 28px; max-width: 46ch;
 }
 
 .hp-hero-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 44px; }
