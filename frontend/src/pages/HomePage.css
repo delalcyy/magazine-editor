@@ -28,16 +28,17 @@
 
 .hp-kicker {
   display: flex; align-items: center; gap: 14px;
-  font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--hp-muted); font-weight: 500; margin-bottom: 28px;
+  font-family: var(--hp-serif); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--hp-muted); font-weight: 600; margin-bottom: 28px;
 }
 .hp-kicker-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--hp-gold); flex-shrink: 0; }
 
 .hp-h1 {
   font-family: var(--hp-serif);
   font-size: clamp(2.6rem, 6vw, 5.2rem);
-  font-weight: 400; line-height: 0.97;
-  letter-spacing: -0.02em; margin-bottom: 28px;
+  font-weight: 600; line-height: 1.05;
+  letter-spacing: 0.14em; margin-bottom: 28px;
+  text-transform: uppercase;
 }
 .hp-h1 em { font-style: italic; color: var(--hp-gold); }
 .hp-h1-rule { display: block; width: 72px; height: 1px; background: var(--hp-ink); margin: 22px 0; }
@@ -45,7 +46,8 @@
 .hp-lede {
   font-family: var(--hp-serif);
   font-size: clamp(1rem, 1.3vw, 1.2rem);
-  line-height: 1.6; color: var(--hp-muted); margin-bottom: 36px; max-width: 46ch;
+  font-weight: 600; letter-spacing: 0.08em;
+  line-height: 1.7; color: var(--hp-muted); margin-bottom: 36px; max-width: 46ch;
 }
 
 .hp-hero-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 44px; }
