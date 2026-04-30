@@ -109,9 +109,22 @@ export default function KapakPage() {
   const [leftPos,  setLeftPos]  = useState({ x: 1, y: 55 })
   const [rightPos, setRightPos] = useState({ x: 59, y: 32 })
 
+  const [left2Text,  setLeft2Text]  = useState("YENİ KOLEKSİYON")
+  const [right2Text, setRight2Text] = useState("TREND RAPORU")
+  const [left2Color,  setLeft2Color]  = useState('#ffffff')
+  const [right2Color, setRight2Color] = useState('#ffffff')
+  const [left2Size,  setLeft2Size]  = useState(1.9)
+  const [right2Size, setRight2Size] = useState(1.9)
+  const [left2Font,  setLeft2Font]  = useState('Inter')
+  const [right2Font, setRight2Font] = useState('Inter')
+  const [left2Pos,  setLeft2Pos]  = useState({ x: 1, y: 70 })
+  const [right2Pos, setRight2Pos] = useState({ x: 59, y: 48 })
+
   const fgRef = useRef(null)
-  const leftDragRef  = useRef(null)
-  const rightDragRef = useRef(null)
+  const leftDragRef   = useRef(null)
+  const rightDragRef  = useRef(null)
+  const left2DragRef  = useRef(null)
+  const right2DragRef = useRef(null)
   const [head,  setHead]              = useState('')
   const [sub,   setSub]               = useState('')
   const [exporting, setExporting]     = useState(false)
@@ -211,7 +224,10 @@ export default function KapakPage() {
   /* ── Yazı sürükleme (textarea için) ── */
   function startTextDrag(e, side) {
     e.stopPropagation() // bg drag'i engelle; preventDefault YOK ki focus çalışsın
-    const pos = side === 'left' ? leftPos : rightPos
+    const posMap    = { left: leftPos, right: rightPos, left2: left2Pos, right2: right2Pos }
+    const setMap    = { left: setLeftPos, right: setRightPos, left2: setLeft2Pos, right2: setRight2Pos }
+    const refMap    = { left: leftDragRef, right: rightDragRef, left2: left2DragRef, right2: right2DragRef }
+    const pos = posMap[side]
     const startX = e.touches ? e.touches[0].clientX : e.clientX
     const startY = e.touches ? e.touches[0].clientY : e.clientY
     const startPosX = pos.x; const startPosY = pos.y
@@ -222,21 +238,19 @@ export default function KapakPage() {
       const cy = ev.touches ? ev.touches[0].clientY : ev.clientY
       if (!dragging && (Math.abs(cx - startX) > 8 || Math.abs(cy - startY) > 8)) {
         dragging = true
-        const el = side === 'left' ? leftDragRef.current : rightDragRef.current
-        el?.blur()
+        refMap[side].current?.blur()
         window.getSelection()?.removeAllRanges()
       }
       if (!dragging) return
       if (ev.cancelable) ev.preventDefault()
       if (!coverRef.current) return
       const rect = coverRef.current.getBoundingClientRect()
-      const textEl = side === 'left' ? leftDragRef.current : rightDragRef.current
+      const textEl = refMap[side].current
       const textH = textEl ? (textEl.getBoundingClientRect().height / rect.height) * 100 : 0
       const textW = textEl ? (textEl.getBoundingClientRect().width  / rect.width)  * 100 : 0
       const nx = Math.max(0, Math.min(100 - textW, startPosX + ((cx - startX) / rect.width) * 100))
       const ny = Math.max(22, Math.min(82 - textH, startPosY + ((cy - startY) / rect.height) * 100))
-      if (side === 'left') setLeftPos({ x: nx, y: ny })
-      else setRightPos({ x: nx, y: ny })
+      setMap[side]({ x: nx, y: ny })
     }
     function up() {
       document.removeEventListener('mousemove', move)
@@ -716,6 +730,60 @@ export default function KapakPage() {
                   <button className="kp-ic-btn" style={{ borderColor: 'var(--kp-line-str)', color: 'var(--kp-label)' }} onClick={() => setRightSize(s => Math.min(5, +(s + 0.1).toFixed(1)))}>+</button>
                 </div>
               </div>
+
+              <div className="kp-side-group">
+                <div className="kp-side-group-head">
+                  <span className="kp-side-group-label">Sol Yazı 2</span>
+                  <label className="kp-color-wrap">
+                    <span>Renk</span>
+                    <input type="color" value={left2Color} onChange={e => setLeft2Color(e.target.value)} className="kp-color-input" />
+                  </label>
+                </div>
+                <textarea
+                  className="kp-input"
+                  value={left2Text}
+                  onChange={e => setLeft2Text(enforceWordLimit(e.target.value))}
+                  rows={2}
+                  maxLength={80}
+                  placeholder="Sol yazı 2..."
+                />
+                <select className="kp-font-select" value={left2Font} onChange={e => setLeft2Font(e.target.value)}>
+                  {FONTS.map(f => <option key={f.value} value={f.value}>{f.label}</option>)}
+                </select>
+                <div className="kp-img-ctrl-row">
+                  <span className="kp-img-ctrl-label" style={{ color: 'var(--kp-muted)' }}>Boyut</span>
+                  <button className="kp-ic-btn" style={{ borderColor: 'var(--kp-line-str)', color: 'var(--kp-label)' }} onClick={() => setLeft2Size(s => Math.max(0.8, +(s - 0.1).toFixed(1)))}>−</button>
+                  <span className="kp-img-ctrl-val" style={{ color: 'var(--kp-label)' }}>{left2Size.toFixed(1)}</span>
+                  <button className="kp-ic-btn" style={{ borderColor: 'var(--kp-line-str)', color: 'var(--kp-label)' }} onClick={() => setLeft2Size(s => Math.min(5, +(s + 0.1).toFixed(1)))}>+</button>
+                </div>
+              </div>
+
+              <div className="kp-side-group">
+                <div className="kp-side-group-head">
+                  <span className="kp-side-group-label">Sağ Yazı 2</span>
+                  <label className="kp-color-wrap">
+                    <span>Renk</span>
+                    <input type="color" value={right2Color} onChange={e => setRight2Color(e.target.value)} className="kp-color-input" />
+                  </label>
+                </div>
+                <textarea
+                  className="kp-input"
+                  value={right2Text}
+                  onChange={e => setRight2Text(enforceWordLimit(e.target.value))}
+                  rows={2}
+                  maxLength={80}
+                  placeholder="Sağ yazı 2..."
+                />
+                <select className="kp-font-select" value={right2Font} onChange={e => setRight2Font(e.target.value)}>
+                  {FONTS.map(f => <option key={f.value} value={f.value}>{f.label}</option>)}
+                </select>
+                <div className="kp-img-ctrl-row">
+                  <span className="kp-img-ctrl-label" style={{ color: 'var(--kp-muted)' }}>Boyut</span>
+                  <button className="kp-ic-btn" style={{ borderColor: 'var(--kp-line-str)', color: 'var(--kp-label)' }} onClick={() => setRight2Size(s => Math.max(0.8, +(s - 0.1).toFixed(1)))}>−</button>
+                  <span className="kp-img-ctrl-val" style={{ color: 'var(--kp-label)' }}>{right2Size.toFixed(1)}</span>
+                  <button className="kp-ic-btn" style={{ borderColor: 'var(--kp-line-str)', color: 'var(--kp-label)' }} onClick={() => setRight2Size(s => Math.min(5, +(s + 0.1).toFixed(1)))}>+</button>
+                </div>
+              </div>
             </div>
 
             {/* 04 Arka Plan Rengi */}
@@ -879,6 +947,32 @@ export default function KapakPage() {
                 rows={4}
                 maxLength={80}
                 style={{ left: `${rightPos.x}%`, top: `${rightPos.y}%`, color: rightColor, textAlign: 'right', fontSize: `${rightSize}cqh`, fontFamily: rightFont, width: '40%' }}
+              />
+
+              {/* Sol yazı 2 */}
+              <textarea
+                ref={left2DragRef}
+                className="kp-cov-text-ta"
+                value={left2Text}
+                onChange={e => setLeft2Text(enforceWordLimit(e.target.value))}
+                onMouseDown={e => startTextDrag(e, 'left2')}
+                onTouchStart={e => startTextDrag(e, 'left2')}
+                rows={4}
+                maxLength={80}
+                style={{ left: `${left2Pos.x}%`, top: `${left2Pos.y}%`, color: left2Color, textAlign: 'left', fontSize: `${left2Size}cqh`, fontFamily: left2Font, width: '50%' }}
+              />
+
+              {/* Sağ yazı 2 */}
+              <textarea
+                ref={right2DragRef}
+                className="kp-cov-text-ta"
+                value={right2Text}
+                onChange={e => setRight2Text(enforceWordLimit(e.target.value))}
+                onMouseDown={e => startTextDrag(e, 'right2')}
+                onTouchStart={e => startTextDrag(e, 'right2')}
+                rows={4}
+                maxLength={80}
+                style={{ left: `${right2Pos.x}%`, top: `${right2Pos.y}%`, color: right2Color, textAlign: 'right', fontSize: `${right2Size}cqh`, fontFamily: right2Font, width: '40%' }}
               />
 
             </div>
