@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import Header from '../components/Header'
 import OrderForm from '../components/OrderForm'
 import logoImg from '../assets/logo1.png'
+import logoBlackMetalImg from '../assets/logo1-black-metal.png'
 import { buildEmptyAnswers } from '../data/questions'
 import './KapakPage.css'
 import './EditorPage.css'
@@ -27,7 +28,7 @@ const BG_COLORS = [
 
 const LOGO_COLORS = [
   { label: 'Orijinal', filter: 'none',                                                             preview: '#e8e8e8', dark: true  },
-  { label: 'Siyah',    filter: 'saturate(0) brightness(0.8) contrast(1.21)',                      preview: '#111111', dark: false },
+  { label: 'Siyah',    filter: '__black_metal__',                                                   preview: '#111111', dark: false },
   { label: 'Altın',    filter: 'sepia(1) saturate(4) hue-rotate(8deg)',                           preview: '#c9a050', dark: false },
   { label: 'Gümüş',    filter: 'brightness(0.65) saturate(0)',                                    preview: '#888888', dark: false },
   { label: 'Açık Mavi', filter: 'sepia(1) saturate(5) hue-rotate(195deg) brightness(1.1)',         preview: '#5aaee8', dark: false },
@@ -900,9 +901,13 @@ export default function KapakPage() {
               {/* Logo — kp-cover-content dışında, doğrudan kp-cover içinde */}
               <div
                 className="kp-cov-brand"
-                style={logoFilter !== 'none' ? { filter: logoFilter } : undefined}
+                style={logoFilter !== 'none' && logoFilter !== '__black_metal__' ? { filter: logoFilter } : undefined}
               >
-                <img src={logoImg} className="kp-cov-logo-img" alt="Logo" />
+                <img
+                  src={logoFilter === '__black_metal__' ? logoBlackMetalImg : logoImg}
+                  className="kp-cov-logo-img"
+                  alt="Logo"
+                />
               </div>
 
               {/* Ön plan kişi katmanı */}
