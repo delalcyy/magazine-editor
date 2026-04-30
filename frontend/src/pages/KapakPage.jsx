@@ -901,12 +901,34 @@ export default function KapakPage() {
               {/* Logo — kp-cover-content dışında, doğrudan kp-cover içinde */}
               <div
                 className="kp-cov-brand"
-                style={logoFilter !== 'none' && logoFilter !== '__black_metal__' ? { filter: logoFilter } : undefined}
+                style={{
+                  position: 'absolute',
+                  top: '3cqh',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'flex-start',
+                  zIndex: 20,
+                  pointerEvents: 'none',
+                  userSelect: 'none',
+                  ...(logoFilter !== 'none' && logoFilter !== '__black_metal__' ? { filter: logoFilter } : {}),
+                }}
               >
                 <img
                   src={logoFilter === '__black_metal__' ? logoBlackMetalImg : logoImg}
                   className="kp-cov-logo-img"
                   alt="Logo"
+                  style={{
+                    width: '72%',
+                    maxWidth: 'none',
+                    height: 'auto',
+                    display: 'block',
+                    margin: 0,
+                    padding: 0,
+                    filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.3))',
+                  }}
                 />
               </div>
 
