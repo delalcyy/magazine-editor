@@ -368,7 +368,7 @@ user-select: none;}
   position: absolute; font-size: 1.9cqh; line-height: 1.5; font-weight: 500;
   letter-spacing: 0.1em; text-transform: uppercase;
   white-space: pre-line; word-break: break-word;
-  cursor: grab;   z-index: 70 !important;
+  cursor: grab;   z-index:80!important;
   text-shadow: 0 1px 4px rgba(0,0,0,.6);
   transition: outline .15s;
   overflow: hidden;
