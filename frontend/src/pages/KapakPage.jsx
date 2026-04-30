@@ -27,7 +27,7 @@ const BG_COLORS = [
 
 const LOGO_COLORS = [
   { label: 'Orijinal', filter: 'none',                                                             preview: '#e8e8e8', dark: true  },
-  { label: 'Siyah',    filter: 'saturate(0) brightness(0.71) contrast(1.17)',                       preview: '#111111', dark: false },
+  { label: 'Siyah',    filter: '__dark_depth__',                                                   preview: '#111111', dark: false },
   { label: 'Altın',    filter: 'sepia(1) saturate(4) hue-rotate(8deg)',                           preview: '#c9a050', dark: false },
   { label: 'Gümüş',    filter: 'brightness(0.65) saturate(0)',                                    preview: '#888888', dark: false },
   { label: 'Açık Mavi', filter: 'sepia(1) saturate(5) hue-rotate(195deg) brightness(1.1)',         preview: '#5aaee8', dark: false },
@@ -832,9 +832,16 @@ export default function KapakPage() {
               {/* Logo — kp-cover-content dışında, doğrudan kp-cover içinde */}
               <div
                 className="kp-cov-brand"
-                style={logoFilter !== 'none' ? { filter: logoFilter } : undefined}
+                style={logoFilter !== 'none' && logoFilter !== '__dark_depth__' ? { filter: logoFilter } : undefined}
               >
-                <img src={logoImg} className="kp-cov-logo-img" alt="Logo" />
+                {logoFilter === '__dark_depth__' ? (
+                  <>
+                    <img src={logoImg} className="kp-cov-logo-img" alt="Logo" style={{ visibility: 'hidden' }} />
+                    <div className="kp-cov-logo-dark-wrap" style={{ maskImage: `url(${logoImg})`, WebkitMaskImage: `url(${logoImg})` }} />
+                  </>
+                ) : (
+                  <img src={logoImg} className="kp-cov-logo-img" alt="Logo" />
+                )}
               </div>
 
               {/* Ön plan kişi katmanı */}
