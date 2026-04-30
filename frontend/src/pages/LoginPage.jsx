@@ -56,7 +56,7 @@ export default function LoginPage() {
       <Header />
       <div className="auth-page">
         <div className="auth-card">
-          <div className="auth-brand">Hatıra Dergi<span>.</span></div>
+          <div className="auth-brand">Hatıra Dergi<span></span></div>
           <h1 className="auth-title">Giriş Yap</h1>
           <p className="auth-sub">Hesabınıza erişin</p>
 
