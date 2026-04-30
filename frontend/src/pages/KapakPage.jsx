@@ -311,7 +311,29 @@ export default function KapakPage() {
     try {
       const html2canvas = (await import('html2canvas')).default
       const canvas = await html2canvas(coverRef.current, {
-        scale: 3, useCORS: true, backgroundColor: null, logging: false,
+        scale: 3,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: null,
+        logging: false,
+        scrollX: 0,
+        scrollY: 0,
+        onclone: (_doc, el) => {
+          el.querySelectorAll('textarea.kp-cov-text-ta').forEach(ta => {
+            const div = _doc.createElement('div')
+            div.style.cssText = ta.getAttribute('style') || ''
+            div.style.overflow = 'hidden'
+            div.style.whiteSpace = 'pre-wrap'
+            div.style.wordBreak = 'break-word'
+            div.style.background = 'transparent'
+            div.style.border = 'none'
+            div.style.outline = 'none'
+            div.style.padding = '0'
+            div.className = ta.className
+            div.textContent = ta.value
+            ta.parentNode.replaceChild(div, ta)
+          })
+        },
       })
       const link = document.createElement('a')
       link.download = `hatira-dergi-kapak-${Date.now()}.png`
