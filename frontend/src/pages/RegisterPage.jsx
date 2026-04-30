@@ -41,7 +41,7 @@ export default function RegisterPage() {
       <Header />
       <div className="auth-page">
         <div className="auth-card auth-card-wide">
-          <div className="auth-brand">MAISON<span>.</span></div>
+          <div className="auth-brand">Hatıra Dergi<span></span></div>
           <h1 className="auth-title">Hesap Oluştur</h1>
           <p className="auth-sub">Ücretsiz kaydolun</p>
 

@@ -54,7 +54,7 @@ export default function Header() {
       </div>
 
       {/* Mobil menü */}
-      <div className={`hdr-mobile-menu ${open ? 'hdr-mobile-menu--open' : ''}`}>
+      {open && <div className="hdr-mobile-menu">
         <Link to="/"          className="hdr-mobile-a" onClick={close}>Ana Sayfa</Link>
         <Link to="/abonelik"  className="hdr-mobile-a" onClick={close}>Abonelik</Link>
         {user && <Link to="/kapak"    className="hdr-mobile-a" onClick={close}>Kapak Tasarla</Link>}
@@ -70,7 +70,7 @@ export default function Header() {
             </>
           )}
         </div>
-      </div>
+      </div>}
     </header>
   )
 }
