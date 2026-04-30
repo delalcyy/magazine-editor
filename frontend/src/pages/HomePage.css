@@ -11,6 +11,7 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+body { overflow-x: hidden; }
 .hp { font-family: var(--hp-sans); color: var(--hp-ink); background: var(--hp-paper); overflow-x: hidden; }
 
 /* ── Wrap ── */
@@ -246,6 +247,7 @@
 @media (max-width: 960px) {
   .hp-hero-wrap { grid-template-columns: 1fr; }
   .hp-cover-stage { margin: 0 auto; max-width: 340px; }
+  .hp-cover-stage::after { display: none; }
   .hp-section-head { grid-template-columns: 1fr; gap: 24px; }
   .hp-steps { grid-template-columns: repeat(2, 1fr); }
   .hp-testimonials { grid-template-columns: 1fr; }
@@ -254,4 +256,5 @@
 @media (max-width: 580px) {
   .hp-steps { grid-template-columns: 1fr; }
   .hp-footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+  .hp-h1 { font-size: clamp(1.5rem, 7vw, 2rem); }
 }
