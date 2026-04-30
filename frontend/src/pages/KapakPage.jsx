@@ -25,6 +25,15 @@ const BG_COLORS = [
   { label: 'Altın',    value: '#a98947', dark: false },
 ]
 
+const LOGO_COLORS = [
+  { label: 'Orijinal', filter: 'none',                                                             preview: '#e8e8e8', dark: true  },
+  { label: 'Siyah',    filter: 'invert(1)',                                                        preview: '#111111', dark: false },
+  { label: 'Altın',    filter: 'sepia(1) saturate(4) hue-rotate(8deg)',                           preview: '#c9a050', dark: false },
+  { label: 'Gümüş',    filter: 'brightness(0.65) saturate(0)',                                    preview: '#888888', dark: false },
+  { label: 'Kırmızı',  filter: 'sepia(1) saturate(8) hue-rotate(-30deg) brightness(0.85)',        preview: '#cc2222', dark: false },
+  { label: 'Pembe',    filter: 'sepia(1) saturate(5) hue-rotate(295deg) brightness(0.9)',         preview: '#e060a8', dark: false },
+]
+
 
 const FONTS = [
   { label: 'Inter',             value: 'Inter, system-ui, sans-serif' },
@@ -85,6 +94,7 @@ export default function KapakPage() {
   const [fgOffsetX, setFgOffsetX]     = useState(0)
   const [fgOffsetY, setFgOffsetY]     = useState(0)
   const [dragTarget, setDragTarget]   = useState('bg')
+  const [logoFilter, setLogoFilter]   = useState('none')
 
   /* ── Yan yazı state ── */
   const [headColor, setHeadColor] = useState('#ffffff')
@@ -170,6 +180,7 @@ export default function KapakPage() {
     setPhoto(null); setPhotoBase64(null); setFgPhoto(null); setHead(''); setSub(''); setSavedPdf(null)
     setBgZoom(1); setBgRotate(0); setBgMirror(false); setBgOffsetX(0); setBgOffsetY(0)
     setFgZoom(1); setFgRotate(0); setFgMirror(false); setFgOffsetX(0); setFgOffsetY(0); setDragTarget('bg')
+    setLogoFilter('none')
     setLeftPos({ x: 1, y: 55 }); setRightPos({ x: 59, y: 32 })
     setLeftSize(1.9); setRightSize(1.9)
     setLeftFont('Inter'); setRightFont('Inter')
@@ -709,6 +720,40 @@ export default function KapakPage() {
             </div>
 
 
+            {/* 05 Logo Rengi */}
+            <div className="kp-section">
+              <div className="kp-section-head">
+                <span className="kp-section-num">05</span>
+                <span className="kp-section-title">Logo Rengi</span>
+              </div>
+              <div className="kp-bg-swatches">
+                {LOGO_COLORS.map(c => (
+                  <button
+                    key={c.filter}
+                    className={`kp-bg-swatch ${logoFilter === c.filter ? 'kp-bg-swatch--active' : ''}`}
+                    style={{ background: c.preview }}
+                    onClick={() => setLogoFilter(c.filter)}
+                    title={c.label}
+                  >
+                    {logoFilter === c.filter && (
+                      <span className="kp-bg-swatch-check" style={{ color: c.dark ? '#111' : '#fff' }}>✓</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+              <div className="kp-logo-color-labels">
+                {LOGO_COLORS.map(c => (
+                  <span
+                    key={c.filter}
+                    className={`kp-logo-color-label ${logoFilter === c.filter ? 'kp-logo-color-label--active' : ''}`}
+                    onClick={() => setLogoFilter(c.filter)}
+                  >
+                    {c.label}
+                  </span>
+                ))}
+              </div>
+            </div>
+
             {/* Mobil aksiyonlar */}
             <div className="kp-editor-actions">
               <button className="kp-btn kp-btn-ghost" onClick={handleReset}>Sıfırla</button>
@@ -764,7 +809,7 @@ export default function KapakPage() {
 
               {/* Logo — kp-cover-content dışında, doğrudan kp-cover içinde */}
               <div className="kp-cov-brand">
-                <img src={logoImg} className="kp-cov-logo-img" alt="Logo" />
+                <img src={logoImg} className="kp-cov-logo-img" alt="Logo" style={logoFilter !== 'none' ? { filter: logoFilter } : undefined} />
               </div>
 
               {/* Ön plan kişi katmanı */}

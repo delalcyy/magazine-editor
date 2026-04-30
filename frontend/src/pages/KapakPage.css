@@ -171,6 +171,18 @@
   color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.7);
 }
 
+/* Logo renk etiketleri */
+.kp-logo-color-labels {
+  display: flex; gap: 0; flex-wrap: wrap; margin-top: 6px;
+}
+.kp-logo-color-label {
+  font-size: 10px; color: var(--kp-muted); cursor: pointer;
+  width: 48px; text-align: center; padding: 2px 0;
+  transition: color .15s;
+}
+.kp-logo-color-label:hover { color: var(--kp-ink); }
+.kp-logo-color-label--active { color: var(--kp-gold); font-weight: 600; }
+
 /* Font seçici */
 .kp-font-select {
   width: 100%; background: #fff; border: 1px solid var(--kp-line-str);
