@@ -905,6 +905,7 @@ export default function KapakPage() {
                   position: 'absolute',
                   top: '16px',
                   left: 0,
+                  transform: 'none',
                   width: '100%',
                   maxWidth: 'none',
                   padding: '0 9%',
