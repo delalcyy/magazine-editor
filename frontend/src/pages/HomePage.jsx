@@ -26,7 +26,7 @@ const testimonials = [
   },
   { 
     name: 'Murat B.', 
-    title: 'Üniversite Mezunu', 
+    title: 'İstanbul',
     text: 'Mezuniyet için denemek istedim. Açıkçası bu kadar iyi beklemiyordum. Baskı kalitesi falan baya iyi, kapağı direkt dergi gibi. Arkadaşlarım görünce link istediler, 2-3 kişi daha yaptı.' 
   },
   { 
@@ -39,10 +39,15 @@ const testimonials = [
     title: 'İzmir', 
     text: 'Sevgilim için yaptım. Normal hediye almak istemedim. Bu daha farklı geldi. Kapak tasarlamak da zor değildi. Sonuç baya profesyonel duruyor. Beklediğimden iyi çıktı açıkçası.' 
   },
-  { 
-    name: 'Zeynep D.', 
-    title: 'Yeni Anne', 
-    text: 'Bebeğimiz doğduktan sonra yaptık. İleride hatıra olarak kalsın diye. Hem eğlenceliydi hem de ortaya çıkan şey çok güzel oldu. Albüm gibi ama daha özel hissettiriyor.' 
+  {
+    name: 'Zeynep D.',
+    title: 'Yeni Anne',
+    text: 'Bebeğimiz doğduktan sonra yaptık. İleride hatıra olarak kalsın diye. Hem eğlenceliydi hem de ortaya çıkan şey çok güzel oldu. Albüm gibi ama daha özel hissettiriyor.'
+  },
+  {
+    name: 'Ceren A.',
+    title: 'Bursa',
+    text: 'Babama sürpriz yaptım kariyer yıldönümü için. Kapağa iş hayatından bir fotoğrafını koydum, içine röportaj doldurdum. Gördüğünde "bu ne ya" dedi ama okumaya başlayınca sustı. Benim için en anlamlı hediyelerin biriydi.'
   }
 ]
 
