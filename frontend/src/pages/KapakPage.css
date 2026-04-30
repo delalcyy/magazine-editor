@@ -521,3 +521,28 @@ user-select: none;}
   .kp-editor { padding: 16px 14px 20px; }
   .kp-preview { padding: 18px 12px 28px; }
 }
+/* Yan yazıları ön plan PNG'nin üstüne zorla */
+.kp-cover-content {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 200 !important;
+  pointer-events: none !important;
+}
+
+.kp-cov-side-drag,
+.kp-cov-text-ta {
+  position: absolute !important;
+  z-index: 250 !important;
+  background: transparent !important;
+  pointer-events: auto !important;
+}
+
+/* Ön plan kişi görseli yazıların altında kalsın */
+.kp-cover-fg {
+  z-index: 100 !important;
+}
+
+/* Logo kişi görselinin altında kalsın */
+.kp-cov-brand {
+  z-index: 20 !important;
+}
