@@ -903,7 +903,7 @@ export default function KapakPage() {
                 className="kp-cov-brand"
                 style={{
                   position: 'absolute',
-                  top: '3cqh',
+                  top: '1.5cqh',
                   left: '50%',
                   transform: 'translateX(-50%)',
                   width: '100%',
@@ -921,7 +921,7 @@ export default function KapakPage() {
                   className="kp-cov-logo-img"
                   alt="Logo"
                   style={{
-                    width: '72%',
+                    width: '82%',
                     maxWidth: 'none',
                     height: 'auto',
                     display: 'block',
