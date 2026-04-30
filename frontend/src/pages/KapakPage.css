@@ -327,17 +327,21 @@
 /* Marka */
 .kp-cov-brand {
   position: absolute;
-  top: 20px;
+  top: 48px;
   left: 50%;
   transform: translateX(-50%);
-  width: 80%;
-  z-index: 10;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 20;
   pointer-events: none; isolation: isolate; user-select: none;
 }
 
 /* Logo resmi */
 .kp-cov-logo-img {
-  width: 100%; height: auto; display: block;
+  width: 68%; max-width: none; height: auto;
+  display: block; margin: 0; padding: 0;
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
 }
 
