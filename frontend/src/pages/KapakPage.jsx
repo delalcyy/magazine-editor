@@ -837,7 +837,10 @@ export default function KapakPage() {
                 {logoFilter === '__dark_depth__' ? (
                   <>
                     <img src={logoImg} className="kp-cov-logo-img" alt="Logo" style={{ visibility: 'hidden' }} />
-                    <div className="kp-cov-logo-dark" style={{ maskImage: `url(${logoImg})`, WebkitMaskImage: `url(${logoImg})` }} />
+                    <div className="kp-cov-logo-dark-wrap" style={{ maskImage: `url(${logoImg})`, WebkitMaskImage: `url(${logoImg})` }}>
+                      <div className="kp-cov-logo-dark-base" />
+                      <div className="kp-cov-logo-dark-gloss" />
+                    </div>
                   </>
                 ) : (
                   <img src={logoImg} className="kp-cov-logo-img" alt="Logo" />
