@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Header from '../components/Header'
@@ -52,9 +52,37 @@ const testimonials = [
 ]
 
 
+const GALLERY = [kapakImg, ornekkapak1, ornekkapak4, ornekkapak5, ornekkapak6]
+
 export default function HomePage() {
   const { user, hasAbonelik } = useAuth()
   const navigate = useNavigate()
+  const [slideIdx, setSlideIdx] = useState(0)
+  const sliderRef = useRef(null)
+
+  function getSlideW() {
+    const vp = sliderRef.current
+    const slide = vp?.querySelector('.hp-slider-slide')
+    return slide ? slide.offsetWidth + 16 : 0
+  }
+
+  function goTo(idx) {
+    const vp = sliderRef.current
+    if (!vp) return
+    vp.scrollTo({ left: idx * getSlideW(), behavior: 'smooth' })
+    setSlideIdx(idx)
+  }
+
+  useEffect(() => {
+    const vp = sliderRef.current
+    if (!vp) return
+    function onScroll() {
+      const w = getSlideW()
+      if (w) setSlideIdx(Math.round(vp.scrollLeft / w))
+    }
+    vp.addEventListener('scroll', onScroll, { passive: true })
+    return () => vp.removeEventListener('scroll', onScroll)
+  }, [])
 
   function handleCTA() {
     if (!user) { navigate('/kayit'); return }
@@ -167,11 +195,23 @@ export default function HomePage() {
                 <h2 className="hp-section-title">Anlarınızdan <em>Kareler</em></h2>
               </div>
             </div>
-            <div className="hp-gallery">
-              <div className="hp-gallery-box"><img src={ornekkapak1} alt="Örnek Kapak 1" /></div>
-              <div className="hp-gallery-box"><img src={ornekkapak4} alt="Örnek Kapak 4" /></div>
-              <div className="hp-gallery-box"><img src={ornekkapak5} alt="Örnek Kapak 5" /></div>
-              <div className="hp-gallery-box"><img src={ornekkapak6} alt="Örnek Kapak 6" /></div>
+            <div className="hp-slider-wrap">
+              <button className="hp-slider-arr hp-slider-arr--prev" onClick={() => goTo(Math.max(0, slideIdx - 1))} disabled={slideIdx === 0}>‹</button>
+              <div className="hp-slider-viewport" ref={sliderRef}>
+                <div className="hp-slider-track">
+                  {GALLERY.map((img, i) => (
+                    <div key={i} className="hp-slider-slide">
+                      <img src={img} alt={`Kapak ${i + 1}`} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <button className="hp-slider-arr hp-slider-arr--next" onClick={() => goTo(Math.min(GALLERY.length - 1, slideIdx + 1))} disabled={slideIdx >= GALLERY.length - 1}>›</button>
+              <div className="hp-slider-dots">
+                {GALLERY.map((_, i) => (
+                  <button key={i} className={`hp-slider-dot ${i === slideIdx ? 'hp-slider-dot--active' : ''}`} onClick={() => goTo(i)} />
+                ))}
+              </div>
             </div>
           </div>
         </section>
