@@ -320,7 +320,7 @@
 
 /* ── Kapak içeriği (container query ile ölçekli) ── */
 .kp-cover-content {
-  position: absolute; inset: 0; z-index: 60;
+  position: absolute; inset: 0;   z-index: 60 !important;
   padding: 6cqh 5cqw; color: #fff;
   pointer-events: none;
 }
@@ -368,7 +368,7 @@ user-select: none;}
   position: absolute; font-size: 1.9cqh; line-height: 1.5; font-weight: 500;
   letter-spacing: 0.1em; text-transform: uppercase;
   white-space: pre-line; word-break: break-word;
-  cursor: grab; z-index:70; user-select: none;
+  cursor: grab;   z-index: 70 !important;
   text-shadow: 0 1px 4px rgba(0,0,0,.6);
   transition: outline .15s;
   overflow: hidden;
@@ -380,8 +380,8 @@ user-select: none;}
 /* Kapak üzeri yazı textarea */
 .kp-cov-text-ta {
   position: absolute;
-  z-index: 80 !important;
-  border: 1.5px dashed rgba(255,255,255,0);
+  z-index: 12 !important;
+  background: transparent !important;
   border-radius: 2px;
   outline: none;
   resize: none;
