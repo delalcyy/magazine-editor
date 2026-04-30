@@ -19,10 +19,33 @@ const steps = [
 const categories = ['Doğum Günü', 'Evlilik', 'Kariyer', 'Bebek', 'Mezuniyet']
 
 const testimonials = [
-  { name: 'Elif K.', title: 'Eş & Anne', text: 'Eşime sürpriz olarak hazırladım. Gözleri doldu. Yıllardır bu kadar özel bir hediye almamıştı. Tasarımı gerçekten bir dergiden ayırt edemiyorsunuz, inanılmaz kaliteli çıktı.' },
-  { name: 'Murat B.', title: 'Mezun', text: 'Mezuniyetim için bir sayfa oluşturdum. Gerçek bir dergi gibi görünüyor! Ailem ve arkadaşlarım çok beğendi, hatta birkaç kişi daha sipariş vermek istedi. Kesinlikle tavsiye ederim.' },
-  { name: 'Selin T.', title: 'Kız Evladı', text: 'Annemin doğum günü için kullandım. Tüm aile hayran kaldı. Annem o kadar mutlu oldu ki çerçevelettirip duvara astı. Bu kadar kişisel ve anlamlı bir hediye bulmak gerçekten zordu.' },
+  { 
+    name: 'Elif K.', 
+    title: 'İstanbul', 
+    text: 'Eşime doğum günü için yaptım. Açtığında önce anlamadı, sonra gerçekten dergi sandı. İçindeki röportaj kısmını okuyunca baya duygulandı. Şu an salonda duruyor, gelen herkes soruyor nereden yaptırdınız diye.' 
+  },
+  { 
+    name: 'Murat B.', 
+    title: 'Üniversite Mezunu', 
+    text: 'Mezuniyet için denemek istedim. Açıkçası bu kadar iyi beklemiyordum. Baskı kalitesi falan baya iyi, kapağı direkt dergi gibi. Arkadaşlarım görünce link istediler, 2-3 kişi daha yaptı.' 
+  },
+  { 
+    name: 'Selin T.', 
+    title: 'Ankara', 
+    text: 'Annem için yaptırdım. Fotoğrafı kapağa koyunca çok şaşırdı. Röportaj kısmını yüksek sesle okuduk birlikte. Sonra çerçeveletip duvara astı. Gerçekten manevi değeri yüksek bir şey.' 
+  },
+  { 
+    name: 'Ahmet Y.', 
+    title: 'İzmir', 
+    text: 'Sevgilim için yaptım. Normal hediye almak istemedim. Bu daha farklı geldi. Kapak tasarlamak da zor değildi. Sonuç baya profesyonel duruyor. Beklediğimden iyi çıktı açıkçası.' 
+  },
+  { 
+    name: 'Zeynep D.', 
+    title: 'Yeni Anne', 
+    text: 'Bebeğimiz doğduktan sonra yaptık. İleride hatıra olarak kalsın diye. Hem eğlenceliydi hem de ortaya çıkan şey çok güzel oldu. Albüm gibi ama daha özel hissettiriyor.' 
+  }
 ]
+
 
 export default function HomePage() {
   const { user, hasAbonelik } = useAuth()
