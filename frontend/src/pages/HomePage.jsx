@@ -104,11 +104,10 @@ export default function HomePage() {
                 Herkes Kendi Dergisinin Kapağı Olabilir
               </div>
               <h1 className="hp-h1">
-                Her Hikâye <br />
-                <em>Bir Kapak Olmayı</em>
+                Birgün Herkes Ünlü  <br />
+                <em>Olacak</em>
                 <span className="hp-h1-rule" />
-                Hak Eder
-              </h1>
+                Andy Warhol              </h1>
               <p className="hp-lede">
               fashiontv magazine kapağının yıldızı siz olun.
               Hikâyenizi yazın, röportajınızı oluşturun ve lüks bir lifestyle dergide yerinizi alın.              </p>
