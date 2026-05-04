@@ -104,7 +104,7 @@ export default function HomePage() {
                 Herkes Kendi Dergisinin Kapağı Olabilir
               </div>
               <h1 className="hp-h1">
-                Birgün Herkes <br />
+                Bir Gün  <br />
                 <em> Ünlü Olacak</em>
                 <span className="hp-h1-rule" />
                 Andy Warhol              </h1>
