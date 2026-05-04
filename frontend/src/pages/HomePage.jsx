@@ -52,7 +52,7 @@ const testimonials = [
 ]
 
 
-const GALLERY = [kapakImg, ornekkapak1, ornekkapak4, ornekkapak5, ornekkapak6]
+const GALLERY = [kapakImg, ornekkapak1, ornekkapak4, ornekkapak5, ornekkapak6, ornekkapak7]
 
 export default function HomePage() {
   const { user, hasAbonelik } = useAuth()
