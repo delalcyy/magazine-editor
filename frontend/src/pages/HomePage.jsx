@@ -7,6 +7,7 @@ import ornekkapak1 from '../assets/ornekkapak1.jpeg'
 import ornekkapak4 from '../assets/ornekkapak4.png'
 import ornekkapak5 from '../assets/ornekkapak5.png'
 import ornekkapak6 from '../assets/ornekkapak6.png'
+import ornekkapak7 from '../assets/ornekkapak7.png'
 import './HomePage.css'
 
 const steps = [
