@@ -1,6 +1,49 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+const ILCELER = {
+  İstanbul: [
+    "Adalar",
+    "Arnavutköy",
+    "Ataşehir",
+    "Avcılar",
+    "Bağcılar",
+    "Bahçelievler",
+    "Bakırköy",
+    "Başakşehir",
+    "Bayrampaşa",
+    "Beşiktaş",
+    "Beykoz",
+    "Beylikdüzü",
+    "Beyoğlu",
+    "Büyükçekmece",
+    "Çatalca",
+    "Çekmeköy",
+    "Esenler",
+    "Esenyurt",
+    "Eyüpsultan",
+    "Fatih",
+    "Gaziosmanpaşa",
+    "Güngören",
+    "Kadıköy",
+    "Kağıthane",
+    "Kartal",
+    "Küçükçekmece",
+    "Maltepe",
+    "Pendik",
+    "Sancaktepe",
+    "Sarıyer",
+    "Silivri",
+    "Sultanbeyli",
+    "Sultangazi",
+    "Şile",
+    "Şişli",
+    "Tuzla",
+    "Ümraniye",
+    "Üsküdar",
+    "Zeytinburnu",
+  ],
+};
 import Header from '../components/Header'
 import './AbonelikPage.css'
 
@@ -127,15 +170,40 @@ export default function AbonelikPage() {
               </div>
             </div>
             <div className="ab-row">
-              <div className="ab-field">
-                <label>İl</label>
-                <input name="il" value={form.il} onChange={handle} placeholder="İstanbul" required />
-              </div>
-              <div className="ab-field">
-                <label>İlçe</label>
-                <input name="ilce" value={form.ilce} onChange={handle} placeholder="Kadıköy" required />
-              </div>
-            </div>
+  <div className="ab-field">
+    <label>İl</label>
+    <select
+      name="il"
+      value={form.il}
+      onChange={(e) => {
+        handle(e);
+        handle({ target: { name: "ilce", value: "" } });
+      }}
+      required
+    >
+      <option value="">İl seçin</option>
+      <option value="İstanbul">İstanbul</option>
+    </select>
+  </div>
+
+  <div className="ab-field">
+    <label>İlçe</label>
+    <select
+      name="ilce"
+      value={form.ilce}
+      onChange={handle}
+      required
+      disabled={!form.il}
+    >
+      <option value="">İlçe seçin</option>
+      {(ILCELER[form.il] || []).map((ilce) => (
+        <option key={ilce} value={ilce}>
+          {ilce}
+        </option>
+      ))}
+    </select>
+  </div>
+</div>
             <div className="ab-field">
               <label>Açık Adres</label>
               <textarea name="adres" value={form.adres} onChange={handle} placeholder="Mahalle, cadde, sokak, bina no…" rows={3} required />
