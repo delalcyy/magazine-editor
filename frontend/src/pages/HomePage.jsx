@@ -8,6 +8,8 @@ import ornekkapak4 from '../assets/ornekkapak4.png'
 import ornekkapak5 from '../assets/ornekkapak5.png'
 import ornekkapak6 from '../assets/ornekkapak6.png'
 import ornekkapak7 from '../assets/ornekkapak7.png'
+import ornekkapak8 from '../assets/ornekkapak8.png'
+
 import './HomePage.css'
 
 const steps = [
@@ -53,7 +55,7 @@ const testimonials = [
 ]
 
 
-const GALLERY = [kapakImg, ornekkapak1, ornekkapak4, ornekkapak5, ornekkapak6, ornekkapak7]
+const GALLERY = [kapakImg, ornekkapak1, ornekkapak4, ornekkapak5, ornekkapak6, ornekkapak7, ornekkapak8]
 
 export default function HomePage() {
   const { user, hasAbonelik } = useAuth()
