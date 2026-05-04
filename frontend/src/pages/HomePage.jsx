@@ -86,6 +86,25 @@ export default function HomePage() {
     vp.addEventListener('scroll', onScroll, { passive: true })
     return () => vp.removeEventListener('scroll', onScroll)
   }, [])
+  useEffect(() => {
+  const timer = setInterval(() => {
+    setSlideIdx((prev) => {
+      const next = prev >= GALLERY.length - 1 ? 0 : prev + 1;
+
+      const vp = sliderRef.current;
+      if (vp) {
+        vp.scrollTo({
+          left: next * getSlideW(),
+          behavior: "smooth",
+        });
+      }
+
+      return next;
+    });
+  }, 3000);
+
+  return () => clearInterval(timer);
+}, []);
 
   function handleCTA() {
     if (!user) { navigate('/kayit'); return }
