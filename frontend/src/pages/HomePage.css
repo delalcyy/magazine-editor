@@ -45,13 +45,12 @@ body { overflow-x: hidden; }
 .hp-h1-rule { display: block ; width: 36px; height: 1px; background: var(--hp-ink); margin: 10px 0; }
 .hp-h1-author {
   display: block;
-  font-size: 13px;
+  font-size: 12px;
+  font-style: italic;
   letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-top: 8px;
+  margin-top: 12px;
   color: #999;
 }
-
 .hp-lede {
   font-family: var(--hp-serif);
   font-size: clamp(0.9rem, 1.1vw, 1.05rem);
