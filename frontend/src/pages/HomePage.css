@@ -51,6 +51,15 @@ body { overflow-x: hidden; }
   margin-top: 12px;
   color: #999;
 }
+.hp-h1 .hp-h1-author {
+  display: block !important;
+  font-size: 13px !important;
+  line-height: 1.2 !important;
+  letter-spacing: 2px !important;
+  font-weight: 400 !important;
+  color: #999 !important;
+  margin-top: 8px !important;
+}
 .hp-lede {
   font-family: var(--hp-serif);
   font-size: clamp(0.9rem, 1.1vw, 1.05rem);
