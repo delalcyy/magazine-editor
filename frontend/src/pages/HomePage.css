@@ -43,6 +43,14 @@ body { overflow-x: hidden; }
 }
 .hp-h1 em { font-style: italic; color: var(--hp-gold); }
 .hp-h1-rule { display: block ; width: 36px; height: 1px; background: var(--hp-ink); margin: 10px 0; }
+.hp-h1-author {
+  display: block;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 8px;
+  color: #999;
+}
 
 .hp-lede {
   font-family: var(--hp-serif);
