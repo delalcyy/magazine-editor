@@ -321,3 +321,10 @@ body { overflow-x: hidden; }
   .hp-slider-arr--prev { left: 0; }
   .hp-slider-arr--next { right: 0; }
 }
+.hp-h1 .hp-h1-author {
+  display: block !important;
+  font-size: 10px !important;
+  letter-spacing: 1px !important;
+  color: red !important;
+  font-weight: 400 !important;
+}
